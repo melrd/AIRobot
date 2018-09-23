@@ -1,0 +1,24 @@
+Easiest way: log in with ssh and see the program output.
+Use print("…") to get the information you want.
+
+When you run your code from the menu, an .errlog will collect all output
+written to stderr. To use this, you need to tell the print function to
+output to stderr:
+
+    import sys
+
+    print("Error message", file=sys.stderr)
+
+use scp or sftp to get access to these files.
+
+
+Also, you can use bluetooth or wifi to see the output of a mobile robot,
+which is not connected via an USB cable.
+
+
+Another option is to use the LCD display, and put information there.
+
+
+
+Also check the fundamentals section:
+http://docs.ev3dev.org/en/ev3dev-stretch/programming/fundamentals.html

@@ -1,0 +1,14 @@
+Sur putty : 
+
+id : robot@192.168.0.1
+mdp : maker
+
+
+
+dans cmd 
+scp C:\Users\Asus\Documents\GitHub\AIRobot\example-ev3.py robot@192.168.0.1:\home\robot
+vérifier que le chemin est similaire
+
+
+dans la commande robot 
+python3 example-ev3.py

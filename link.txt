@@ -1,0 +1,10 @@
+Description utilité des différents outils : 
+http://www.legoengineering.com/ev3-sensors/
+
+Paramètres des outils : https://sites.google.com/site/ev3python/learn_ev3_python/using-sensors/sensor-modes
+
+Fonction
+https://python-ev3dev.readthedocs.io/en/latest/sensors.html#color-sensor
+
+Documentation ev3dev
+http://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-jessie/sensors.html#lego-nxt-color-sensors

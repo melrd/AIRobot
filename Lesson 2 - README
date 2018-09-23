@@ -1,0 +1,77 @@
+  Mini README for the EV3
+
+
+*** General Note on Documentation ***
+
+
+Please use the slides for your lecture on BlackBoard+ [1] to access 
+introductory information for working with the EV3.
+
+
+
+
+*** Other Resources ***
+
+
+The ev3dev's homepage [2] provides a pleora of information from getting
+started, to documentation of different programming language interfaces.
+The python documentation can for example be found at [3] and the references
+therein, especially the collected infromation at [4,5]. [4] provides
+specific information on the python interface, whereas generic information on
+how to use the interfaces of the EV3 can be found at [5].
+
+
+
+
+*** Emergency Documentation on Restoring a Broken Installation ***
+
+
+In case you need to reinstall this SDCard, please download the latest image 
+here [6]. Do not use the images from [2], as our images [6] come with small
+changes to accomodate for our courses.
+
+You can find lots of information on how to write the image to the SDCard
+online [2], especially from [7]. There, the process is performed with the
+tool Etcher [8], which is available for all major platforms.
+
+Under Linux, you also have the possibility to do the step of writing the
+image to the SDCard with the system tool *dd*, which allows you to write the
+image directly to the device file which corresponds to the SDCard. But be
+aware that this procedure includes no security checks and if you provide the
+wrong device file, you might erase your hard disc, bios settings, or
+something else. Therefore, we can take no responsibility for any destruction
+caused by you using this tool.
+If you do not know what this warning is about, you should probably relate to
+the information given above [2,7-8].
+
+If you have identified the device file of the SDCard, for example
+/dev/mmcblk0, and have the path of the downloaded image, then using
+
+    dd bs=2048 if=<path to image> of=<device file>
+
+as root or with sudo will write the image <path to image> to the device
+pointed to by <device file> without further checks or questions. That's why
+it is dangerous to make a mistake at this step.
+
+
+
+
+** References **
+
+
+[1] https://e-learn.sdu.dk
+
+[2] https://www.ev3dev.org
+
+[3] https://github.com/ev3dev/ev3dev-lang-python
+
+[4] https://python-ev3dev.readthedocs.io/en/ev3dev-stretch/
+
+[5] https://ev3dev.readthedocs.io/en/ev3dev-jessie/
+
+[6] https://esrl.dk/ai1_ev3_sdcard.img
+
+[7] https://www.ev3dev.org/docs/getting-started/#step-2-flash-the-sd-card
+
+[8] https://etcher.io/
+
