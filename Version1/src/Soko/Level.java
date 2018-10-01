@@ -3,7 +3,7 @@ package Soko;
 import java.util.*;
 
 /**
- * 
+ *  élément statique : mur + case déplacement en tab 2D
  */
 public class Level {
 
