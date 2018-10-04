@@ -3,7 +3,7 @@ package Soko;
 import java.util.*;
 
 /**
- * 
+ * élément dynamique : joueur (variable d instance) + caisse (array list) 
  */
 public class Configuration {
 
