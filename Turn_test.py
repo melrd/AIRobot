@@ -28,7 +28,7 @@ THRESHOLD_RIGHT = 30#Value for light sensor
 Stop_Value = 30 #Value for light sensor
 
 No_Speed = 0
-Forward_Speed = 30
+Forward_Speed = 50
 Turn_Speed = 30
 
 # Set the motor mode
@@ -57,32 +57,51 @@ print('Press Ctrl+C to exit')
 def go_straight(Nbr_of_Square):
     mAleft.duty_cycle_sp=Forward_Speed
     mBright.duty_cycle_sp = Forward_Speed
-    initial_angle=get_gyro_value()
+    #initial_angle=get_gyro_value()
+    stop_condition=0
     
     sensorLeft = get_value_left_light_sensor()
     sensorRight = get_value_right_light_sensor()
     
-    while sensorLeft<Stop_Value and sensorRight<Stop_Value:
+    while stop_condition==0:
         sensorLeft = get_value_left_light_sensor()
         sensorRight = get_value_right_light_sensor()
-        correction_trajectoire(initial_angle)
+        correction_trajectoire(sensorLeft,sensorRight)
         
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = No_Speed
 ################################################################################
-def correction_trajectoire(input_angle):
-    current_angle=get_gyro_value()
-    if input_angle<current_angle-5:
-        mAleft.duty_cycle_sp=Forward_Speed   ################A tester en réel avec différentes vitesses pour chaque moteur
-        mBright.duty_cycle_sp = Forward_Speed
-        #cahngement trajectoire
-    elif input_angle>current_angle+5:
+def correction_trajectoire(sensorLeft,sensorRight):
+    if sensorLeft<Stop_Value and sensorRight<Stop_Value:
         mAleft.duty_cycle_sp=Forward_Speed
         mBright.duty_cycle_sp = Forward_Speed
-        #changement_traj
-    else:
+    
+    elif sensorLeft<Stop_Value and sensorRight>Stop_Value:
         mAleft.duty_cycle_sp=Forward_Speed
+        mBright.duty_cycle_sp = Turn_Speed
+    
+    elif sensorLeft>Stop_Value and sensorRight<Stop_Value:
+        mAleft.duty_cycle_sp=Turn_Speed
         mBright.duty_cycle_sp = Forward_Speed
+    
+    elif sensorLeft>Stop_Value and sensorRight>Stop_Value:
+        mAleft.duty_cycle_sp=No_Speed
+        mBright.duty_cycle_sp = No_Speed
+        
+    
+#### Si fait avec gyro    
+#    current_angle=get_gyro_value()
+#    if input_angle<current_angle-5:
+#        mAleft.duty_cycle_sp=Forward_Speed   ################A tester en réel avec différentes vitesses pour chaque moteur
+#        mBright.duty_cycle_sp = Forward_Speed
+#        #cahngement trajectoire
+#    elif input_angle>current_angle+5:
+#        mAleft.duty_cycle_sp=Forward_Speed
+#        mBright.duty_cycle_sp = Forward_Speed
+#        #changement_traj
+#    else:
+#        mAleft.duty_cycle_sp=Forward_Speed
+#        mBright.duty_cycle_sp = Forward_Speed
         
     
     
@@ -135,4 +154,7 @@ def Turn (input_angle):
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = -No_Speed
 #################################################################################
+####Commandes a tetser
+
+
 Turn(90)
