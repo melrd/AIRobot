@@ -16,6 +16,13 @@ mBright = ev3.LargeMotor('outB')
 lightSensorLeft1 = ev3.ColorSensor('in1')
 lightSensorRight2 = ev3.ColorSensor('in4') 
 gyro = ev3.GyroSensor('in2')
+Sonar = ev3.UltrasonicSensor('in3') 
+
+# Put the US sensor into distance mode.
+Sonar.mode='US-DIST-CM'
+units = Sonar.units    # reports 'cm' even though the sensor measures 'mm'
+
+
 
 # Check if the sensors are connected
 assert lightSensorLeft1.connected, "LightSensorLeft(ColorSensor) is not connected"
@@ -23,9 +30,9 @@ assert lightSensorRight2.connected, "LightSensorRight(LightSensor) is not conect
 
 # Constantes
 
-THRESHOLD_LEFT = 80 #Value for light sensor
-THRESHOLD_RIGHT = 80#Value for light sensor
-Stop_Value = 80 #Value for light sensor
+THRESHOLD_LEFT = 30 #Value for light sensor
+THRESHOLD_RIGHT = 30#Value for light sensor
+Stop_Value = 30 #Value for light sensor
 
 No_Speed = 0
 Forward_Speed = -50
@@ -62,12 +69,16 @@ def go_straight(Nbr_of_Square):
     
     sensorLeft = get_value_left_light_sensor()
     sensorRight = get_value_right_light_sensor()
+    print("left :  ")
     print(sensorLeft)
+    print("right :  ")
     print(sensorRight)
     while stop_condition==0:
         sensorLeft = get_value_left_light_sensor()
         sensorRight = get_value_right_light_sensor()
+        print("left :  ")
         print(sensorLeft)
+        print("right :  ")
         print(sensorRight)
         stop_condition=correction_trajectoire(sensorLeft,sensorRight)
         
@@ -75,19 +86,19 @@ def go_straight(Nbr_of_Square):
     mBright.duty_cycle_sp = No_Speed
 ################################################################################
 def correction_trajectoire(sensorLeft,sensorRight):
-    if sensorLeft<Stop_Value and sensorRight<Stop_Value:
+    if sensorLeft>Stop_Value and sensorRight>Stop_Value:
         mAleft.duty_cycle_sp=Forward_Speed
         mBright.duty_cycle_sp = Forward_Speed
         return 0
-    elif sensorLeft<Stop_Value and sensorRight>Stop_Value:
+    elif sensorLeft>Stop_Value and sensorRight<Stop_Value:
         mAleft.duty_cycle_sp=Forward_Speed
         mBright.duty_cycle_sp = -Turn_Speed
         return 0
-    elif sensorLeft>Stop_Value and sensorRight<Stop_Value:
+    elif sensorLeft<Stop_Value and sensorRight>Stop_Value:
         mAleft.duty_cycle_sp=-Turn_Speed
         mBright.duty_cycle_sp = Forward_Speed
         return 0
-    elif sensorLeft>Stop_Value and sensorRight>Stop_Value:
+    elif sensorLeft<Stop_Value and sensorRight<Stop_Value:
         mAleft.duty_cycle_sp=No_Speed
         mBright.duty_cycle_sp = No_Speed
         return 1
@@ -107,9 +118,26 @@ def correction_trajectoire(sensorLeft,sensorRight):
 #        mBright.duty_cycle_sp = Forward_Speed
         
     
-    
-        
+###############################################################################    
+def management_canette():
+    mAleft.duty_cycle_sp=Forward_Speed
+    mBright.duty_cycle_sp = Forward_Speed
 
+        
+    distance = Sonar.value()  # en mm normalement
+    print("distance")
+    print(distance)
+    while distance>50:
+        distance = Sonar.value()
+        mAleft.duty_cycle_sp= Forward_Speed*(distance-50)/distance
+        mBright.duty_cycle_sp = Forward_Speed*(distance-50)/distance
+        print("distance")
+        print(distance)
+    mAleft.duty_cycle_sp=No_Speed
+    mBright.duty_cycle_sp = No_Speed
+
+            
+###############################################################################
 def get_value_left_light_sensor():
     sensorLeft = lightSensorLeft1.value()
     return sensorLeft
@@ -134,7 +162,7 @@ def Turn (input_angle):
         
     #On avance un peu le robot pour que le centre de rotation soit au centre de la case
     i=0
-    while i<500:
+    while i<280:
         mAleft.duty_cycle_sp=Forward_Speed
         mBright.duty_cycle_sp = Forward_Speed
         i=i+1
@@ -161,5 +189,19 @@ def Turn (input_angle):
 #################################################################################
 ####Commandes a tetser
 
-go_straight(1)
-Turn(90)
+management_canette()
+
+#go_straight(1)
+#Turn(90)
+#go_straight(1)
+#Turn(90)
+#go_straight(1)
+#Turn(90)
+#go_straight(1)
+#Turn(90)
+#go_straight(1)
+#Turn(90)
+#go_straight(1)
+#Turn(90)
+#go_straight(1)
+#Turn(90)
