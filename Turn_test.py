@@ -14,8 +14,8 @@ mBright = ev3.LargeMotor('outB')
 
 #input, light sensors and gyro sensor
 lightSensorLeft1 = ev3.ColorSensor('in1')
-lightSensorRight2 = ev3.ColorSensor('in2') 
-gyro = ev3.GyroSensor('in3')
+lightSensorRight2 = ev3.ColorSensor('in4') 
+gyro = ev3.GyroSensor('in2')
 
 # Check if the sensors are connected
 assert lightSensorLeft1.connected, "LightSensorLeft(ColorSensor) is not connected"
@@ -23,13 +23,13 @@ assert lightSensorRight2.connected, "LightSensorRight(LightSensor) is not conect
 
 # Constantes
 
-THRESHOLD_LEFT = 30 #Value for light sensor
-THRESHOLD_RIGHT = 30#Value for light sensor
-Stop_Value = 30 #Value for light sensor
+THRESHOLD_LEFT = 80 #Value for light sensor
+THRESHOLD_RIGHT = 80#Value for light sensor
+Stop_Value = 80 #Value for light sensor
 
 No_Speed = 0
-Forward_Speed = 50
-Turn_Speed = 30
+Forward_Speed = -50
+Turn_Speed = -30
 
 # Set the motor mode
 mAleft.run_direct()
@@ -62,11 +62,14 @@ def go_straight(Nbr_of_Square):
     
     sensorLeft = get_value_left_light_sensor()
     sensorRight = get_value_right_light_sensor()
-    
+    print(sensorLeft)
+    print(sensorRight)
     while stop_condition==0:
         sensorLeft = get_value_left_light_sensor()
         sensorRight = get_value_right_light_sensor()
-        correction_trajectoire(sensorLeft,sensorRight)
+        print(sensorLeft)
+        print(sensorRight)
+        stop_condition=correction_trajectoire(sensorLeft,sensorRight)
         
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = No_Speed
@@ -75,19 +78,19 @@ def correction_trajectoire(sensorLeft,sensorRight):
     if sensorLeft<Stop_Value and sensorRight<Stop_Value:
         mAleft.duty_cycle_sp=Forward_Speed
         mBright.duty_cycle_sp = Forward_Speed
-    
+        return 0
     elif sensorLeft<Stop_Value and sensorRight>Stop_Value:
         mAleft.duty_cycle_sp=Forward_Speed
-        mBright.duty_cycle_sp = Turn_Speed
-    
+        mBright.duty_cycle_sp = -Turn_Speed
+        return 0
     elif sensorLeft>Stop_Value and sensorRight<Stop_Value:
-        mAleft.duty_cycle_sp=Turn_Speed
+        mAleft.duty_cycle_sp=-Turn_Speed
         mBright.duty_cycle_sp = Forward_Speed
-    
+        return 0
     elif sensorLeft>Stop_Value and sensorRight>Stop_Value:
         mAleft.duty_cycle_sp=No_Speed
         mBright.duty_cycle_sp = No_Speed
-        
+        return 1
     
 #### Si fait avec gyro    
 #    current_angle=get_gyro_value()
@@ -119,36 +122,38 @@ def get_gyro_value():
     return angle
 ###############################################################################
 def Turn (input_angle):
-    angle=0
+    
     current_angle = get_gyro_value()
-    sens_rotation=-1
+    print("angle initial  " + str(current_angle) + " " + units)
+    sens_rotation=1
     if input_angle<0:   #Si angle négatif (-90°) On change le sens de rotation
         sens_rotation=1
         
     target_angle = (current_angle + input_angle) %360 # angle a atteindre, condition d'arret de la fonction
-       
+    print("angle objectif  " + str(target_angle) + " " + units)   
         
     #On avance un peu le robot pour que le centre de rotation soit au centre de la case
     i=0
     while i<500:
-        mAleft.duty_cycle_sp=-Forward_Speed
-        mBright.duty_cycle_sp = -Forward_Speed
+        mAleft.duty_cycle_sp=Forward_Speed
+        mBright.duty_cycle_sp = Forward_Speed
         i=i+1
-        
-    print(str(angle) + " " + units)  
+    angle = get_gyro_value()    
+    print("angle initial  " + str(angle) + " " + units)
+    
     if input_angle<0:   
-        sens_rotation=1
-        while angle < target_angle or angle>(target_angle+30)%360:
-            mAleft.duty_cycle_sp=-Turn_Speed*sens_rotation
-            mBright.duty_cycle_sp = Turn_Speed*sens_rotation
+        sens_rotation=-1
+        while angle > target_angle or angle<(target_angle-30)%360:
+            mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
+            mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
             angle = get_gyro_value()
-            print(str(angle) + " " + units)
+            print("angle = " + str(angle) + " " + units)  
     else:
-        while angle > target_angle or angle<(target_angle-30)%360:    #précision du capteur impossible, si il détecte pas, fait un tour complet
-            mAleft.duty_cycle_sp=-Turn_Speed*sens_rotation
-            mBright.duty_cycle_sp = Turn_Speed*sens_rotation
+        while angle < target_angle or angle>(target_angle+30)%360:     #précision du capteur impossible, si il détecte pas, fait un tour complet
+            mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
+            mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
             angle = get_gyro_value()
-            print(str(angle) + " " + units)
+            print("angle = " + str(angle) + " " + units)  
 
         
     mAleft.duty_cycle_sp=No_Speed
@@ -156,5 +161,5 @@ def Turn (input_angle):
 #################################################################################
 ####Commandes a tetser
 
-
+go_straight(1)
 Turn(90)
