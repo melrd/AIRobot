@@ -12,16 +12,23 @@ public class main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		readingFile();
+		char[][] map = null;
+		map = readingFile(map);
+		for(int i = 0;i < 9;i++) {
+			for(int j = 0;j<10;j++) {
+				System.out.print(map[i][j]);
+			}
+			System.out.println("\t");
+		}
 	}
 	
 	
 	
-	public static void readingFile() {
+	public static char[][] readingFile(char[][] map) {
 		ArrayList<String> extractFile = new ArrayList<String>();
 		int numberColumn = 0,
-				numberLine = 0;
-		char[][] map = null;
+				numberLine = 0,
+				numberGoal = 0;
 		
 		try{
 		    File f = new File ("C:\\Users\\Asus\\Documents\\GitHub\\AIRobot\\Version1\\scheme1.txt");
@@ -29,10 +36,10 @@ public class main {
 		    BufferedReader br = new BufferedReader (fr);
 		 
 		    try	{
-		        String line = br.readLine(); //faisable par char
+		    	// open file and read line by line, memorise everything in the array
+		        String line = br.readLine(); 
 		 
 		        while (line != null) {
-		           // System.out.println (line);
 		            extractFile.add(line);
 		            line = br.readLine();
 		        }
@@ -48,30 +55,24 @@ public class main {
 		    System.out.println ("Le fichier n'a pas été trouvé");
 		}
 		
-		//System.out.println("blabl");
 
 		for(int i=0;i <extractFile.size(); i++) {
-			//System.out.print(extractFile.get(i)+"\n");
 			
-			if(i == 0) {
+			if(i == 0) { // for the first line we extract the parameters of the map and initialize the map table
 				String[] parts = extractFile.get(i).split(Pattern.quote(" "));
 				numberColumn = Integer.parseInt(parts[0]); 
 				numberLine = Integer.parseInt(parts[1]); 
+				numberGoal = Integer.parseInt(parts[2]); 
 				map = new char[numberLine][numberColumn]; 
 			
-			}else {
+			}else {// we put all the data in the map
 				for(int j = 0;j < numberColumn; j++) {
 					map[i-1][j] = extractFile.get(i).charAt(j);
 				}
 			}
 		}
 		
-		for(int i = 0;i < 9;i++) {
-			for(int j = 0;j<10;j++) {
-				System.out.print(map[i][j]);
-			}
-			System.out.println("\n");
-		}
-	}
+		return map;
+	}           
 
 }
