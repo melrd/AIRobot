@@ -145,7 +145,6 @@ def management_canette():
 
 def move_barriere(state):
     mCBarriere.duty_cycle_sp=Forward_Speed
-       
      
 ###############################################################################
 def get_value_left_light_sensor():
