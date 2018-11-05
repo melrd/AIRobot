@@ -59,6 +59,7 @@ def signal_handler(sig, frame):
 	print('Shutting down gracefully')
 	mAleft.duty_cycle_sp = 0
 	mBright.duty_cycle_sp = 0
+	mCBarriere.duty_cycle_sp=0
 	exit(0)
 
 # Install the signal handler for CTRL+C
@@ -143,9 +144,12 @@ def management_canette():
     
         
 
-def move_barriere(state):
-    mCBarriere.duty_cycle_sp=Forward_Speed
-       
+def move_barriere():
+    i=0
+    while i<500:
+        mCBarriere.duty_cycle_sp=Forward_Speed
+        i=i+1
+    mCBarriere.duty_cycle_sp=No_Speed
      
 ###############################################################################
 def get_value_left_light_sensor():
@@ -198,8 +202,8 @@ def Turn (input_angle):
     mBright.duty_cycle_sp = -No_Speed
 #################################################################################
 ####Commandes a tetser
-
-management_canette()
+move_barriere()
+#management_canette()
 
 #go_straight(1)
 #Turn(90)
