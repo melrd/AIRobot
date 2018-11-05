@@ -11,6 +11,7 @@ import signal
 # Connect two motors 
 mAleft = ev3.LargeMotor('outA')
 mBright = ev3.LargeMotor('outB')
+mCBarriere = ev3.MediumMotor('outC')
 
 #input, light sensors and gyro sensor
 lightSensorLeft1 = ev3.ColorSensor('in1')
@@ -43,6 +44,9 @@ mAleft.run_direct()
 mBright.run_direct()
 mAleft.polarity = "inversed"
 mBright.polarity = "inversed"
+
+mCBarriere.run_direct()
+mCBarriere.polarity = "inversed"
 
 # Put the gyro sensor into ANGLE mode.
 gyro.mode='GYRO-ANG'
@@ -135,8 +139,12 @@ def management_canette():
         print(distance)
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = No_Speed
-
-            
+    
+    i=0
+    while i<100:
+        mCBarriere.duty_cycle_sp=Forward_Speed
+        i=i+1
+    mCBarriere.duty_cycle_sp = No_Speed        
 ###############################################################################
 def get_value_left_light_sensor():
     sensorLeft = lightSensorLeft1.value()
