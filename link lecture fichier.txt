@@ -1,0 +1,7 @@
+https://openclassrooms.com/fr/courses/26832-apprenez-a-programmer-en-java/20998-les-tableaux
+https://www.ukonline.be/programmation/java/tutoriel/chapitre12/page3.php
+https://openclassrooms.com/fr/courses/26832-apprenez-a-programmer-en-java/22756-les-flux-dentree-sortie
+https://www.journaldunet.fr/web-tech/developpement/1203051-java-comment-lire-un-fichier-texte/
+
+
+https://openclassrooms.com/forum/sujet/lire-fichier-caractere-par-caractere-30884 <=> meilleur
