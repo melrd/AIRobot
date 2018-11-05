@@ -140,11 +140,13 @@ def management_canette():
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = No_Speed
     
-    i=0
-    while i<100:
-        mCBarriere.duty_cycle_sp=Forward_Speed
-        i=i+1
-    mCBarriere.duty_cycle_sp = No_Speed        
+    
+        
+
+def move_barriere(state):
+    mCBarriere.duty_cycle_sp=Forward_Speed
+       
+     
 ###############################################################################
 def get_value_left_light_sensor():
     sensorLeft = lightSensorLeft1.value()
