@@ -8,13 +8,3 @@ https://python-ev3dev.readthedocs.io/en/latest/sensors.html#color-sensor
 
 Documentation ev3dev
 http://docs.ev3dev.org/projects/lego-linux-drivers/en/ev3dev-jessie/sensors.html#lego-nxt-color-sensors
-
-
-vidéo design
-https://www.youtube.com/watch?v=m934NlhGB2M
-
-
-CONSTRUCTION
-https://education.lego.com/en-us/support/mindstorms-ev3/building-instructions#building-core
-https://www.youtube.com/watch?v=U8f9qinA7CE
-https://www.youtube.com/watch?v=V-G9_qiH7Qc
