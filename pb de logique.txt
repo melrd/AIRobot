@@ -1,0 +1,2 @@
+pb a résoudre
+	aller retour du robot sur 2 cases voisines
