@@ -17,10 +17,3 @@ commencer l algo de l IA
 	noeud suivant de la file
 
 
-class noeud
-	coordonnée
-	nombre de pas
-	j placé
-	noeud suivant
-	noeud précédent
-	noeud avant précédent

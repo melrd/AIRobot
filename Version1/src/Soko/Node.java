@@ -1,6 +1,7 @@
 package Soko;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Node {
 	int column, // for know actual position 
@@ -8,8 +9,8 @@ public class Node {
 		steps, // for know wich way is fast
 		goalsFree; // for know when the game is over
 	Node beforePrevious,
-		previous,
-		next;
+		previous;
+	List<Node> next;
 	
 	public Node(){
 		column = 0;
@@ -28,8 +29,9 @@ public class Node {
 		goalsFree = pGoalsFree;
 		beforePrevious = null;
 		previous = null;
-		next = new Node();
+		next = new ArrayList <Node>();
 	}
+	
 	public Node(int pColumn, int pLine, int pGoalsFree, Node pPrevious){
 		column = pColumn;
 		line = pLine;
@@ -37,9 +39,15 @@ public class Node {
 		goalsFree = pGoalsFree;
 		beforePrevious = pPrevious.previous;
 		previous = pPrevious;
-		next = new Node();
+		next = new ArrayList <Node>();
 	}
 	public void Node() {
 		
+	}
+	
+	public static void printNode(Node node) {
+		System.out.println("Coordonnée : [" + node.line + "][" + node.column +"]");
+		System.out.println("Step : " + node.steps);
+		System.out.println("Goal non complete : " + node.goalsFree);
 	}
 }

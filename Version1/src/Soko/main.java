@@ -40,7 +40,11 @@ public class main {
 			System.out.println("\t");
 		}
 		
-		tree = new Tree(startLine,startColumn,numberGoal);
+		tree = new Tree(startLine,startColumn,numberGoal); // start of the tree at M
+		if (tree.GameRules(map,startColumn,startLine-1,false,DIRECTION.UP) == true)
+			tree.addNode(tree.node, 0, -1);
+		
+		tree.node.printNode(tree.node.next[0]);
 	}
 	
 	
