@@ -21,13 +21,11 @@ public class main {
 		char[][] map = null;
 		int startColumn = 0,
 			startLine = 0,
-			numberColumn = 0,
-			numberLine = 0,
 			numberGoal = 0;
 		Tree tree = null;
 		
 		
-		map = readingFile(numberColumn, numberLine, numberGoal);
+		map = readingFile();
 		
 		for(int i = 0;i < 9;i++) {
 			for(int j = 0;j<10;j++) {
@@ -41,18 +39,20 @@ public class main {
 		}
 		
 		tree = new Tree(startLine,startColumn,numberGoal); // start of the tree at M
-		if (tree.GameRules(map,startColumn,startLine-1,false,DIRECTION.UP) == true)
-			tree.addNode(tree.node, 0, -1);
 		
-		tree.node.printNode(tree.node.next[0]);
+		if (tree.GameRules(map,startColumn,startLine+1,false,DIRECTION.UP) == true) 
+			tree.addNode(tree.node, 0, -1,DIRECTION.UP);
+		tree.node.printNode(tree.node.up);
 	}
 	
 	
 	
-	public static char[][] readingFile(int numberColumn, int numberLine, int numberGoal) {
+	public static char[][] readingFile() {
 		ArrayList<String> extractFile = new ArrayList<String>();
 		char[][] map = null; 
-		
+		int numberColumn = 0, 
+			numberLine = 0,
+			numberGoal = 0;
 		try{
 		    File f = new File ("C:\\Users\\Asus\\Documents\\GitHub\\AIRobot\\Version1\\scheme1.txt");
 		    FileReader fr = new FileReader (f);
