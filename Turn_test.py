@@ -11,7 +11,7 @@ import signal
 # Connect two motors 
 mAleft = ev3.LargeMotor('outA')
 mBright = ev3.LargeMotor('outB')
-mCBarriere = ev3.MediumMotor('outC')
+mCFence = ev3.MediumMotor('outC')
 
 #input, light sensors and gyro sensor
 lightSensorLeft1 = ev3.ColorSensor('in1')
@@ -31,22 +31,25 @@ assert lightSensorRight2.connected, "LightSensorRight(LightSensor) is not conect
 
 # Constantes
 
-THRESHOLD_LEFT = 30 #Value for light sensor
-THRESHOLD_RIGHT = 30#Value for light sensor
-Stop_Value = 30 #Value for light sensor
+THRESHOLD_LEFT = 20 #Value for light sensor
+THRESHOLD_RIGHT = 20#Value for light sensor
+Stop_Value = 20 #Value for light sensor
 
 No_Speed = 0
-Forward_Speed = -50
-Turn_Speed = -30
+Forward_Speed = -70
+Turn_Speed = -35
+Forward_before_turn_speed=-50
 
+Fence_down_speed=20
+Fence_up_speed=-50
 # Set the motor mode
 mAleft.run_direct()
 mBright.run_direct()
 mAleft.polarity = "inversed"
 mBright.polarity = "inversed"
 
-mCBarriere.run_direct()
-mCBarriere.polarity = "inversed"
+mCFence.run_direct()
+mCFence.polarity = "inversed"
 
 # Put the gyro sensor into ANGLE mode.
 gyro.mode='GYRO-ANG'
@@ -59,7 +62,7 @@ def signal_handler(sig, frame):
 	print('Shutting down gracefully')
 	mAleft.duty_cycle_sp = 0
 	mBright.duty_cycle_sp = 0
-	mCBarriere.duty_cycle_sp=0
+	mCFence.duty_cycle_sp=0
 	exit(0)
 
 # Install the signal handler for CTRL+C
@@ -78,6 +81,10 @@ def go_straight(Nbr_of_Square):
     print(sensorLeft)
     print("right :  ")
     print(sensorRight)
+    if sensorLeft<Stop_Value and sensorRight<Stop_Value:
+        while sensorLeft<Stop_Value and sensorRight<Stop_Value:
+            sensorLeft = get_value_left_light_sensor()
+            sensorRight = get_value_right_light_sensor()
     while stop_condition==0:
         sensorLeft = get_value_left_light_sensor()
         sensorRight = get_value_right_light_sensor()
@@ -108,20 +115,7 @@ def correction_trajectoire(sensorLeft,sensorRight):
         mBright.duty_cycle_sp = No_Speed
         return 1
     
-#### Si fait avec gyro    
-#    current_angle=get_gyro_value()
-#    if input_angle<current_angle-5:
-#        mAleft.duty_cycle_sp=Forward_Speed   ################A tester en réel avec différentes vitesses pour chaque moteur
-#        mBright.duty_cycle_sp = Forward_Speed
-#        #cahngement trajectoire
-#    elif input_angle>current_angle+5:
-#        mAleft.duty_cycle_sp=Forward_Speed
-#        mBright.duty_cycle_sp = Forward_Speed
-#        #changement_traj
-#    else:
-#        mAleft.duty_cycle_sp=Forward_Speed
-#        mBright.duty_cycle_sp = Forward_Speed
-        
+
     
 ###############################################################################    
 def management_canette():
@@ -140,16 +134,24 @@ def management_canette():
         print(distance)
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = No_Speed
+    move_fence(0)
     
     
         
+#### 1 for mooving up, 0 for mooving down########################################
+def move_fence(state):
+    if state==1:
+        i=0
+        while i<250:
+            mCFence.duty_cycle_sp=Fence_up_speed
+            i=i+1
+    if state==0:
+        i=0
+        while i<250:
+            mCFence.duty_cycle_sp=Fence_down_speed
+            i=i+1
 
-def move_barriere():
-    i=0
-    while i<500:
-        mCBarriere.duty_cycle_sp=Forward_Speed
-        i=i+1
-    mCBarriere.duty_cycle_sp=No_Speed
+    mCFence.duty_cycle_sp=No_Speed
      
 ###############################################################################
 def get_value_left_light_sensor():
@@ -176,9 +178,9 @@ def Turn (input_angle):
         
     #On avance un peu le robot pour que le centre de rotation soit au centre de la case
     i=0
-    while i<280:
-        mAleft.duty_cycle_sp=Forward_Speed
-        mBright.duty_cycle_sp = Forward_Speed
+    while i<200:
+        mAleft.duty_cycle_sp=Forward_before_turn_speed
+        mBright.duty_cycle_sp = Forward_before_turn_speed
         i=i+1
     angle = get_gyro_value()    
     print("angle initial  " + str(angle) + " " + units)
@@ -202,20 +204,23 @@ def Turn (input_angle):
     mBright.duty_cycle_sp = -No_Speed
 #################################################################################
 ####Commandes a tetser
-move_barriere()
+
 #management_canette()
 
-#go_straight(1)
-#Turn(90)
-#go_straight(1)
-#Turn(90)
-#go_straight(1)
-#Turn(90)
-#go_straight(1)
-#Turn(90)
-#go_straight(1)
-#Turn(90)
-#go_straight(1)
-#Turn(90)
-#go_straight(1)
-#Turn(90)
+
+go_straight(1)
+Turn(-90)
+go_straight(1)
+Turn(-90)
+go_straight(1)
+Turn(-90)
+go_straight(1)
+Turn(-90)
+go_straight(1)
+Turn(90)
+go_straight(1)
+Turn(90)
+go_straight(1)
+Turn(90)
+go_straight(1)
+Turn(90)
