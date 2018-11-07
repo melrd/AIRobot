@@ -62,7 +62,7 @@ public class Node {
 		else {
 			System.out.println("Coordonnée : [" + node.line + "][" + node.column +"]");
 			System.out.println("Step : " + node.steps);
-			System.out.println("Goal non complete : " + node.goalsFree);
+			//System.out.println("Goal non complete : " + node.goalsFree);
 		}
 	}
 }

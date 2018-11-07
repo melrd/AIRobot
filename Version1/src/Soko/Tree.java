@@ -45,101 +45,60 @@ public class Tree {
 		}
 	}
 	
-	public boolean GameRules(char[][]map, int checkColumn, int checkLine, boolean state, DIRECTION direction) {
-		//check the movement of the robot
-		if(map[checkLine][checkColumn] == 'X' ||
-				map[checkLine][checkColumn] == ' ' ||
-				map[checkLine][checkColumn] == 'J' ||
-				map[checkLine][checkColumn] == 'M')
-			return false;
-		
+	public boolean GameRules(char[][]map, boolean state, DIRECTION direction, Node node) {
+		int line = 0,
+			column = 0;
 
-		// check if we can move the diamonds
-		else if(state == true) {
-			if(direction == DIRECTION.UP) {
-				if(checkLine - 1 < 0)
-					return false;
-				else if(map[checkLine - 1][checkColumn] == 'X' ||
-						map[checkLine - 1][checkColumn] == ' ' ||
-						map[checkLine - 1][checkColumn] == 'J')
-					return false;
-				else
-					return true;
-			}
-			else if(direction == DIRECTION.DOWN) {
-				if(checkLine +1 < map.length)
-					return false;
-				else if(map[checkLine+1][checkColumn] == 'X' ||
-						map[checkLine+1][checkColumn] == ' ' ||
-						map[checkLine+1][checkColumn] == 'J')
-					return false;
-				else
-					return true;
-			}
-			else if(direction == DIRECTION.LEFT) {
-				if(checkColumn -1 < 0)
-					return false;
-				else if(map[checkLine][checkColumn-1] == 'X' ||
-						map[checkLine][checkColumn-1] == ' ' ||
-						map[checkLine][checkColumn-1] == 'J')
-					return false;
-				else
-					return true;
-			}
-			else if(direction == DIRECTION.RIGHT) {
-				if(checkColumn +1 < map[checkLine].length)
-					return false;
-				else if(map[checkLine][checkColumn+1] == 'X' ||
-						map[checkLine][checkColumn+1] == ' ' ||
-						map[checkLine][checkColumn+1] == 'J')
-					return false;
-				else
-					return true;
-			}
+		switch (direction) {
+			case UP :
+				line = node.line- 1;
+				column = node.column;
+				break;
+			case DOWN :
+				line = node.line +1;
+				column = node.column;
+				break;
+			case LEFT :
+				line = node.line;
+				column = node.column-1;
+				break;
+			case RIGHT :
+				line = node.line;
+				column = node.column +1;
+				break;
+			default :
+				return false;
 		}
-		else
-			return true;
-		return false;
-	}
 
-	/**public boolean GameRules(char[][]map, int checkColumn, int checkLine, boolean state, DIRECTION direction) {
 		//check the movement of the robot
-		if(movementCans(map, checkLine, checkColumn) == false ||
-				map[checkLine][checkColumn] == 'M')
+		if(movementCans(map, line, column) == false ||
+				map[node.line][node.column] == 'M')
 			return false;
-		
 
 		// check if we can move the diamonds
-		else if(state == true) {
+		if(state == true) {
 			switch (direction) {
 				case UP :
-					if(checkLine - 1 < 0)
+					if(line < 0)
 						return false;
-					else 
-						return movementCans(map, checkLine-1, checkColumn);
-					break;
+					return movementCans(map, line, column);
 				case DOWN :
-					if(checkLine +1 < map.length)
+					if(line < map.length)
 						return false;
-					else 
-						return movementCans(map, checkLine+1, checkColumn);
-					break;
+					return movementCans(map, line, column);
 				case LEFT :
-					if(checkColumn -1 < 0)
-						return false;
-					else 
-						return movementCans(map, checkLine, checkColumn -1);
-					break;
+					if(column < 0)
+						return false; 
+					return movementCans(map, line, column);
 				case RIGHT : 
-					if(checkColumn +1 < map[checkLine].length)
+					if(line < map[line].length)
 						return false;
-					else 
-						return movementCans(map, checkLine, checkColumn +1);
-					break;
+					return movementCans(map, line, column);
 				default :
-					return true;
+					return false;
+			}
 		}
-		return false;
+		return true;
 	}
 	
 	private boolean movementCans(char[][] map, int checkLine, int checkColumn) {
@@ -150,5 +109,5 @@ public class Tree {
 		else
 			return true;
 	}
-	*/
+	
 }

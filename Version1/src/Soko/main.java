@@ -40,9 +40,19 @@ public class main {
 		
 		tree = new Tree(startLine,startColumn,numberGoal); // start of the tree at M
 		
-		if (tree.GameRules(map,startColumn,startLine+1,false,DIRECTION.UP) == true) 
+		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node) == true) 
+			tree.addNode(tree.node, 0, +1,DIRECTION.DOWN);
+		tree.node.printNode(tree.node.down);
+		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node) == true) 
+			tree.addNode(tree.node, -1, 0,DIRECTION.LEFT);
+		tree.node.printNode(tree.node.left);
+		if (tree.GameRules(map,false,DIRECTION.UP, tree.node) == true) 
 			tree.addNode(tree.node, 0, -1,DIRECTION.UP);
 		tree.node.printNode(tree.node.up);
+		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node) == true) 
+			tree.addNode(tree.node, +1, 0,DIRECTION.RIGHT);
+		tree.node.printNode(tree.node.right);
+
 	}
 	
 	
