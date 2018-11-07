@@ -1,0 +1,19 @@
+implémenter les règles
+créer la classe noeud
+	variables
+	fonctions
+commencer l algo de l IA
+	noeud actuel
+		check mvt possible = colonne +1 et -1 et ligne +1 et -1
+			F return faux
+			J check déplacement possible
+				F return faux
+				T return vrai
+			T return vrai
+		si T 
+			mémorise en noeud suivant 
+			ajoute ce noeud à la file
+		sinon abandonne
+	noeud suivant de la file
+
+

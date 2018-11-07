@@ -1,0 +1,7 @@
+class noeud
+	coordonnée OK
+	nombre de pas OK
+	j placé
+	noeud suivant
+	noeud précédent
+	noeud avant précédent

@@ -138,6 +138,7 @@ def management_canette():
     
     
         
+<<<<<<< HEAD:Turn_test.py
 #### 1 for mooving up, 0 for mooving down########################################
 def move_fence(state):
     if state==1:
@@ -152,6 +153,20 @@ def move_fence(state):
             i=i+1
 
     mCFence.duty_cycle_sp=No_Speed
+=======
+
+<<<<<<< HEAD
+def move_barriere(state):
+    mCBarriere.duty_cycle_sp=Forward_Speed
+=======
+def move_barriere():
+    i=0
+    while i<500:
+        mCBarriere.duty_cycle_sp=Forward_Speed
+        i=i+1
+    mCBarriere.duty_cycle_sp=No_Speed
+>>>>>>> b55296e4a2ea56581b86e302c4f0ede6203a62ad
+>>>>>>> 040e1f1e619b707856b85b29ddcd04d00dec4075:ev3/Turn_test.py
      
 ###############################################################################
 def get_value_left_light_sensor():

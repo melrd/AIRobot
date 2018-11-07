@@ -1,0 +1,23 @@
+marche impossible si
+	X
+	" "
+	J
+	M
+
+mouvement possible
+	gauche 
+	droite
+	haut
+	bas
+mouvement impossible
+	diagonale
+
+déplacement du diamant impossible si
+	X dans la direction
+	" " dans la direction
+	J  dans la direction
+
+fin si G dans la direction
+
+pas possible de faire G4 G3 G4 G3
+possible de faire G4 G3 G4
