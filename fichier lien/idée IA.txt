@@ -1,0 +1,20 @@
+FILE
+	linkedList
+		https://openclassrooms.com/fr/courses/26832-apprenez-a-programmer-en-java/22278-les-collections-dobjets
+
+	http://gallium.inria.fr/~maranget/X/421/poly/piles.html
+
+
+
+
+TABLEAU ENFANT FILLE
+	si oas de multithread : arraylist
+	si multithread : vector
+
+
+VECTOR
+https://docs.oracle.com/javase/8/docs/api/java/util/Vector.htmlhttp://b.kostrzewa.free.fr/java/td-struct/glossaire.html
+http://b.kostrzewa.free.fr/java/td-struct/glossaire.html
+
+
+https://openclassrooms.com/fr/courses/1826586-java-et-les-collections/2665730-linterface-list-e
