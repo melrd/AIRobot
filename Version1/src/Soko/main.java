@@ -194,28 +194,28 @@ public class main {
 		if (node.GameRules(map,false,DIRECTION.DOWN, node) == true) {
 			System.out.println("-- test D --");
 			if(node.roundTrip(node, DIRECTION.DOWN) == true)
-				node.addNode(node, 0, +1,DIRECTION.DOWN);
+				node.addNode(node,DIRECTION.DOWN);
 			// ajouté dans la file
 		}
 		node.printNode(node.down);
 		if (node.GameRules(map,false,DIRECTION.LEFT, node) == true) {
 			System.out.println("-- test L --");
 			if(node.roundTrip(node, DIRECTION.LEFT) == true)
-				node.addNode(node, -1, 0,DIRECTION.LEFT);
+				node.addNode(node,DIRECTION.LEFT);
 			//ajouté dans la file
 		}
 		node.printNode(node.left);
 		if (node.GameRules(map,false,DIRECTION.UP, node) == true) {
 			System.out.println("-- test U --");
 			if(node.roundTrip(node, DIRECTION.UP) == true)
-				node.addNode(node, 0, -1,DIRECTION.UP);
+				node.addNode(node,DIRECTION.UP);
 			// ajouté dans la file
 		}
 		node.printNode(node.up);
 		if (node.GameRules(map,false,DIRECTION.RIGHT, node) == true) {
 			System.out.println("-- test R --");
 			if(node.roundTrip(node, DIRECTION.RIGHT) == true)
-				node.addNode(node, +1, 0,DIRECTION.RIGHT);
+				node.addNode(node,DIRECTION.RIGHT);
 			//ajouté dans la file
 		}
 		node.printNode(node.right);	

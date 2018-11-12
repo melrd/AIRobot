@@ -69,25 +69,25 @@ public class Node {
 		}
 	}
 
-	public void addNode(Node actual, int changeColumn, int changeLine, DIRECTION direction) { // simplifier car on a la diection
+	public void addNode(Node actual, DIRECTION direction) {
 		switch (direction) {
 		case  UP :
-			actual.up = new Node(actual.column + changeColumn, actual.line + changeLine, actual.goalsFree, actual);
+			actual.up = new Node(actual.column, actual.line-1, actual.goalsFree, actual);
 			if(actual.up == null)
 				System.out.print("No add");
 			break;
 		case DOWN :
-			actual.down = new Node(actual.column + changeColumn, actual.line + changeLine, actual.goalsFree, actual);
+			actual.down = new Node(actual.column, actual.line+1, actual.goalsFree, actual);
 			if(actual.down == null)
 				System.out.print("No add");
 			break;
 		case LEFT:
-			actual.left = new Node(actual.column + changeColumn, actual.line + changeLine, actual.goalsFree, actual);
+			actual.left = new Node(actual.column-1, actual.line, actual.goalsFree, actual);
 			if(actual.left == null)
 				System.out.print("No add");
 			break;
 		case RIGHT:
-			actual.right = new Node(actual.column + changeColumn, actual.line + changeLine, actual.goalsFree, actual);
+			actual.right = new Node(actual.column+1, actual.line, actual.goalsFree, actual);
 			if(actual.right == null)
 				System.out.print("No add");
 			break;
