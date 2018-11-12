@@ -40,23 +40,11 @@ public class main {
 		
 		tree = new Tree(startLine,startColumn,numberGoal); // start of the tree at M
 		
-		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node) == true) 
-			tree.addNode(tree.node, 0, +1,DIRECTION.DOWN);
-		tree.node.printNode(tree.node.down);
-		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node) == true) 
-			tree.addNode(tree.node, -1, 0,DIRECTION.LEFT);
-		tree.node.printNode(tree.node.left);
-		if (tree.GameRules(map,false,DIRECTION.UP, tree.node) == true) 
-			tree.addNode(tree.node, 0, -1,DIRECTION.UP);
-		tree.node.printNode(tree.node.up);
-		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node) == true) 
-			tree.addNode(tree.node, +1, 0,DIRECTION.RIGHT);
-		tree.node.printNode(tree.node.right);
+		test(tree, map);
 
 	}
 	
-	
-	
+		
 	public static char[][] readingFile() {
 		ArrayList<String> extractFile = new ArrayList<String>();
 		char[][] map = null; 
@@ -105,4 +93,26 @@ public class main {
 		return map;
 	}           
 
+	private static void test(Tree tree, char[][] map) {
+		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node) == true) {
+			tree.addNode(tree.node, 0, +1,DIRECTION.DOWN);
+			// ajouté dans la file
+		}
+		tree.node.printNode(tree.node.down);
+		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node) == true) { 
+			tree.addNode(tree.node, -1, 0,DIRECTION.LEFT);
+			//ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left);
+		if (tree.GameRules(map,false,DIRECTION.UP, tree.node) == true) { 
+			tree.addNode(tree.node, 0, -1,DIRECTION.UP);
+			// ajouté dans la file
+		}
+		tree.node.printNode(tree.node.up);
+		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node) == true) { 
+			tree.addNode(tree.node, +1, 0,DIRECTION.RIGHT);
+			//ajouté dans la file
+		}
+		tree.node.printNode(tree.node.right);
+	}
 }

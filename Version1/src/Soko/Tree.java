@@ -70,31 +70,30 @@ public class Tree {
 			default :
 				return false;
 		}
-		System.out.print("Test : [" + line + "][" + column + "]\n");
+		
 		//check the movement of the robot
-		if(movementCans(map, line, column) == false ||
-				map[node.line][node.column] == 'M')
+		if(movement(map, line, column) == false)
 			return false;
-
+		
 		// check if we can move the diamonds
 		if(state == true) {
 			switch (direction) {
 				case UP :
 					if(line < 0)
 						return false;
-					return movementCans(map, line, column);
+					return movement(map, line-1, column);
 				case DOWN :
 					if(line < map.length)
 						return false;
-					return movementCans(map, line, column);
+					return movement(map, line+1, column);
 				case LEFT :
 					if(column < 0)
 						return false; 
-					return movementCans(map, line, column);
+					return movement(map, line, column-1);
 				case RIGHT : 
 					if(line < map[line].length)
 						return false;
-					return movementCans(map, line, column);
+					return movement(map, line, column+1);
 				default :
 					return false;
 			}
@@ -102,7 +101,7 @@ public class Tree {
 		return true;
 	}
 	
-	private boolean movementCans(char[][] map, int checkLine, int checkColumn) {
+	private boolean movement(char[][] map, int checkLine, int checkColumn) {
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ' ||
 				map[checkLine][checkColumn] == 'J')
@@ -110,5 +109,4 @@ public class Tree {
 		else
 			return true;
 	}
-	
 }
