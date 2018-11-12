@@ -93,7 +93,9 @@ public class main {
 		return map;
 	}           
 
-	private static void test(Tree tree, char[][] map) {
+	/**
+	 * fonctionnel mais ultra sale
+	 * private static void test(Tree tree, char[][] map) {
 		System.out.println("--------------START---------------------");
 		if (tree.GameRules(map,true,DIRECTION.DOWN, tree.node) == true) {
 			if(tree.roundTrip(tree.node, DIRECTION.DOWN) == true)
@@ -122,7 +124,6 @@ public class main {
 		
 		
 		System.out.println("--------------GAUCHE---------------------");
-		
 		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node.left) == true) {
 			if(tree.roundTrip(tree.node.left, DIRECTION.DOWN) == true)
 				tree.addNode(tree.node.left, 0, +1,DIRECTION.DOWN);
@@ -149,7 +150,6 @@ public class main {
 		tree.node.printNode(tree.node.left.right);
 		
 		System.out.println("---------------DROITE--------------------");
-		
 		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node.left.right) == true) {
 			if(tree.roundTrip(tree.node.left.right, DIRECTION.DOWN) == true)
 				tree.addNode(tree.node.left.right, 0, +1,DIRECTION.DOWN);
@@ -174,5 +174,50 @@ public class main {
 			//ajouté dans la file
 		}
 		tree.node.printNode(tree.node.left.right.right);
+	} */
+	
+	private static void test(Tree tree, char[][] map) {
+		System.out.println("--------------START---------------------");
+		tree.node.printNode(tree.node);
+		testTest(map,tree.node);
+		
+		System.out.println("--------------GAUCHE---------------------");
+		tree.node.printNode(tree.node.left);
+		testTest(map,tree.node.left);
+
+		System.out.println("---------------DROITE--------------------");
+		tree.node.printNode(tree.node.left.right);
+		testTest(map,tree.node.left.right);
+	}
+	
+	private static void testTest(char[][] map, Node node) {
+		if (node.GameRules(map,false,DIRECTION.DOWN, node) == true) {
+			System.out.println("-- test D --");
+			if(node.roundTrip(node, DIRECTION.DOWN) == true)
+				node.addNode(node, 0, +1,DIRECTION.DOWN);
+			// ajouté dans la file
+		}
+		node.printNode(node.down);
+		if (node.GameRules(map,false,DIRECTION.LEFT, node) == true) {
+			System.out.println("-- test L --");
+			if(node.roundTrip(node, DIRECTION.LEFT) == true)
+				node.addNode(node, -1, 0,DIRECTION.LEFT);
+			//ajouté dans la file
+		}
+		node.printNode(node.left);
+		if (node.GameRules(map,false,DIRECTION.UP, node) == true) {
+			System.out.println("-- test U --");
+			if(node.roundTrip(node, DIRECTION.UP) == true)
+				node.addNode(node, 0, -1,DIRECTION.UP);
+			// ajouté dans la file
+		}
+		node.printNode(node.up);
+		if (node.GameRules(map,false,DIRECTION.RIGHT, node) == true) {
+			System.out.println("-- test R --");
+			if(node.roundTrip(node, DIRECTION.RIGHT) == true)
+				node.addNode(node, +1, 0,DIRECTION.RIGHT);
+			//ajouté dans la file
+		}
+		node.printNode(node.right);	
 	}
 }
