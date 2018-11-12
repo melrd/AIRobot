@@ -9,8 +9,8 @@ public class Tree {
 		
 	}
 	
-	public Tree(int pLine, int pColumn, int pGoals) {
-		node = new Node(pLine, pColumn, pGoals);
+	public Tree(int line, int column, int goals) {
+		node = new Node(line, column, goals);
 		node.printNode(node);
 	}
 	
@@ -48,7 +48,8 @@ public class Tree {
 	public boolean GameRules(char[][]map, boolean state, DIRECTION direction, Node node) {
 		int line = 0,
 			column = 0;
-
+		
+		//change coordonate in case of witch way
 		switch (direction) {
 			case UP :
 				line = node.line- 1;
@@ -69,7 +70,7 @@ public class Tree {
 			default :
 				return false;
 		}
-
+		System.out.print("Test : [" + line + "][" + column + "]\n");
 		//check the movement of the robot
 		if(movementCans(map, line, column) == false ||
 				map[node.line][node.column] == 'M')

@@ -27,7 +27,7 @@ public class Node {
 		right = null;
 	}
 	
-	public Node(int pColumn, int pLine, int pGoalsFree){ //first node
+	public Node(int pLine, int pColumn, int pGoalsFree){ //first node
 		column = pColumn;
 		line = pLine;
 		steps = 1;
