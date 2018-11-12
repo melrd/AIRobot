@@ -109,4 +109,31 @@ public class Tree {
 		else
 			return true;
 	}
+	
+	public boolean roundTrip(Node node, DIRECTION direction) {
+		if(node.previous == null)
+			return true;
+		
+		switch (direction) {
+		case  UP :
+			if(node.previous.column == node.column -1)
+				return false;
+			return true;
+		case DOWN :
+			if(node.previous.column == node.column +1)
+				return false;
+			return true;
+		case LEFT:
+			if(node.previous.line== node.line-1)
+				return false;
+			return true;
+		case RIGHT:
+			if(node.previous.line== node.line+1)
+				return false;
+			return true;
+		default:
+			System.out.println("False direction");
+			return false;
+		}
+	}
 }

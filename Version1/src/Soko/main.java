@@ -94,25 +94,85 @@ public class main {
 	}           
 
 	private static void test(Tree tree, char[][] map) {
-		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node) == true) {
-			tree.addNode(tree.node, 0, +1,DIRECTION.DOWN);
+		System.out.println("--------------START---------------------");
+		if (tree.GameRules(map,true,DIRECTION.DOWN, tree.node) == true) {
+			if(tree.roundTrip(tree.node, DIRECTION.DOWN) == true)
+				tree.addNode(tree.node, 0, +1,DIRECTION.DOWN);
 			// ajouté dans la file
 		}
 		tree.node.printNode(tree.node.down);
-		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node) == true) { 
-			tree.addNode(tree.node, -1, 0,DIRECTION.LEFT);
+		if (tree.GameRules(map,false,DIRECTION.LEFT, tree.node) == true) {
+			if(tree.roundTrip(tree.node, DIRECTION.LEFT) == true)
+				tree.addNode(tree.node, -1, 0,DIRECTION.LEFT);
 			//ajouté dans la file
 		}
 		tree.node.printNode(tree.node.left);
-		if (tree.GameRules(map,false,DIRECTION.UP, tree.node) == true) { 
-			tree.addNode(tree.node, 0, -1,DIRECTION.UP);
+		if (tree.GameRules(map,false,DIRECTION.UP, tree.node) == true) {
+			if(tree.roundTrip(tree.node, DIRECTION.UP) == true)
+				tree.addNode(tree.node, 0, -1,DIRECTION.UP);
 			// ajouté dans la file
 		}
 		tree.node.printNode(tree.node.up);
 		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node) == true) { 
-			tree.addNode(tree.node, +1, 0,DIRECTION.RIGHT);
+			if(tree.roundTrip(tree.node, DIRECTION.RIGHT) == true)
+				tree.addNode(tree.node, +1, 0,DIRECTION.RIGHT);
 			//ajouté dans la file
 		}
 		tree.node.printNode(tree.node.right);
+		
+		
+		System.out.println("--------------GAUCHE---------------------");
+		
+		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node.left) == true) {
+			if(tree.roundTrip(tree.node.left, DIRECTION.DOWN) == true)
+				tree.addNode(tree.node.left, 0, +1,DIRECTION.DOWN);
+			// ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.down);
+		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node.left) == true) { 
+			if(tree.roundTrip(tree.node.left, DIRECTION.LEFT) == true)
+				tree.addNode(tree.node.left, -1, 0,DIRECTION.LEFT);
+			//ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.left);
+		if (tree.GameRules(map,false,DIRECTION.UP, tree.node.left) == true) {
+			if(tree.roundTrip(tree.node.left, DIRECTION.UP) == true)
+				tree.addNode(tree.node.left, 0, -1,DIRECTION.UP);
+			// ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.up);
+		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node.left) == true) { 
+			if(tree.roundTrip(tree.node.left, DIRECTION.RIGHT) == true)
+				tree.addNode(tree.node.left, +1, 0,DIRECTION.RIGHT);
+			//ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.right);
+		
+		System.out.println("---------------DROITE--------------------");
+		
+		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node.left.right) == true) {
+			if(tree.roundTrip(tree.node.left.right, DIRECTION.DOWN) == true)
+				tree.addNode(tree.node.left.right, 0, +1,DIRECTION.DOWN);
+			// ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.right.down);
+		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node.left.right) == true) { 
+			if(tree.roundTrip(tree.node.left.right, DIRECTION.LEFT) == true)
+				tree.addNode(tree.node.left.right, -1, 0,DIRECTION.LEFT);
+			//ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.right.left);
+		if (tree.GameRules(map,false,DIRECTION.UP, tree.node.left.right) == true) {
+			if(tree.roundTrip(tree.node.left.right, DIRECTION.UP) == true)
+				tree.addNode(tree.node.left.right, 0, -1,DIRECTION.UP);
+			// ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.right.up);
+		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node.left.right) == true) { 
+			if(tree.roundTrip(tree.node.left.right, DIRECTION.RIGHT) == true)
+				tree.addNode(tree.node.left.right, +1, 0,DIRECTION.RIGHT);
+			//ajouté dans la file
+		}
+		tree.node.printNode(tree.node.left.right.right);
 	}
 }
