@@ -1,0 +1,2 @@
+https://fr.wikipedia.org/wiki/Algorithme_de_Dijkstra
+http://www.alcandre.net/uploads/TD-dijkstra.pdf
