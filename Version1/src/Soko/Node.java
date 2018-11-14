@@ -29,7 +29,8 @@ public class Node {
 		right = null;
 	}
 	
-	public Node(int pLine, int pColumn, int pGoalsFree){ //first node
+	//only for the first node
+	public Node(int pLine, int pColumn, int pGoalsFree){ 
 		column = pColumn;
 		line = pLine;
 		steps = 1;
@@ -42,7 +43,8 @@ public class Node {
 		right = null;
 	}
 	
-	public Node(int pColumn, int pLine, int pGoalsFree, Node pPrevious){
+	// for all the nodes excepts the first one
+	public Node(int pColumn, int pLine, int pGoalsFree, Node pPrevious){ 
 		column = pColumn;
 		line = pLine;
 		steps = pPrevious.steps + 1;
@@ -56,7 +58,6 @@ public class Node {
 	}
 	
 	public void Node() {
-		
 	}
 	
 	public static void printNode(Node node) {
