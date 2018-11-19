@@ -38,8 +38,8 @@ public class main {
 			System.out.println("\t");
 		}
 		
-		tree = new Tree(startLine,startColumn,numberGoal); // start of the tree at M
-		
+		tree = new Tree(startLine,startColumn, createGoal(map, 'G'), createGoal(map,'J')); // start of the tree at M
+
 		test(tree, map, fifo);
 
 	}
@@ -93,89 +93,6 @@ public class main {
 		return map;
 	}           
 
-	/**
-	 * fonctionnel mais ultra sale
-	 * private static void test(Tree tree, char[][] map) {
-		System.out.println("--------------START---------------------");
-		if (tree.GameRules(map,true,DIRECTION.DOWN, tree.node) == true) {
-			if(tree.roundTrip(tree.node, DIRECTION.DOWN) == true)
-				tree.addNode(tree.node, 0, +1,DIRECTION.DOWN);
-			// ajouté dans la file
-		}
-		tree.node.printNode(tree.node.down);
-		if (tree.GameRules(map,false,DIRECTION.LEFT, tree.node) == true) {
-			if(tree.roundTrip(tree.node, DIRECTION.LEFT) == true)
-				tree.addNode(tree.node, -1, 0,DIRECTION.LEFT);
-			//ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left);
-		if (tree.GameRules(map,false,DIRECTION.UP, tree.node) == true) {
-			if(tree.roundTrip(tree.node, DIRECTION.UP) == true)
-				tree.addNode(tree.node, 0, -1,DIRECTION.UP);
-			// ajouté dans la file
-		}
-		tree.node.printNode(tree.node.up);
-		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node) == true) { 
-			if(tree.roundTrip(tree.node, DIRECTION.RIGHT) == true)
-				tree.addNode(tree.node, +1, 0,DIRECTION.RIGHT);
-			//ajouté dans la file
-		}
-		tree.node.printNode(tree.node.right);
-		
-		
-		System.out.println("--------------GAUCHE---------------------");
-		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node.left) == true) {
-			if(tree.roundTrip(tree.node.left, DIRECTION.DOWN) == true)
-				tree.addNode(tree.node.left, 0, +1,DIRECTION.DOWN);
-			// ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.down);
-		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node.left) == true) { 
-			if(tree.roundTrip(tree.node.left, DIRECTION.LEFT) == true)
-				tree.addNode(tree.node.left, -1, 0,DIRECTION.LEFT);
-			//ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.left);
-		if (tree.GameRules(map,false,DIRECTION.UP, tree.node.left) == true) {
-			if(tree.roundTrip(tree.node.left, DIRECTION.UP) == true)
-				tree.addNode(tree.node.left, 0, -1,DIRECTION.UP);
-			// ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.up);
-		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node.left) == true) { 
-			if(tree.roundTrip(tree.node.left, DIRECTION.RIGHT) == true)
-				tree.addNode(tree.node.left, +1, 0,DIRECTION.RIGHT);
-			//ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.right);
-		
-		System.out.println("---------------DROITE--------------------");
-		if (tree.GameRules(map,false,DIRECTION.DOWN, tree.node.left.right) == true) {
-			if(tree.roundTrip(tree.node.left.right, DIRECTION.DOWN) == true)
-				tree.addNode(tree.node.left.right, 0, +1,DIRECTION.DOWN);
-			// ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.right.down);
-		if (tree.GameRules(map,true,DIRECTION.LEFT, tree.node.left.right) == true) { 
-			if(tree.roundTrip(tree.node.left.right, DIRECTION.LEFT) == true)
-				tree.addNode(tree.node.left.right, -1, 0,DIRECTION.LEFT);
-			//ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.right.left);
-		if (tree.GameRules(map,false,DIRECTION.UP, tree.node.left.right) == true) {
-			if(tree.roundTrip(tree.node.left.right, DIRECTION.UP) == true)
-				tree.addNode(tree.node.left.right, 0, -1,DIRECTION.UP);
-			// ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.right.up);
-		if (tree.GameRules(map,false,DIRECTION.RIGHT, tree.node.left.right) == true) { 
-			if(tree.roundTrip(tree.node.left.right, DIRECTION.RIGHT) == true)
-				tree.addNode(tree.node.left.right, +1, 0,DIRECTION.RIGHT);
-			//ajouté dans la file
-		}
-		tree.node.printNode(tree.node.left.right.right);
-	} */
-	
 	private static void test(Tree tree, char[][] map, Fipo fifo) {
 		System.out.println("--------------START---------------------");
 		tree.node.printNode(tree.node);
@@ -219,5 +136,23 @@ public class main {
 			fifo.nodeCheck(fifo.fifo, node, node.right);
 		}
 		node.printNode(node.right);	
+	}
+	
+
+	private static ArrayList<Coordonate> createGoal (char[][]map, char type) {
+		ArrayList <Coordonate> tab = new ArrayList();
+		boolean state;
+		
+		if (type == 'G')
+			state = false;
+		else state = true;
+		
+		for(int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map[i].length; j++)
+				if(map[i][j] == type) {
+					tab.add(new Coordonate(j,i,type,state));
+				}
+		}
+		return tab;
 	}
 }

@@ -7,6 +7,7 @@ public class Fipo {
 	ArrayList<Node> fifo;
 	
 	public Fipo() {
+		// implements an array for the file
 		fifo = new ArrayList();
 	}
 	
@@ -15,20 +16,23 @@ public class Fipo {
 	}
 	
 	private void add(Node node) {
+		// add the case of the node
 		fifo.add(node);
+		// check if the node is added
 		if (fifo.contains(node) != true)
 			System.out.println("Not in the file");
 	}
 	
 	private void remove(Node node) {
-		if(fifo.contains(node) == true)
-			fifo.remove(fifo.indexOf(node));
+		// delete the node observe
+		fifo.remove(fifo.indexOf(node));
 	}
 	
 	
 	public void nodeCheck(ArrayList fifo, Node actualNode, Node nextNode) {
-		fifo.add(nextNode);
-		fifo.remove(actualNode);
+		fifo.add(nextNode); // add the new node in the file
+		if(fifo.contains(actualNode) == true) // check if the node check is in the file
+			fifo.remove(actualNode); // delete the node who's check
 		System.out.println("______Fifo______");
 		for(int i = 0; i < fifo.size() ; i++) 
 			nextNode.printNode((Node)fifo.get(i));

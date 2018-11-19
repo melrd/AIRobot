@@ -1,69 +1,75 @@
 package Soko;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import Soko.main.DIRECTION;
 
 public class Node {
 	int column, // for know actual position 
 		line, //for know actual position
-		steps, // for know which way is fast
-		goalsFree; // for know when the game is over
+		steps; // for know which way is fast
 	Node previous,
 		up,
 		down,
 		left,
 		right;
-	//Vector<Node> next;
+	ArrayList <Coordonate> tabGoal;
+	ArrayList <Coordonate> tabDiamond;
 	
-	public Node(){
+	public Node(){ // implements the node without parameters
 		column = 0;
 		line = 0;
 		steps = 0;
-		goalsFree = 0;
+		
 		previous = null;
-		//next = null;
 		up = null;
 		down = null;
 		left = null;
 		right = null;
+		
+		tabGoal = null;
+		tabDiamond = null;
 	}
 	
-	//only for the first node
-	public Node(int pLine, int pColumn, int pGoalsFree){ 
+	//only for the first node because no previous one
+	public Node(int pLine, int pColumn, ArrayList <Coordonate> pTabGoal,ArrayList <Coordonate> pTabDiamond){ 
 		column = pColumn;
 		line = pLine;
 		steps = 1;
-		goalsFree = pGoalsFree;
+		
 		previous = null;
-		//next = new Vector <Node>();
 		up = null;
 		down = null;
 		left = null;
 		right = null;
+		
+		tabGoal = pTabGoal;
+		tabDiamond = pTabDiamond;
 	}
 	
 	// for all the nodes excepts the first one
-	public Node(int pColumn, int pLine, int pGoalsFree, Node pPrevious){ 
+	public Node(int pColumn, int pLine, Node pPrevious){ 
 		column = pColumn;
 		line = pLine;
 		steps = pPrevious.steps + 1;
-		goalsFree = pGoalsFree;
+		
 		previous = pPrevious;
-		//next = new Vector <Node>();
 		up = null;
 		down = null;
 		left = null;
 		right = null;
+		
+		tabGoal = previous.tabGoal;
+		tabDiamond = previous.tabDiamond;
 	}
 	
 	public void Node() {
 	}
 	
 	public static void printNode(Node node) {
-		if(node == null)
+		if(node == null) // verify we have a node
 			System.out.println("No node find");
-		else {
+		else { // print the coordonate of the node send
 			System.out.println("Coordonnée : [" + node.line + "][" + node.column +"]");
 			//System.out.println("Step : " + node.steps);
 			//System.out.println("Goal non complete : " + node.goalsFree);
@@ -71,24 +77,25 @@ public class Node {
 	}
 
 	public void addNode(Node actual, DIRECTION direction) {
+		//for th good direction 
 		switch (direction) {
 		case  UP :
-			actual.up = new Node(actual.column, actual.line-1, actual.goalsFree, actual);
+			actual.up = new Node(actual.column, actual.line-1, actual);
 			if(actual.up == null)
 				System.out.print("No add");
 			break;
 		case DOWN :
-			actual.down = new Node(actual.column, actual.line+1, actual.goalsFree, actual);
+			actual.down = new Node(actual.column, actual.line+1, actual);
 			if(actual.down == null)
 				System.out.print("No add");
 			break;
 		case LEFT:
-			actual.left = new Node(actual.column-1, actual.line, actual.goalsFree, actual);
+			actual.left = new Node(actual.column-1, actual.line, actual);
 			if(actual.left == null)
 				System.out.print("No add");
 			break;
 		case RIGHT:
-			actual.right = new Node(actual.column+1, actual.line, actual.goalsFree, actual);
+			actual.right = new Node(actual.column+1, actual.line, actual);
 			if(actual.right == null)
 				System.out.print("No add");
 			break;
@@ -96,7 +103,7 @@ public class Node {
 			System.out.println("No direction found");
 		}
 	}
-	
+
 	public boolean GameRules(char[][]map, boolean state, DIRECTION direction, Node node) {
 		int line = 0,
 			column = 0;
