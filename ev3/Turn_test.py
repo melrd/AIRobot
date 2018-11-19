@@ -36,7 +36,8 @@ THRESHOLD_RIGHT = 20#Value for light sensor
 Stop_Value = 20 #Value for light sensor
 
 No_Speed = 0
-Forward_Speed = -70
+Forward_Speed = -40
+Correction_Speed=-20
 Turn_Speed = -35
 Forward_before_turn_speed=-50
 
@@ -104,10 +105,10 @@ def correction_trajectoire(sensorLeft,sensorRight):
         return 0
     elif sensorLeft>Stop_Value and sensorRight<Stop_Value:
         mAleft.duty_cycle_sp=Forward_Speed
-        mBright.duty_cycle_sp = -Turn_Speed
+        mBright.duty_cycle_sp = -Correction_Speed
         return 0
     elif sensorLeft<Stop_Value and sensorRight>Stop_Value:
-        mAleft.duty_cycle_sp=-Turn_Speed
+        mAleft.duty_cycle_sp=-Correction_Speed
         mBright.duty_cycle_sp = Forward_Speed
         return 0
     elif sensorLeft<Stop_Value and sensorRight<Stop_Value:
@@ -118,7 +119,7 @@ def correction_trajectoire(sensorLeft,sensorRight):
 
     
 ###############################################################################    
-def management_canette():
+def management_can():
     mAleft.duty_cycle_sp=Forward_Speed
     mBright.duty_cycle_sp = Forward_Speed
 
@@ -138,7 +139,7 @@ def management_canette():
     
     
         
-<<<<<<< HEAD:Turn_test.py
+
 #### 1 for mooving up, 0 for mooving down########################################
 def move_fence(state):
     if state==1:
@@ -153,21 +154,8 @@ def move_fence(state):
             i=i+1
 
     mCFence.duty_cycle_sp=No_Speed
-=======
 
-<<<<<<< HEAD
-def move_barriere(state):
-    mCBarriere.duty_cycle_sp=Forward_Speed
-=======
-def move_barriere():
-    i=0
-    while i<500:
-        mCBarriere.duty_cycle_sp=Forward_Speed
-        i=i+1
-    mCBarriere.duty_cycle_sp=No_Speed
->>>>>>> b55296e4a2ea56581b86e302c4f0ede6203a62ad
->>>>>>> 040e1f1e619b707856b85b29ddcd04d00dec4075:ev3/Turn_test.py
-     
+
 ###############################################################################
 def get_value_left_light_sensor():
     sensorLeft = lightSensorLeft1.value()
@@ -202,22 +190,58 @@ def Turn (input_angle):
     
     if input_angle<0:   
         sens_rotation=-1
-        while angle > target_angle or angle<(target_angle-30)%360:
-            mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
-            mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
-            angle = get_gyro_value()
-            print("angle = " + str(angle) + " " + units)  
+        if target_angle<31:
+            while angle > target_angle and angle<329:
+                mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
+                mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
+                angle = get_gyro_value()
+                print("angle = " + str(angle) + " " + units)  
+        else:                
+            while angle > target_angle or angle<(target_angle-30)%360:
+                mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
+                mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
+                angle = get_gyro_value()
+                print("angle = " + str(angle) + " " + units)  
     else:
-        while angle < target_angle or angle>(target_angle+30)%360:     #précision du capteur impossible, si il détecte pas, fait un tour complet
-            mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
-            mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
-            angle = get_gyro_value()
-            print("angle = " + str(angle) + " " + units)  
+        if target_angle>329:
+            while angle<target_angle and angle>31:
+                mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
+                mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
+                angle = get_gyro_value()
+                print("angle = " + str(angle) + " " + units)  
+        else:
+            while angle < target_angle or angle>(target_angle+30)%360:     #précision du capteur impossible, si il détecte pas, fait un tour complet
+                mAleft.duty_cycle_sp=Turn_Speed*sens_rotation
+                mBright.duty_cycle_sp = -Turn_Speed*sens_rotation
+                angle = get_gyro_value()
+                print("angle = " + str(angle) + " " + units)  
 
         
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = -No_Speed
 #################################################################################
+def read_order():
+    file = open("solver_order.txt", "r")
+    order=file.read()
+    i=0
+    while i < len(order):
+        x=file[i]
+        if x=='a':
+            go_straight(1)
+        elif x=='b':
+            Turn(-90)
+        elif x=='c':
+            Turn(90)
+        elif x=='d':
+            Turn(180)
+        elif x=='e':
+            management_can()
+        i=i+1
+
+        
+    file.close()
+
+
 ####Commandes a tetser
 
 #management_canette()
