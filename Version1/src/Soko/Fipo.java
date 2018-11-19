@@ -10,11 +10,6 @@ public class Fipo {
 		fifo = new ArrayList();
 	}
 	
-	// return if the fifo is empty
-	public boolean empty() {
-		return fifo.isEmpty();
-	}
-	
 	private void clear() {
 		fifo = null;
 	}
@@ -22,21 +17,21 @@ public class Fipo {
 	private void add(Node node) {
 		fifo.add(node);
 		if (fifo.contains(node) != true)
-			System.out.println("Not ine the file");
+			System.out.println("Not in the file");
 	}
 	
 	private void remove(Node node) {
-		if((fifo.contains(node) == true) && (node == fifo.get(1))) {
-			fifo.remove(1);
-		}
+		if(fifo.contains(node) == true)
+			fifo.remove(fifo.indexOf(node));
 	}
 	
-	public void nodeCheck(ArrayList fifo, Node nextNode, Node actualNode) {
+	
+	public void nodeCheck(ArrayList fifo, Node actualNode, Node nextNode) {
 		fifo.add(nextNode);
 		fifo.remove(actualNode);
-		System.out.println("Fifo : ");
+		System.out.println("______Fifo______");
 		for(int i = 0; i < fifo.size() ; i++) 
 			nextNode.printNode((Node)fifo.get(i));
-		System.out.println("______");
+		System.out.println("__________________");
 	}
 }
