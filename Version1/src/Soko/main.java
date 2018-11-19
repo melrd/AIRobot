@@ -39,8 +39,14 @@ public class main {
 		}
 		
 		tree = new Tree(startLine,startColumn, createGoal(map, 'G'), createGoal(map,'J')); // start of the tree at M
-
-		test(tree, map, fifo);
+		fifo.fifo.add(tree.node);
+		
+		while ((fifo.fifo.get(0).steps < 7) && (fifo.fifo != null)) {
+			System.out.println("Step : " + fifo.fifo.get(0).steps);
+			checkAround(map,fifo.fifo.get(0), fifo);
+			System.out.println("\n \n");
+		}
+		//test(tree, map, fifo);
 
 	}
 	
@@ -96,44 +102,50 @@ public class main {
 	private static void test(Tree tree, char[][] map, Fipo fifo) {
 		System.out.println("--------------START---------------------");
 		tree.node.printNode(tree.node);
-		testTest(map,tree.node, fifo);
+		checkAround(map,tree.node, fifo);
 		
 		System.out.println("--------------GAUCHE---------------------");
 		tree.node.printNode(tree.node.left);
-		testTest(map,tree.node.left, fifo);
+		checkAround(map,tree.node.left, fifo);
 
 		System.out.println("---------------DROITE--------------------");
 		tree.node.printNode(tree.node.left.right);
-		testTest(map,tree.node.left.right, fifo);
+		checkAround(map,tree.node.left.right, fifo);
 	}
 	
-	private static void testTest(char[][] map, Node node, Fipo fifo) {
+	private static void checkAround (char[][] map, Node node, Fipo fifo) {
+		node.printNode(node);
+		
 		if (node.GameRules(map,false,DIRECTION.DOWN, node) == true) {
 			System.out.println("-- test D --");
-			if(node.roundTrip(node, DIRECTION.DOWN) == true)
+			if(node.roundTrip(node, DIRECTION.DOWN) == true) {
 				node.addNode(node,DIRECTION.DOWN);
 				fifo.nodeCheck(fifo.fifo, node, node.down);
+			}
 		}
 		node.printNode(node.down);
 		if (node.GameRules(map,false,DIRECTION.LEFT, node) == true) {
 			System.out.println("-- test L --");
-			if(node.roundTrip(node, DIRECTION.LEFT) == true)
+			if(node.roundTrip(node, DIRECTION.LEFT) == true) {
 				node.addNode(node,DIRECTION.LEFT);
-			fifo.nodeCheck(fifo.fifo, node, node.left);
+				fifo.nodeCheck(fifo.fifo, node, node.left);
+			}
 		}
 		node.printNode(node.left);
 		if (node.GameRules(map,false,DIRECTION.UP, node) == true) {
 			System.out.println("-- test U --");
-			if(node.roundTrip(node, DIRECTION.UP) == true)
+			if(node.roundTrip(node, DIRECTION.UP) == true) {
 				node.addNode(node,DIRECTION.UP);
-			fifo.nodeCheck(fifo.fifo, node, node.up);
+				fifo.nodeCheck(fifo.fifo, node, node.up);
+			}
 		}
 		node.printNode(node.up);
 		if (node.GameRules(map,false,DIRECTION.RIGHT, node) == true) {
 			System.out.println("-- test R --");
-			if(node.roundTrip(node, DIRECTION.RIGHT) == true)
+			if(node.roundTrip(node, DIRECTION.RIGHT) == true) {
 				node.addNode(node,DIRECTION.RIGHT);
-			fifo.nodeCheck(fifo.fifo, node, node.right);
+				fifo.nodeCheck(fifo.fifo, node, node.right);
+			}
 		}
 		node.printNode(node.right);	
 	}
