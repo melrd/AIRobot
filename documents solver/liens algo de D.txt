@@ -1,2 +1,12 @@
 https://fr.wikipedia.org/wiki/Algorithme_de_Dijkstra
 http://www.alcandre.net/uploads/TD-dijkstra.pdf
+
+
+Sur JAVA:
+https://www.baeldung.com/java-dijkstra
+https://medium.com/@ssaurel/calculate-shortest-paths-in-java-by-implementing-dijkstras-algorithm-5c1db06b6541
+http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html
+
+tutos:
+https://www.youtube.com/watch?v=nhKU5IbJBEg
+https://www.youtube.com/watch?v=q3yKyE19OR0
