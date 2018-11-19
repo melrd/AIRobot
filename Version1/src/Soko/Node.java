@@ -196,4 +196,25 @@ public class Node {
 		}
 	}
 
+	// verifier que ca fonctionne
+	public boolean checkEnd(Node node) {
+		for (Coordonate e : node.tabGoal) {
+			if(e.state == false)
+				return false;
+		}
+		return true;
+	}
+	
+	// verifier que ca fonctionne
+	public void changeGoal(int column, int line, Node node) {
+		for(Coordonate e : node.tabGoal) {
+			if((e.column == column) && (e.line == line)) {
+				e.state = true;
+				for(Coordonate f : node.tabDiamond) {
+					if((f.column == column) && (f.line == line))
+						f.state = false;
+				}
+			}
+		}
+	}
 }
