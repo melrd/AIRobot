@@ -150,7 +150,7 @@ public class main {
 		for(int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++)
 				if(map[i][j] == type) {
-					tab.add(new Coordonate(j,i,type,state));
+					tab.add(new Coordonate(j,i,state));
 				}
 		}
 		return tab;

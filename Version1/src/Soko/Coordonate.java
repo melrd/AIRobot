@@ -4,19 +4,16 @@ public class Coordonate {
 	int column,
 		line;
 	boolean state;
-	char type;
 	
 	public void Coordonate() {
 		column = 0;
 		line = 0;
-		type = ' ';
 		state = false;
 	}
 	
-	public Coordonate(int pColumn, int pLine, char pType, boolean pState) {
+	public Coordonate(int pColumn, int pLine, boolean pState) {
 		column = pColumn;
 		line = pLine;
-		type = pType;
 		state = pState;
 	}
 
