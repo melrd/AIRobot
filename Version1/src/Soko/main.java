@@ -23,7 +23,7 @@ public class main {
 			startLine = 0,
 			numberGoal = 0;
 		Tree tree = null;
-		
+		Fipo fifo = new Fipo();
 		
 		map = readingFile();
 		
@@ -40,7 +40,7 @@ public class main {
 		
 		tree = new Tree(startLine,startColumn,numberGoal); // start of the tree at M
 		
-		test(tree, map);
+		test(tree, map, fifo);
 
 	}
 	
@@ -176,47 +176,47 @@ public class main {
 		tree.node.printNode(tree.node.left.right.right);
 	} */
 	
-	private static void test(Tree tree, char[][] map) {
+	private static void test(Tree tree, char[][] map, Fipo fifo) {
 		System.out.println("--------------START---------------------");
 		tree.node.printNode(tree.node);
-		testTest(map,tree.node);
+		testTest(map,tree.node, fifo);
 		
 		System.out.println("--------------GAUCHE---------------------");
 		tree.node.printNode(tree.node.left);
-		testTest(map,tree.node.left);
+		testTest(map,tree.node.left, fifo);
 
 		System.out.println("---------------DROITE--------------------");
 		tree.node.printNode(tree.node.left.right);
-		testTest(map,tree.node.left.right);
+		testTest(map,tree.node.left.right, fifo);
 	}
 	
-	private static void testTest(char[][] map, Node node) {
+	private static void testTest(char[][] map, Node node, Fipo fifo) {
 		if (node.GameRules(map,false,DIRECTION.DOWN, node) == true) {
 			System.out.println("-- test D --");
 			if(node.roundTrip(node, DIRECTION.DOWN) == true)
 				node.addNode(node,DIRECTION.DOWN);
-			// ajouté dans la file
+				fifo.nodeCheck(fifo.fifo, node, node.down);
 		}
 		node.printNode(node.down);
 		if (node.GameRules(map,false,DIRECTION.LEFT, node) == true) {
 			System.out.println("-- test L --");
 			if(node.roundTrip(node, DIRECTION.LEFT) == true)
 				node.addNode(node,DIRECTION.LEFT);
-			//ajouté dans la file
+			fifo.nodeCheck(fifo.fifo, node, node.left);
 		}
 		node.printNode(node.left);
 		if (node.GameRules(map,false,DIRECTION.UP, node) == true) {
 			System.out.println("-- test U --");
 			if(node.roundTrip(node, DIRECTION.UP) == true)
 				node.addNode(node,DIRECTION.UP);
-			// ajouté dans la file
+			fifo.nodeCheck(fifo.fifo, node, node.up);
 		}
 		node.printNode(node.up);
 		if (node.GameRules(map,false,DIRECTION.RIGHT, node) == true) {
 			System.out.println("-- test R --");
 			if(node.roundTrip(node, DIRECTION.RIGHT) == true)
 				node.addNode(node,DIRECTION.RIGHT);
-			//ajouté dans la file
+			fifo.nodeCheck(fifo.fifo, node, node.right);
 		}
 		node.printNode(node.right);	
 	}

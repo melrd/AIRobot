@@ -18,6 +18,8 @@ public class Tree {
 
 	}
 	
+	/** 
+	 * pareil dans node
 	public void addNode(Node actual, int changeColumn, int changeLine, DIRECTION direction) {
 		switch (direction) {
 		case  UP :
@@ -136,5 +138,5 @@ public class Tree {
 			return false;
 		}
 	}
-
+	*/
 }
