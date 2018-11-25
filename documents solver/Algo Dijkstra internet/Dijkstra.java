@@ -73,7 +73,6 @@ public class Dijkstra {
 	}
 	
 	private void majDistMin(int n){
-
 		for (int i = 0; i < dimensionDeLaMatrice; i++){			
 				if (!contains(S,i)){
 					//D[i] = min(D[i], D[n] + distanceDsGraphe(n,i));

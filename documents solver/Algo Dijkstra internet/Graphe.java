@@ -6,7 +6,7 @@ public class Graphe {
 	private int [][] U;
 	private boolean [] valid; // sommet valide veut dire qu'il existe dans le graphe
 	public final static int ALPHA_NOTDEF = -999 ;// on met final psk c'est une constante
-	
+	 
 	
 	 // Contructeur par defaut:
 	public Graphe () {
