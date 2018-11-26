@@ -1,20 +1,23 @@
 package Soko;
 
+
+
 public class Dijkstra {
 
-	public final static int INFINITE = 1000; //Integer.MAX_VALUE;
-	public final static int alpha = - 999; //representing infinity
+	public final static int INFINITE = 1000, //Integer.MAX_VALUE;
+							alpha = - 999; //representing infinity
 	private int x0; //to initialize functions : source
-	private int [] V; //best distance from source (vertexes)
-	private int [] P; //previous vertex of the optimal path (vertexes)
+	private int [] V, //best distance from source (vertexes)
+				P, //previous vertex of the optimal path (vertexes)
+				D; //vertex's values of the Dijkstra path (values)
 	private Graph g0;
-	private int [] D; //vertex's values of the Dijkstra path (values)
-	
 	private boolean [] markedNodes; 
-	private static int currentPathSize; //to simplify calculs
+	private static int currentPathSize; //to simplify results
+
 	
-	//constructor : call the calcul of the best path
-	public Dijkstra(int x, Graph g) {
+	
+	//constructor : call the result of the best path
+	public Dijkstra(int x, Graph g, Node nodeA, Node nodeB, char[][] map) {
 		x0 = x;
 		g0 = g;
 		currentPathSize = g0.vertexCount();
@@ -22,14 +25,15 @@ public class Dijkstra {
 		V = new int [currentPathSize]; //vertexes
 		P = new int [currentPathSize]; //vertexes
 		D = new int [currentPathSize]; //distances
-		pathCalcul();	
+		pathCalcul(nodeA, nodeB, map);	
+		//g.distance(map, nodeA, nodeB.column, nodeB.line);
 	}
 	
 	//calculates the shortest path
-	public void pathCalcul() {
+	public void pathCalcul(Node nodeA, Node nodeB, char[][] map) {
 		int n = 0;
 		for (int a = 0; a<currentPathSize; a++) {
-			markedNodes[a]=false;
+			//markedNodes[a]=false;
 			V[a] = -1; //
 			P[a] = -1; //nodes do not have previous 
 		}
@@ -37,23 +41,24 @@ public class Dijkstra {
 		V[n] = x0;
 		D[x0] = 0;
 		P[x0] = x0;
-		initDistMin();
+		initDistMin(nodeA, nodeB, map);
 		for (int i = 0; i<currentPathSize; i++) {
 			if (!contains(V,i)) {
-				int c = vertexChoice();
-				markedNodes[c] = true;
+				//int c = vertexChoice();
+				//markedNodes[c] = true;
+				for 
 				n++;
 				V[n]=c;
-				adjDistMin(c);
+				//adjDistMin(nodeA, nodeB,map);
 			}
 		}
 	}
 	
 	//initialize minimum distance values
-	public void initDistMin() {
+	public void initDistMin(Node nodeA, Node nodeB, char[][] map) {
 		markedNodes[x0] = true;
 		for (int i = 0; i< currentPathSize; i++) {
-			if (g0.isArch(x0, i)) {
+			if (g0.isPath(nodeA, nodeB, map)) {
 				D[i] = g0.getG()[x0][i];
 				P[i] = x0 ;
 			}
@@ -66,37 +71,35 @@ public class Dijkstra {
 	}
 	
 	//choose the closest vertex to the source
-	public int vertexChoice() {
+	/*public int vertexChoice() {
 		int valeurMin = INFINITE;
-		int min = x0;
 		
 		for (int i = 0; i<currentPathSize; i++) {
 			if (!markedNodes[i]) {
 				if (D[i] <= valeurMin) {
-					min = i ;
 					valeurMin = D[i];
 				}
 			}
 		}
 		return valeurMin;
-	}
+	}*/
 	
 	//adjust the value to be the closest
-	public void adjDistMin(int n) {
+	/*public void adjDistMin(Node nodeA, Node nodeB, char[][] map) {
 		for (int i = 0; i<currentPathSize; i++) {
 			if (!contains(V,i)) {
-				if (D[n]+distance(n,i) < D[i]) {
-					D[i] = D[n] + distance(n,i);
-					P[i] = n;
+				if (D[nodeB.line]+ pathDistance(nodeA, nodeB, map) < D[i]) {
+					D[i] = D[nodeB.line] + pathDistance(nodeA, nodeB, map);
+					P[i] = nodeB.line;
 				}
 			}
 		}
-	}
+	}*/
 
 	//return the value of the distance
-	public int distance (int t, int s) {
-		if (g0.isArch(t, s)) {
-			return g0.getG()[t][s];
+	public int pathDistance (Node nodeA, Node nodeB, char[][] map) {
+		if (g0.isPath(nodeA, nodeB, map)) {
+			return g0.getG()[nodeB.line][nodeB.column];
 		}
 		else return INFINITE;
 	}

@@ -5,7 +5,7 @@ public class Coordonate {
 		line;
 	boolean state;
 	
-	public void Coordonate() {
+	public Coordonate() {
 		column = 0;
 		line = 0;
 		state = false;

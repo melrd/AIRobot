@@ -1,7 +1,6 @@
 package Soko;
 
 import java.util.ArrayList;
-
 import Soko.main.DIRECTION;
 
 public class Node {
@@ -104,7 +103,7 @@ public class Node {
 		}
 	}
 
-	public boolean GameRules(char[][]map, boolean state, DIRECTION direction, Node node) {
+	public boolean GameRules(char[][] map, boolean state, DIRECTION direction, Node node) {
 		int line = 0,
 			column = 0;
 		
@@ -160,7 +159,7 @@ public class Node {
 		return true;
 	}
 	
-	private boolean movement(char[][] map, int checkLine, int checkColumn) {
+	public boolean movement(char[][] map, int checkLine, int checkColumn) {
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ' ||
 				map[checkLine][checkColumn] == 'J')
