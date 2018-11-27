@@ -6,7 +6,7 @@ public class Graph {
 
 	private int [][] G ; //values table (x,y) = (column, line)
 	//private boolean [] visited ; // visited and existed vertex
-	public final static int alpha = - 999 ; //constant corresponding to infinity
+	public final static int alpha = 999 ; //constant corresponding to infinity
 	public ArrayList<int []> path = new ArrayList<>();
 	
 	//default constructor
@@ -22,7 +22,6 @@ public class Graph {
 		}
 	}
 	
-	//A REFAIRE
 	//constructor with distances
 	public Graph(Node node, char [][] map) {
 		int Nmax = map.length;
@@ -119,7 +118,7 @@ public class Graph {
 	}
 	
 	//calculates the practical distance between two points
-	public int distance(char [][] map, Node node, int finalcolumn, int finalline /*,ArrayList<int[]> path, int [][] G*/) {
+	public int distance(char [][] map, Node node, int finalcolumn, int finalline) {
 		
 		Coordonate F = new Coordonate(finalcolumn,finalline, false);
 		Coordonate C = new Coordonate(node.column,node.line,false); //abstract A to follow the path
@@ -181,6 +180,15 @@ public class Graph {
 		
 	}
 	
-	
+	//calculates the shortest path between two nodes
+	//check if the result is null
+	public ArrayList<int[]> pathCalcul(Node node, Coordonate goal, char[][] map) {
+			int minDist = distance (map, node, goal.column, goal.line); //distance of the best path
+						
+			if (minDist == path.size()) {
+				return path;
+			} 
+			else { return null;}
+		}
 	
 }

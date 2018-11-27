@@ -12,7 +12,7 @@ public class Dijkstra {
 				D; //vertex's values of the Dijkstra path (values)
 	private Graph g0;
 	private boolean [] markedNodes; 
-	private static int currentPathSize; //to simplify results
+	//private static int currentPathSize; //to simplify results
 
 	
 	
@@ -32,11 +32,11 @@ public class Dijkstra {
 	//calculates the shortest path
 	public void pathCalcul(Node nodeA, Node nodeB, char[][] map) {
 		int n = 0;
-		for (int a = 0; a<currentPathSize; a++) {
+		/*for (int a = 0; a<currentPathSize; a++) {
 			//markedNodes[a]=false;
 			V[a] = -1; //
 			P[a] = -1; //nodes do not have previous 
-		}
+		}*/
 		
 		V[n] = x0;
 		D[x0] = 0;
