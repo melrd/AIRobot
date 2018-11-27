@@ -168,6 +168,18 @@ public class Node {
 			return true;
 	}
 	
+	public boolean movement(char[][] map, int checkLine, int checkColumn, Node node) {
+		if(map[checkLine][checkColumn] == 'X' ||
+				map[checkLine][checkColumn] == ' ')
+			return false;
+		
+		for(Coordonate e : node.tabDiamond) {
+			if (e.line == checkLine && e.column == checkColumn)
+				return false;
+		}
+		return true;
+	}
+	
 	public boolean roundTrip(Node node, DIRECTION direction) {
 		if(node.previous == null)
 			return true;
@@ -196,6 +208,7 @@ public class Node {
 	}
 
 	// verifier que ca fonctionne
+	// check if all diamonds are put in goals
 	public boolean checkEnd(Node node) {
 		for (Coordonate e : node.tabGoal) {
 			if(e.state == false)
@@ -205,6 +218,7 @@ public class Node {
 	}
 	
 	// verifier que ca fonctionne
+	// change the state of the goal and the diamonds 
 	public void changeGoal(int column, int line, Node node) {
 		for(Coordonate e : node.tabGoal) {
 			if((e.column == column) && (e.line == line)) {

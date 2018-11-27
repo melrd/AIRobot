@@ -18,19 +18,20 @@ public class main {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		char[][] map = null;
+		char[][] mapInitiate = null,
+				mapClean = null;
 		int startColumn = 0,
 			startLine = 0,
 			numberGoal = 0;
 		Tree tree = null;
 		Fipo fifo = new Fipo();
 		
-		map = readingFile();
+		mapInitiate  = readingFile();
 		
-		for(int i = 0;i < 9;i++) {
-			for(int j = 0;j<10;j++) {
-				System.out.print(map[i][j]);
-				if(map[i][j] == 'M') {
+		for(int i = 0;i < mapInitiate.length;i++) {
+			for(int j = 0;j<mapInitiate[i].length;j++) {
+				System.out.print(mapInitiate [i][j]);
+				if(mapInitiate [i][j] == 'M') {
 					startColumn = j;
 					startLine = i;
 				}
@@ -38,12 +39,25 @@ public class main {
 			System.out.println("\t");
 		}
 		
-		tree = new Tree(startLine,startColumn, createGoal(map, 'G'), createGoal(map,'J')); // start of the tree at M
+		System.out.println("Map Clean");
+		mapClean = 	mapInitiate;
+		for(int i = 0;i < mapClean.length;i++) {
+			for(int j = 0;j<mapClean[i].length;j++) {
+				if(mapClean[i][j] == 'G' || mapClean[i][j] == 'J' || mapClean[i][j] == 'M') {
+					mapClean[i][j] = '.';
+				}
+				System.out.print(mapClean [i][j]);
+			}
+			System.out.println("\t");
+		}
+	
+		
+		tree = new Tree(startLine,startColumn, createGoal(mapInitiate , 'G'), createGoal(mapInitiate ,'J')); // start of the tree at M
 		fifo.fifo.add(tree.node);
 		
-		while ((fifo.fifo.get(0).steps < 7) && (fifo.fifo != null)) {
+		while ((fifo.fifo.get(0).steps < 4) && (fifo.fifo != null)) {
 			System.out.println("Step : " + fifo.fifo.get(0).steps);
-			checkAround(map,fifo.fifo.get(0), fifo);
+			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
 			System.out.println("\n \n");
 		}
 		//test(tree, map, fifo);
