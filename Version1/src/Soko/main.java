@@ -47,6 +47,8 @@ public class main {
 			System.out.println("\n \n");
 		}
 		//test(tree, map, fifo);
+		
+		//Graph graph= new Graph();
 
 	}
 	
@@ -104,11 +106,11 @@ public class main {
 		tree.node.printNode(tree.node);
 		checkAround(map,tree.node, fifo);
 		
-		System.out.println("--------------GAUCHE---------------------");
+		System.out.println("--------------LEFT---------------------");
 		tree.node.printNode(tree.node.left);
 		checkAround(map,tree.node.left, fifo);
 
-		System.out.println("---------------DROITE--------------------");
+		System.out.println("---------------RIGHT--------------------");
 		tree.node.printNode(tree.node.left.right);
 		checkAround(map,tree.node.left.right, fifo);
 	}
