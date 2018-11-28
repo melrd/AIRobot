@@ -2,8 +2,6 @@ package Soko;
 
 import java.util.ArrayList;
 
-import Soko.main.DIRECTION;
-
 public class Graph {
 
 	private int [][] G ; //values table (x,y) = (column, line)
@@ -62,7 +60,7 @@ public class Graph {
 	//is this distance exists
 	public boolean isPath(Node nodeA, Node nodeB, char[][] map) {
 		return ((isVertex(nodeA,map)) && (isVertex(nodeB,map)) && (G[nodeB.line][nodeB.column] != alpha));
-	} 
+	}
 	
 	//returns table of successful vertex
 	/*public int[] success(int i) {
