@@ -65,37 +65,39 @@ public class Node {
 	public void Node() {
 	}
 	
-	public static void printNode(Node node) { // permit to show the node we want
-		if(node == null) // verify we have a node in the memory
-			System.out.println("No node find");
-		else { // print the coordonate
-			System.out.println("Coordonnée : [" + node.line + "][" + node.column +"]");
+	// COMMENT FAIRE POUR CHECK SI LE NOEUD EST NUL -> truc fait mais pas ouf
+	public void printNode() { // permit to show the node we want
+		//if(null) // verify we have a node in the memory
+			//System.out.println("No node find");
+		//else { // print the coordonate
+			System.out.println("Coordonate : [" + line + "][" + column +"]");
 			//System.out.println("Step : " + node.steps);
 			//System.out.println("Goal non complete : " + node.goalsFree);
-		}
+		//}
 	}
 
+	// CLEAN A FINIR MAIS COMMENT ....
 	public void addNode(Node actual, DIRECTION direction) {// add node according to the direction
 		//for the direction send, we add a new node with the good coordonate then we check the memory
 		switch (direction) {
 		case  UP :
-			actual.up = new Node(actual.column, actual.line-1, actual);
-			if(actual.up == null)
+			up = new Node(column, line-1, actual);
+			if(up == null)
 				System.out.print("No add");
 			break;
 		case DOWN :
-			actual.down = new Node(actual.column, actual.line+1, actual);
-			if(actual.down == null)
+			down = new Node(column, line+1, actual);
+			if(down == null)
 				System.out.print("No add");
 			break;
 		case LEFT:
-			actual.left = new Node(actual.column-1, actual.line, actual);
-			if(actual.left == null)
+			left = new Node(column-1, line, actual);
+			if(left == null)
 				System.out.print("No add");
 			break;
 		case RIGHT:
-			actual.right = new Node(actual.column+1, actual.line, actual);
-			if(actual.right == null)
+			right = new Node(column+1, line, actual);
+			if(right == null)
 				System.out.print("No add");
 			break;
 		default:
@@ -103,34 +105,34 @@ public class Node {
 		}
 	}
 
-	public boolean GameRules(char[][] map, boolean state, DIRECTION direction, Node node) { //check if the movment is possible
-		int line = 0,
-			column = 0;
+	public boolean GameRules(char[][] map, boolean state, DIRECTION direction) { //check if the movment is possible
+		int lineChange = 0,
+			columnChange  = 0;
 		
 		//look the direction send, change coordonate who we looking for in comparaison with the actual one
 		switch (direction) {
 			case UP :
-				line = node.line- 1;
-				column = node.column;
+				lineChange  = line- 1;
+				columnChange  = column;
 				break;
 			case DOWN :
-				line = node.line +1;
-				column = node.column;
+				lineChange  = line +1;
+				columnChange = column;
 				break;
 			case LEFT :
-				line = node.line;
-				column = node.column-1;
+				lineChange = line;
+				columnChange = column-1;
 				break;
 			case RIGHT :
-				line = node.line;
-				column = node.column +1;
+				lineChange = line;
+				columnChange = column +1;
 				break;
 			default :
 				return false;
 		}
 		
 		//check if the movement of the robot is possible or say it can't go in this direction
-		if(movement(map, line, column) == false)
+		if(movement(map, lineChange, columnChange) == false)
 			return false;
 		
 		// check if we can move the diamonds : check if we are still in the map with the diamonds 
@@ -138,21 +140,21 @@ public class Node {
 		if(state == true) {
 			switch (direction) {
 				case UP :
-					if(line < 0)
+					if(lineChange < 0)
 						return false;
-					return movement(map, line-1, column);
+					return movement(map, lineChange-1, columnChange);
 				case DOWN :
-					if(line < map.length)
+					if(lineChange < map.length)
 						return false;
-					return movement(map, line+1, column);
+					return movement(map, lineChange+1, columnChange);
 				case LEFT :
-					if(column < 0)
+					if(columnChange < 0)
 						return false; 
-					return movement(map, line, column-1);
+					return movement(map, lineChange, columnChange-1);
 				case RIGHT : 
-					if(line < map[line].length)
+					if(lineChange < map[lineChange].length)
 						return false;
-					return movement(map, line, column+1);
+					return movement(map, lineChange, columnChange+1);
 				default :
 					return false;
 			}
@@ -184,26 +186,26 @@ public class Node {
 		return true;
 	}
 	
-	public boolean roundTrip(Node node, DIRECTION direction) { // prevent round trip between 2 boxes
-		if(node.previous == null)
+	public boolean roundTrip(DIRECTION direction) { // prevent round trip between 2 boxes
+		if(previous == null)
 			return true;
 		
 		// for each direction, that look the node previous and observe if the coordinate are different or not
 		switch (direction) {
 		case  UP :
-			if((node.previous.column == node.column) && (node.previous.line == node.line -1))
+			if((previous.column == column) && (previous.line == line -1))
 				return false;
 			return true;
 		case DOWN :
-			if((node.previous.column == node.column) && (node.previous.line == node.line +1))
+			if((previous.column == column) && (previous.line == line +1))
 				return false;
 			return true;
 		case LEFT:
-			if((node.previous.column == node.column-1) && (node.previous.line == node.line))
+			if((previous.column == column-1) && (previous.line == line))
 				return false;
 			return true;
 		case RIGHT:
-			if((node.previous.column == node.column-1) && (node.previous.line == node.line))
+			if((previous.column == column-1) && (previous.line == line))
 				return false;
 			return true;
 		default:

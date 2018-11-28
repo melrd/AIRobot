@@ -127,7 +127,7 @@ public class main {
 	*/
 	
 	private static void checkAround (char[][] map, Node node, Fipo fifo) {
-		node.printNode(node);
+		node.printNode();
 		
 		/** for the node send
 		 * check each direction one by one
@@ -136,41 +136,49 @@ public class main {
 		 * if we don t, we add this child node and we put this node in the file.
 		 * then we print the node
 		 */
-		if (node.GameRules(map,false,DIRECTION.DOWN, node) == true) {
+		if (node.GameRules(map,false,DIRECTION.DOWN) == true) {
 			System.out.println("-- test D --");
-			if(node.roundTrip(node, DIRECTION.DOWN) == true) {
+			if(node.roundTrip( DIRECTION.DOWN) == true) {
 				node.addNode(node,DIRECTION.DOWN);
 				fifo.nodeCheck(fifo.fifo, node, node.down);
 			}
 		}
-		node.printNode(node.down);
+		if(node.down != null)
+			node.down.printNode();
+		else System.out.println("No node find");
 		
-		if (node.GameRules(map,false,DIRECTION.LEFT, node) == true) {
+		if (node.GameRules(map,false,DIRECTION.LEFT) == true) {
 			System.out.println("-- test L --");
-			if(node.roundTrip(node, DIRECTION.LEFT) == true) {
+			if(node.roundTrip(DIRECTION.LEFT) == true) {
 				node.addNode(node,DIRECTION.LEFT);
 				fifo.nodeCheck(fifo.fifo, node, node.left);
 			}
 		}
-		node.printNode(node.left);
+		if(node.left != null)
+			node.left.printNode();
+		else System.out.println("No node find");
 		
-		if (node.GameRules(map,false,DIRECTION.UP, node) == true) {
+		if (node.GameRules(map,false,DIRECTION.UP) == true) {
 			System.out.println("-- test U --");
-			if(node.roundTrip(node, DIRECTION.UP) == true) {
+			if(node.roundTrip(DIRECTION.UP) == true) {
 				node.addNode(node,DIRECTION.UP);
 				fifo.nodeCheck(fifo.fifo, node, node.up);
 			}
 		}
-		node.printNode(node.up);
+		if (node.up != null)
+			node.up.printNode();
+		else System.out.println("No node find");
 		
-		if (node.GameRules(map,false,DIRECTION.RIGHT, node) == true) {
+		if (node.GameRules(map,false,DIRECTION.RIGHT) == true) {
 			System.out.println("-- test R --");
-			if(node.roundTrip(node, DIRECTION.RIGHT) == true) {
+			if(node.roundTrip(DIRECTION.RIGHT) == true) {
 				node.addNode(node,DIRECTION.RIGHT);
 				fifo.nodeCheck(fifo.fifo, node, node.right);
 			}
 		}
-		node.printNode(node.right);	
+		if(node.right != null)
+			node.right.printNode();
+		else System.out.println("No node find");
 	}
 	
 
