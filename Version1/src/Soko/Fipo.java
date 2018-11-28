@@ -33,9 +33,9 @@ public class Fipo {
 		addNode(nextNode); // add the new node in the file
 		if(fifo.contains(actualNode) == true) // check if the node check is in the file
 			removeNode(actualNode); // delete the node who's check
-		/**System.out.println("______Fifo______");
+		System.out.println("______Fifo______");
 		for(int i = 0; i < fifo.size() ; i++) 
-			nextNode.printNode((Node)fifo.get(i));
-		System.out.println("__________________");*/
+			fifo.get(i).printNode();
+		System.out.println("__________________");
 	}
 }

@@ -65,18 +65,12 @@ public class Node {
 	public void Node() {
 	}
 	
-	// COMMENT FAIRE POUR CHECK SI LE NOEUD EST NUL -> truc fait mais pas ouf
 	public void printNode() { // permit to show the node we want
-	/**	if(this == null) // verify we have a node in the memory
-			System.out.println("No node find");
-		else { // print the coordonate
-*/			System.out.println("Coordonate : [" + line + "][" + column +"]");
-			//System.out.println("Step : " + node.steps);
-			//System.out.println("Goal non complete : " + node.goalsFree);
-	//	}
+		System.out.println("Coordonate : [" + line + "][" + column +"]");
+		//System.out.println("Step : " + node.steps);
+		//System.out.println("Goal non complete : " + node.goalsFree);
 	}
 
-	// CLEAN A FINIR MAIS COMMENT ....
 	public void addNode(Node actual, DIRECTION direction) {// add node according to the direction
 		//for the direction send, we add a new node with the good coordonate then we check the memory
 		switch (direction) {
@@ -162,7 +156,7 @@ public class Node {
 		return true;
 	}
 	
-	/* A VOIR SI ON SUPPRIME ?!?
+	/* A VOIR SI ON SUPPRIME ?!? 
 	public boolean movement(char[][] map, int checkLine, int checkColumn) {
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ' ||
@@ -170,7 +164,8 @@ public class Node {
 			return false;
 		else
 			return true;
-	}*/
+	}
+	*/
 	
 	public boolean movement(char[][] map, int checkLine, int checkColumn) {
 		// for the coordonate send we check on the map if we are able to move in it

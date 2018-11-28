@@ -26,10 +26,11 @@ public class main {
 		Tree tree = null; // decision tree
 		Fipo fifo = new Fipo(); // file for run the tree
 		
+		
 		mapInitiate  = readingFile(); // reading the file and give the map of the game 
+		mapClean = new char[mapInitiate.length][mapInitiate[0].length]; // copy the initiate map in the clean one.
 		
 		
-		mapClean = 	mapInitiate; // copy the initiate map in the clean one.
 		// run the map for find the robot, in the same way we do the clean map
 		for(int i = 0;i < mapInitiate.length;i++) {
 			for(int j = 0;j<mapInitiate[i].length;j++) {
@@ -38,22 +39,25 @@ public class main {
 					startColumn = j;
 					startLine = i;
 				}
-				if(mapClean[i][j] == 'G' || mapClean[i][j] == 'J' || mapClean[i][j] == 'M')
+				if(mapInitiate[i][j] == 'G' || mapInitiate[i][j] == 'J' || mapInitiate[i][j] == 'M')
 					mapClean[i][j] = '.';
+				mapClean[i][j] = mapInitiate[i][j];
 			}
 			System.out.println("\t");
 		}
 		
 		// start of the tree at M and create the tab for diamond and goal
-		tree = new Tree(startLine,startColumn, createGoal(mapInitiate , 'G'), createGoal(mapInitiate ,'J')); 
+		tree = new Tree(startLine,startColumn, createCoordonate(mapInitiate , 'G'), createCoordonate(mapInitiate ,'J')); 
 		fifo.fifo.add(tree.node); // WEIRD
 		
 		// run the fifo with a end point
-		while ((fifo.fifo.get(0).steps < 4) && (fifo.fifo != null)) {
+		while (fifo.fifo.get(0).steps < 5) {
 			System.out.println("Step : " + fifo.fifo.get(0).steps);
 			// for the first node of fifo we check the movment possible for it
 			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
 			System.out.println("\n \n");
+			if(fifo.fifo == null)
+				break;
 		}
 		
 		//test(tree, map, fifo);
@@ -150,7 +154,7 @@ public class main {
 			System.out.println("-- test L --");
 			if(node.roundTrip(DIRECTION.LEFT) == true) {
 				node.addNode(node,DIRECTION.LEFT);
-				fifo.nodeCheck( node, node.left);
+				fifo.nodeCheck(node, node.left);
 			}
 		}
 		//node.left.printNode();
@@ -186,8 +190,8 @@ public class main {
 		else System.out.println("No node find");
 	}
 
-	//CHANGER LE NOM POUR CREATECOorDONATE
-	private static ArrayList<Coordonate> createGoal (char[][]map, char type) { //create table of coordonate
+	
+	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();
 		boolean state;
 		
@@ -195,7 +199,7 @@ public class main {
 			state = false;
 		else state = true;
 		
-		// for each box of the table if that correspond of the type who we ooking for we added in the table
+		// for each box of the table if that correspond of the type who we looking for we added in the table
 		for(int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++)
 				if(map[i][j] == type) { 
