@@ -177,16 +177,21 @@ public class main {
 	}
 
 	//dans le while tant fifo != null et si valeur retourné true
-	private static boolean calculation(Node node) {
-		if (node.coordinate.state == false) {
+	private static boolean calculation(Node node, Fipo fifo) {
+		ArrayList<Node> temp = new ArrayList();
+		
+		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) {
-				if(e.state == true) {
+				if(e.state == true) { // looking for a diamond who we can move
 					/**
-					 * calculer chemin le plus court
+					 * calculer chemin le plus court => retour d une liste de noeud stocker dans temp pour le moment
 					 * mettre dans l arbre
 					 * mettre le dernier noeud dans la file 
 					 */
-				}
+					//calcul du chemin retourne une liste de noeud
+					// add the last node of the way, and add the way in the tree
+					fifo.nodeCheck(node, copyWay(node, temp, 0));
+					}
 			}
 		}
 		else {
@@ -206,6 +211,54 @@ public class main {
 			return true;
 		else return false;
 	}
+		
+	private static Node copyWay(Node node, ArrayList<Node> e, int position) {
+		/**
+		 * recursive function will check each node of the tab
+		 * try to find the direction of the way
+		 * if the node is not add, we create it
+		 * we check if we are at the end of the new way or not
+		 * return the last node
+		 */
+		if(e.get(position).coordinate.column == node.coordinate.column) {
+			if(e.get(position).coordinate.line == node.coordinate.line +1) {
+				if(node.down == null)
+					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				if (position ++ < e.size()) 
+					copyWay(node.down, e, position ++);
+				else
+					return node.down;
+			}
+			if(e.get(position).coordinate.line == node.coordinate.line -1) {
+				if(node.up == null)
+					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				if (position ++ < e.size()) 
+					copyWay(node.up, e, position ++);
+				else
+					return node.up;
+			}
+		}
+		if(e.get(position).coordinate.line == node.coordinate.line) {
+			if(e.get(position).coordinate.column == node.coordinate.column -1 ) { 
+				if(node.left == null) 
+					node.left = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				if (position ++ < e.size()) 
+					copyWay(node.left, e, position ++);
+				else
+					return node.left;
+			}
+			if(e.get(position).coordinate.column == node.coordinate.column +1) {
+				if(node.right == null) 
+					node.right = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				if (position ++ < e.size()) 
+					copyWay(node.right, e, position ++);
+				else
+					return node.right;
+			}
+		}
+		return null;
+	}
+	
 	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();
 		boolean state;
