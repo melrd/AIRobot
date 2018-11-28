@@ -18,56 +18,59 @@ public class main {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		char[][] mapInitiate = null,
-				mapClean = null;
+		char[][] mapInitiate = null, //map for the reading part
+				mapClean = null; // map without any diamonds or goal
 		int startColumn = 0,
 			startLine = 0,
 			numberGoal = 0;
-		Tree tree = null;
-		Fipo fifo = new Fipo();
+		Tree tree = null; // decision tree
+		Fipo fifo = new Fipo(); // file for run the tree
 		
-		mapInitiate  = readingFile();
 		
+		mapInitiate  = readingFile(); // reading the file and give the map of the game 
+		mapClean = new char[mapInitiate.length][mapInitiate[0].length]; // copy the initiate map in the clean one.
+		
+		
+		// run the map for find the robot, in the same way we do the clean map
 		for(int i = 0;i < mapInitiate.length;i++) {
 			for(int j = 0;j<mapInitiate[i].length;j++) {
 				System.out.print(mapInitiate [i][j]);
 				if(mapInitiate [i][j] == 'M') {
 					startColumn = j;
 					startLine = i;
-				}
-			}
-			System.out.println("\t");
-		}
-		
-		System.out.println("Map Clean");
-		mapClean = 	mapInitiate;
-		for(int i = 0;i < mapClean.length;i++) {
-			for(int j = 0;j<mapClean[i].length;j++) {
-				if(mapClean[i][j] == 'G' || mapClean[i][j] == 'J' || mapClean[i][j] == 'M') {
 					mapClean[i][j] = '.';
 				}
-				System.out.print(mapClean [i][j]);
+				if(mapInitiate[i][j] == 'G' || mapInitiate[i][j] == 'J')
+					mapClean[i][j] = '.';
+				mapClean[i][j] = mapInitiate[i][j];
 			}
 			System.out.println("\t");
 		}
-	
 		
-		tree = new Tree(startLine,startColumn, createGoal(mapInitiate , 'G'), createGoal(mapInitiate ,'J')); // start of the tree at M
-		fifo.fifo.add(tree.node);
+		// start of the tree at M and create the tab for diamond and goal
+		tree = new Tree(startLine,startColumn, createCoordonate(mapInitiate , 'G'), createCoordonate(mapInitiate ,'J')); 
+		fifo.addNode(tree.node);
 		
-		while ((fifo.fifo.get(0).steps < 4) && (fifo.fifo != null)) {
+		// run the fifo with a end point
+		while (fifo.fifo.get(0).steps < 6) {
 			System.out.println("Step : " + fifo.fifo.get(0).steps);
+			// for the first node of fifo we check the movment possible for it
 			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
 			System.out.println("\n \n");
+			
+			/** calculation(fifo.fifo.get(0)); 
+			 * retourne un boolean qui permettra de stoper le while
+			 */
+			if(fifo.fifo == null)
+				break;
 		}
-		//test(tree, map, fifo);
 		
 		//Graph graph= new Graph();
 
 	}
 	
 		
-	public static char[][] readingFile() {
+	private static char[][] readingFile() {
 		ArrayList<String> extractFile = new ArrayList<String>();
 		char[][] map = null; 
 		int numberColumn = 0, 
@@ -115,69 +118,106 @@ public class main {
 		return map;
 	}           
 
-	private static void test(Tree tree, char[][] map, Fipo fifo) {
-		System.out.println("--------------START---------------------");
-		tree.node.printNode(tree.node);
-		checkAround(map,tree.node, fifo);
-		
-		System.out.println("--------------LEFT---------------------");
-		tree.node.printNode(tree.node.left);
-		checkAround(map,tree.node.left, fifo);
-
-		System.out.println("---------------RIGHT--------------------");
-		tree.node.printNode(tree.node.left.right);
-		checkAround(map,tree.node.left.right, fifo);
-	}
-	
 	private static void checkAround (char[][] map, Node node, Fipo fifo) {
-		node.printNode(node);
+		node.printNode();
 		
-		if (node.GameRules(map,false,DIRECTION.DOWN, node) == true) {
+		/** for the node send
+		 * check each direction one by one
+		 * we start by looking if we can move in this direction
+		 * if we can, we check we don t already pass on it before (round trip)
+		 * if we don t, we add this child node and we put this node in the file.
+		 * then we print the node
+		 */
+		if (node.GameRules(map,DIRECTION.DOWN) == true) {
 			System.out.println("-- test D --");
-			if(node.roundTrip(node, DIRECTION.DOWN) == true) {
+			if(node.roundTrip( DIRECTION.DOWN) == true) {
 				node.addNode(node,DIRECTION.DOWN);
-				fifo.nodeCheck(fifo.fifo, node, node.down);
+				fifo.nodeCheck(node, node.down);
 			}
 		}
-		node.printNode(node.down);
-		if (node.GameRules(map,false,DIRECTION.LEFT, node) == true) {
+		//node.down.printNode();
+		printNode(node.down);
+		
+		if (node.GameRules(map,DIRECTION.LEFT) == true) {
 			System.out.println("-- test L --");
-			if(node.roundTrip(node, DIRECTION.LEFT) == true) {
+			if(node.roundTrip(DIRECTION.LEFT) == true) {
 				node.addNode(node,DIRECTION.LEFT);
-				fifo.nodeCheck(fifo.fifo, node, node.left);
+				fifo.nodeCheck(node, node.left);
 			}
 		}
-		node.printNode(node.left);
-		if (node.GameRules(map,false,DIRECTION.UP, node) == true) {
+		//node.left.printNode();
+		printNode(node.left);
+		
+		if (node.GameRules(map,DIRECTION.UP) == true) {
 			System.out.println("-- test U --");
-			if(node.roundTrip(node, DIRECTION.UP) == true) {
+			if(node.roundTrip(DIRECTION.UP) == true) {
 				node.addNode(node,DIRECTION.UP);
-				fifo.nodeCheck(fifo.fifo, node, node.up);
+				fifo.nodeCheck(node, node.up);
 			}
 		}
-		node.printNode(node.up);
-		if (node.GameRules(map,false,DIRECTION.RIGHT, node) == true) {
+		//node.up.printNode();
+		printNode(node.up);
+		
+		if (node.GameRules(map,DIRECTION.RIGHT) == true) {
 			System.out.println("-- test R --");
-			if(node.roundTrip(node, DIRECTION.RIGHT) == true) {
+			if(node.roundTrip(DIRECTION.RIGHT) == true) {
 				node.addNode(node,DIRECTION.RIGHT);
-				fifo.nodeCheck(fifo.fifo, node, node.right);
+				fifo.nodeCheck(node, node.right);
 			}
 		}
-		node.printNode(node.right);	
+		//node.right.printNode();
+		printNode(node.right);
 	}
-	
 
-	private static ArrayList<Coordonate> createGoal (char[][]map, char type) {
+	// check if the node is not empty before tho call the function in the node class
+	private static void printNode(Node node) {
+		if(node != null)
+			node.printNode();
+		else System.out.println("No node find");
+	}
+
+	//dans le while tant fifo != null et si valeur retourné true
+	private static boolean calculation(Node node) {
+		if (node.coordinate.state == false) {
+			for (Coordonate e : node.tabDiamond) {
+				if(e.state == true) {
+					/**
+					 * calculer chemin le plus court
+					 * mettre dans l arbre
+					 * mettre le dernier noeud dans la file 
+					 */
+				}
+			}
+		}
+		else {
+			for (Coordonate e : node.tabGoal) {
+				if(e.state == false) {
+					/**
+					 * calculer chemin le plus court
+					 * mettre dans l arbre -> actualiser en meme temps la position des J car déplacement
+					 * mettre le dernier noeud dans la file
+					 * modifier l'état des J et des G
+					 */
+				}
+			}
+		}
+		
+		if(node.checkEnd())
+			return true;
+		else return false;
+	}
+	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();
 		boolean state;
 		
-		if (type == 'G')
+		if (type == 'G') // adapt the state at each type of object
 			state = false;
 		else state = true;
 		
+		// for each box of the table if that correspond of the type who we looking for we added in the table
 		for(int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++)
-				if(map[i][j] == type) {
+				if(map[i][j] == type) { 
 					tab.add(new Coordonate(j,i,state));
 				}
 		}

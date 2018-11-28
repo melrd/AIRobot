@@ -4,4 +4,7 @@
 	<item value="C:\Users\Asus\Documents\GitHub\AIRobot\.git" key="GitSelectRepositoryPage.lastRepository"/>
 	<section name="GitImportWizard">
 	</section>
+	<section name="GitCommitSearchPage">
+		<item value="0" key="HISTORY_SIZE"/>
+	</section>
 </section>

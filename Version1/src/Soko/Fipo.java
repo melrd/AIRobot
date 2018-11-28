@@ -11,31 +11,31 @@ public class Fipo {
 		fifo = new ArrayList();
 	}
 	
-	private void clear() {
+	private void clear() { // to make the fifo empty
 		fifo = null;
 	}
 	
-	private void add(Node node) {
-		// add the case of the node
+	public void addNode(Node node) { // new node to check after to add in our fifo
+		// add the case of the node in the List
 		fifo.add(node);
 		// check if the node is added
 		if (fifo.contains(node) != true)
 			System.out.println("Not in the file");
 	}
 	
-	private void remove(Node node) {
-		// delete the node observe
+	private void removeNode(Node node) {
+		// delete the node observe in the table
 		fifo.remove(fifo.indexOf(node));
 	}
 	
 	
-	public void nodeCheck(ArrayList fifo, Node actualNode, Node nextNode) {
-		fifo.add(nextNode); // add the new node in the file
+	public void nodeCheck(Node actualNode, Node nextNode) {
+		addNode(nextNode); // add the new node in the file
 		if(fifo.contains(actualNode) == true) // check if the node check is in the file
-			fifo.remove(actualNode); // delete the node who's check
-		/**System.out.println("______Fifo______");
+			removeNode(actualNode); // delete the node who's check
+		System.out.println("______Fifo______");
 		for(int i = 0; i < fifo.size() ; i++) 
-			nextNode.printNode((Node)fifo.get(i));
-		System.out.println("__________________");*/
+			fifo.get(i).printNode();
+		System.out.println("__________________");
 	}
 }
