@@ -34,7 +34,7 @@ public class Node {
 	public Node(int pLine, int pColumn, ArrayList <Coordonate> pTabGoal,ArrayList <Coordonate> pTabDiamond){ 
 		steps = 1;
 		
-		coordinate = new Coordonate(pColumn, pLine, false);
+		coordinate = new Coordonate(pColumn, pLine);
 		
 		previous = null;
 		up = null;
@@ -50,7 +50,7 @@ public class Node {
 	public Node(int pColumn, int pLine, Node pPrevious){ 
 		steps = pPrevious.steps + 1;
 		
-		coordinate = new Coordonate(pColumn, pLine, false);
+		coordinate = new Coordonate(pColumn, pLine);
 		
 		previous = pPrevious;
 		up = null;
@@ -156,17 +156,6 @@ public class Node {
 		return true;
 	}
 	
-	/* A VOIR SI ON SUPPRIME ?!? 
-	public boolean movement(char[][] map, int checkLine, int checkColumn) {
-		if(map[checkLine][checkColumn] == 'X' ||
-				map[checkLine][checkColumn] == ' ' ||
-				map[checkLine][checkColumn] == 'J')
-			return false;
-		else
-			return true;
-	}
-	*/
-	
 	private boolean movement(char[][] map, int checkLine, int checkColumn) {
 		// for the coordonate send we check on the map if we are able to move in it
 		if(map[checkLine][checkColumn] == 'X' ||
@@ -220,18 +209,5 @@ public class Node {
 				return false;
 		}
 		return true;
-	}
-	
-	// A MODIFIER PAS OK DU TOUT CORRESPOND PAS A CE QU ON veut
-	private void changeGoal(int column, int line) {// change the state of the goal and the diamonds
-		for(Coordonate e : tabGoal) { // run all the goal of th table
-			if((e.column == column) && (e.line == line)) { // if coordonate of a goal correspond of the new coordonate we change the state f it
-				e.state = true;
-				for(Coordonate f : tabDiamond) { // run all diamond
-					if((f.column == column) && (f.line == line)) // when we
-						f.state = false;
-				}
-			}
-		}
 	}
 }

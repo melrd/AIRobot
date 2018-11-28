@@ -11,10 +11,10 @@ public class Coordonate {
 		state = false;
 	}
 	
-	public Coordonate(int pColumn, int pLine, boolean pState) { // implements the coordonate
+	public Coordonate(int pColumn, int pLine) { // implements the coordonate
 		column = pColumn;
 		line = pLine;
-		state = pState;
+		state = false;
 	}
 
 	//getter & setter for all variable of this class

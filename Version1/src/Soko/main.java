@@ -179,10 +179,12 @@ public class main {
 	//dans le while tant fifo != null et si valeur retourné true
 	private static boolean calculation(Node node, Fipo fifo) {
 		ArrayList<Node> temp = new ArrayList();
+		int positionDiamond = 0,
+				positionGoal = 0;
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
-			for (Coordonate e : node.tabDiamond) {
-				if(e.state == true) { // looking for a diamond who we can move
+			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
+				if(e.state == false) { // looking for a diamond who we can move
 					/**
 					 * calculer chemin le plus court => retour d une liste de noeud stocker dans temp pour le moment
 					 * mettre dans l arbre
@@ -194,7 +196,7 @@ public class main {
 					}
 			}
 		}
-		else {
+		else { // we have a diamond so we are looking for a goal
 			for (Coordonate e : node.tabGoal) {
 				if(e.state == false) {
 					/**
@@ -203,6 +205,8 @@ public class main {
 					 * mettre le dernier noeud dans la file
 					 * modifier l'état des J et des G
 					 */
+					// calcul du chemin
+					fifo.nodeCheck(node, copyWay(node, temp, 0));
 				}
 			}
 		}
@@ -212,6 +216,8 @@ public class main {
 		else return false;
 	}
 		
+	//jamais testé
+	//copy shortest way in the treee
 	private static Node copyWay(Node node, ArrayList<Node> e, int position) {
 		/**
 		 * recursive function will check each node of the tab
@@ -220,16 +226,19 @@ public class main {
 		 * we check if we are at the end of the new way or not
 		 * return the last node
 		 */
+		
 		if(e.get(position).coordinate.column == node.coordinate.column) {
+			
 			if(e.get(position).coordinate.line == node.coordinate.line +1) {
 				if(node.down == null)
 					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				if (position ++ < e.size()) 
+				if (position ++ < e.size())
 					copyWay(node.down, e, position ++);
 				else
 					return node.down;
 			}
-			if(e.get(position).coordinate.line == node.coordinate.line -1) {
+				
+			else if(e.get(position).coordinate.line == node.coordinate.line -1) {
 				if(node.up == null)
 					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
 				if (position ++ < e.size()) 
@@ -238,7 +247,9 @@ public class main {
 					return node.up;
 			}
 		}
-		if(e.get(position).coordinate.line == node.coordinate.line) {
+			
+		else if(e.get(position).coordinate.line == node.coordinate.line) {
+			
 			if(e.get(position).coordinate.column == node.coordinate.column -1 ) { 
 				if(node.left == null) 
 					node.left = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
@@ -247,7 +258,8 @@ public class main {
 				else
 					return node.left;
 			}
-			if(e.get(position).coordinate.column == node.coordinate.column +1) {
+			
+			else if(e.get(position).coordinate.column == node.coordinate.column +1) {
 				if(node.right == null) 
 					node.right = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
 				if (position ++ < e.size()) 
@@ -259,19 +271,84 @@ public class main {
 		return null;
 	}
 	
+	private static Node copyWay(Node node, ArrayList<Node> e, int position, int diamond, int goal) {
+		/**
+		 * recursive function will check each node of the tab
+		 * try to find the direction of the way
+		 * if the node is not add, we create it
+		 * we also change the position of the diamonds
+		 * we check if we are at the end of the new way or not
+		 * return the last node and change the state of the diamond and the goal
+		 */
+		
+		if(e.get(position).coordinate.column == node.coordinate.column) {
+			
+			if(e.get(position).coordinate.line == node.coordinate.line +1) {
+				if(node.down == null)
+					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				node.down.tabDiamond.get(diamond).line ++;
+				if (position ++ < e.size())
+					copyWay(node.down, e, position ++, diamond, goal);
+				else {
+					node.down.tabDiamond.get(diamond).state = true;
+					node.down.tabGoal.get(goal).state = true;
+					return node.down;
+				}
+			}
+				
+			else if(e.get(position).coordinate.line == node.coordinate.line -1) {
+				if(node.up == null)
+					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				node.up.tabDiamond.get(diamond).line --;
+				if (position ++ < e.size()) 
+					copyWay(node.up, e, position ++, diamond, goal);
+				else {
+					node.up.tabDiamond.get(diamond).state = true;
+					node.up.tabGoal.get(goal).state = true;
+					return node.up;
+				}
+			}
+		}
+			
+		else if(e.get(position).coordinate.line == node.coordinate.line) {
+			
+			if(e.get(position).coordinate.column == node.coordinate.column -1 ) { 
+				if(node.left == null) 
+					node.left = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				node.left.tabDiamond.get(diamond).column--;
+				if (position ++ < e.size()) 
+					copyWay(node.left, e, position ++, diamond, goal);
+				else {
+					node.left.tabDiamond.get(diamond).state = true;
+					node.left.tabGoal.get(goal).state = true;
+					return node.left;
+				}
+			}
+			
+			else if(e.get(position).coordinate.column == node.coordinate.column +1) {
+				if(node.right == null) 
+					node.right = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
+				node.right.tabDiamond.get(diamond).column++;
+				if (position ++ < e.size()) 
+					copyWay(node.right, e, position ++, diamond, goal);
+				else {
+					node.right.tabDiamond.get(diamond).state = true;
+					node.right.tabGoal.get(goal).state = true;
+					return node.right;
+				}
+			}
+		}
+		return null;
+	}
+	
 	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();
-		boolean state;
-		
-		if (type == 'G') // adapt the state at each type of object
-			state = false;
-		else state = true;
 		
 		// for each box of the table if that correspond of the type who we looking for we added in the table
 		for(int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++)
 				if(map[i][j] == type) { 
-					tab.add(new Coordonate(j,i,state));
+					tab.add(new Coordonate(j,i));
 				}
 		}
 		return tab;
