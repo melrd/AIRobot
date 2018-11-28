@@ -18,16 +18,19 @@ public class main {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
-		char[][] mapInitiate = null,
-				mapClean = null;
+		char[][] mapInitiate = null, //map for the reading part
+				mapClean = null; // map without any diamonds or goal
 		int startColumn = 0,
 			startLine = 0,
 			numberGoal = 0;
-		Tree tree = null;
-		Fipo fifo = new Fipo();
+		Tree tree = null; // decision tree
+		Fipo fifo = new Fipo(); // file for run the tree
 		
-		mapInitiate  = readingFile();
+		mapInitiate  = readingFile(); // reading the file and give the map of the game 
 		
+		
+		mapClean = 	mapInitiate; // copy the initiate map in the clean one.
+		// run the map for find the robot, in the same way we do the clean map
 		for(int i = 0;i < mapInitiate.length;i++) {
 			for(int j = 0;j<mapInitiate[i].length;j++) {
 				System.out.print(mapInitiate [i][j]);
@@ -35,33 +38,25 @@ public class main {
 					startColumn = j;
 					startLine = i;
 				}
-			}
-			System.out.println("\t");
-		}
-		
-		System.out.println("Map Clean");
-		mapClean = 	mapInitiate;
-		for(int i = 0;i < mapClean.length;i++) {
-			for(int j = 0;j<mapClean[i].length;j++) {
-				if(mapClean[i][j] == 'G' || mapClean[i][j] == 'J' || mapClean[i][j] == 'M') {
+				if(mapClean[i][j] == 'G' || mapClean[i][j] == 'J' || mapClean[i][j] == 'M')
 					mapClean[i][j] = '.';
-				}
-				System.out.print(mapClean [i][j]);
 			}
 			System.out.println("\t");
 		}
-	
 		
-		tree = new Tree(startLine,startColumn, createGoal(mapInitiate , 'G'), createGoal(mapInitiate ,'J')); // start of the tree at M
-		fifo.fifo.add(tree.node);
+		// start of the tree at M and create the tab for diamond and goal
+		tree = new Tree(startLine,startColumn, createGoal(mapInitiate , 'G'), createGoal(mapInitiate ,'J')); 
+		fifo.fifo.add(tree.node); // WEIRD
 		
+		// run the fifo with a end point
 		while ((fifo.fifo.get(0).steps < 4) && (fifo.fifo != null)) {
 			System.out.println("Step : " + fifo.fifo.get(0).steps);
+			// for the first node of fifo we check the movment possible for it
 			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
 			System.out.println("\n \n");
 		}
-		//test(tree, map, fifo);
 		
+		//test(tree, map, fifo);
 		//Graph graph= new Graph();
 
 	}
@@ -115,6 +110,7 @@ public class main {
 		return map;
 	}           
 
+	/** NOT USEFUL ANYMORE
 	private static void test(Tree tree, char[][] map, Fipo fifo) {
 		System.out.println("--------------START---------------------");
 		tree.node.printNode(tree.node);
@@ -128,10 +124,18 @@ public class main {
 		tree.node.printNode(tree.node.left.right);
 		checkAround(map,tree.node.left.right, fifo);
 	}
+	*/
 	
 	private static void checkAround (char[][] map, Node node, Fipo fifo) {
 		node.printNode(node);
 		
+		/** for the node send
+		 * check each direction one by one
+		 * we start by looking if we can move in this direction
+		 * if we can, we check we don t already pass on it before (round trip)
+		 * if we don t, we add this child node and we put this node in the file.
+		 * then we print the node
+		 */
 		if (node.GameRules(map,false,DIRECTION.DOWN, node) == true) {
 			System.out.println("-- test D --");
 			if(node.roundTrip(node, DIRECTION.DOWN) == true) {
@@ -140,6 +144,7 @@ public class main {
 			}
 		}
 		node.printNode(node.down);
+		
 		if (node.GameRules(map,false,DIRECTION.LEFT, node) == true) {
 			System.out.println("-- test L --");
 			if(node.roundTrip(node, DIRECTION.LEFT) == true) {
@@ -148,6 +153,7 @@ public class main {
 			}
 		}
 		node.printNode(node.left);
+		
 		if (node.GameRules(map,false,DIRECTION.UP, node) == true) {
 			System.out.println("-- test U --");
 			if(node.roundTrip(node, DIRECTION.UP) == true) {
@@ -156,6 +162,7 @@ public class main {
 			}
 		}
 		node.printNode(node.up);
+		
 		if (node.GameRules(map,false,DIRECTION.RIGHT, node) == true) {
 			System.out.println("-- test R --");
 			if(node.roundTrip(node, DIRECTION.RIGHT) == true) {
@@ -167,17 +174,19 @@ public class main {
 	}
 	
 
-	private static ArrayList<Coordonate> createGoal (char[][]map, char type) {
+	//CHANGER LE NOM POUR CREATECOorDONATE
+	private static ArrayList<Coordonate> createGoal (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();
 		boolean state;
 		
-		if (type == 'G')
+		if (type == 'G') // adapt the state at each type of object
 			state = false;
 		else state = true;
 		
+		// for each box of the table if that correspond of the type who we ooking for we added in the table
 		for(int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++)
-				if(map[i][j] == type) {
+				if(map[i][j] == type) { 
 					tab.add(new Coordonate(j,i,state));
 				}
 		}

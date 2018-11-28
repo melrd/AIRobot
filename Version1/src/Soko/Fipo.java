@@ -11,11 +11,12 @@ public class Fipo {
 		fifo = new ArrayList();
 	}
 	
-	private void clear() {
+	private void clear() { // to make the fifo empty
 		fifo = null;
 	}
 	
-	private void add(Node node) {
+	// CHANGER LE NOM CAR CONFUSION POSSIBLE ENTRE LA METHODE ET L APPEL AUTOMATIQUE
+	private void add(Node node) { // new node to check after to add in our fifo
 		// add the case of the node
 		fifo.add(node);
 		// check if the node is added
@@ -23,6 +24,7 @@ public class Fipo {
 			System.out.println("Not in the file");
 	}
 	
+	// CHANGE THE NAME FOR DON T HAVE ANY CONFUSION
 	private void remove(Node node) {
 		// delete the node observe
 		fifo.remove(fifo.indexOf(node));

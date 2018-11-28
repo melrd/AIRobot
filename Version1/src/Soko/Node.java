@@ -7,15 +7,15 @@ public class Node {
 	int column, // for know actual position 
 		line, //for know actual position
 		steps; // for know which way is fast
-	Node previous,
+	Node previous, // child node for each direction possible 
 		up,
 		down,
 		left,
 		right;
-	ArrayList <Coordonate> tabGoal;
-	ArrayList <Coordonate> tabDiamond;
+	ArrayList <Coordonate> tabGoal; // list of all goal with the coordonate & state
+	ArrayList <Coordonate> tabDiamond; // list of all diamond with the coordonate & state
 	
-	public Node(){ // implements the node without parameters
+	public Node(){ // implements the node without any parameters
 		column = 0;
 		line = 0;
 		steps = 0;
@@ -30,7 +30,7 @@ public class Node {
 		tabDiamond = null;
 	}
 	
-	//only for the first node because no previous one
+	//implements the first node because no previous one
 	public Node(int pLine, int pColumn, ArrayList <Coordonate> pTabGoal,ArrayList <Coordonate> pTabDiamond){ 
 		column = pColumn;
 		line = pLine;
@@ -46,7 +46,7 @@ public class Node {
 		tabDiamond = pTabDiamond;
 	}
 	
-	// for all the nodes excepts the first one
+	// implement all the nodes excepts the first one, because of the previous
 	public Node(int pColumn, int pLine, Node pPrevious){ 
 		column = pColumn;
 		line = pLine;
@@ -65,18 +65,18 @@ public class Node {
 	public void Node() {
 	}
 	
-	public static void printNode(Node node) {
-		if(node == null) // verify we have a node
+	public static void printNode(Node node) { // permit to show the node we want
+		if(node == null) // verify we have a node in the memory
 			System.out.println("No node find");
-		else { // print the coordonate of the node send
+		else { // print the coordonate
 			System.out.println("Coordonnée : [" + node.line + "][" + node.column +"]");
 			//System.out.println("Step : " + node.steps);
 			//System.out.println("Goal non complete : " + node.goalsFree);
 		}
 	}
 
-	public void addNode(Node actual, DIRECTION direction) {
-		//for th good direction 
+	public void addNode(Node actual, DIRECTION direction) {// add node according to the direction
+		//for the direction send, we add a new node with the good coordonate then we check the memory
 		switch (direction) {
 		case  UP :
 			actual.up = new Node(actual.column, actual.line-1, actual);
@@ -103,11 +103,11 @@ public class Node {
 		}
 	}
 
-	public boolean GameRules(char[][] map, boolean state, DIRECTION direction, Node node) {
+	public boolean GameRules(char[][] map, boolean state, DIRECTION direction, Node node) { //check if the movment is possible
 		int line = 0,
 			column = 0;
 		
-		//change coordonate in case of witch way
+		//look the direction send, change coordonate who we looking for in comparaison with the actual one
 		switch (direction) {
 			case UP :
 				line = node.line- 1;
@@ -129,11 +129,12 @@ public class Node {
 				return false;
 		}
 		
-		//check the movement of the robot
+		//check if the movement of the robot is possible or say it can't go in this direction
 		if(movement(map, line, column) == false)
 			return false;
 		
-		// check if we can move the diamonds
+		// check if we can move the diamonds : check if we are still in the map with the diamonds 
+		//& if the movement is possible with the new coordonate of the diamond
 		if(state == true) {
 			switch (direction) {
 				case UP :
@@ -159,7 +160,7 @@ public class Node {
 		return true;
 	}
 	
-	/*
+	/* A VOIR SI ON SUPPRIME ?!?
 	public boolean movement(char[][] map, int checkLine, int checkColumn) {
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ' ||
@@ -167,13 +168,15 @@ public class Node {
 			return false;
 		else
 			return true;
-//	}*/
+	}*/
 	
 	public boolean movement(char[][] map, int checkLine, int checkColumn) {
+		// for the coordonate send we check on the map if we are able to move in it
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ')
 			return false;
 		
+		// check on the table of diamond if we don t have any diamond on our  box 
 		for(Coordonate e : tabDiamond) {
 			if (e.line == checkLine && e.column == checkColumn)
 				return false;
@@ -181,10 +184,11 @@ public class Node {
 		return true;
 	}
 	
-	public boolean roundTrip(Node node, DIRECTION direction) {
+	public boolean roundTrip(Node node, DIRECTION direction) { // prevent round trip between 2 boxes
 		if(node.previous == null)
 			return true;
 		
+		// for each direction, that look the node previous and observe if the coordinate are different or not
 		switch (direction) {
 		case  UP :
 			if((node.previous.column == node.column) && (node.previous.line == node.line -1))
@@ -209,8 +213,8 @@ public class Node {
 	}
 
 	// verifier que ca fonctionne
-	// check if all diamonds are put in goals
-	public boolean checkEnd() {
+	public boolean checkEnd() { // check if all diamonds are put in goals
+		//observe all goal of our node and check if anyone is free or not
 		for (Coordonate e : tabGoal) {
 			if(e.state == false)
 				return false;
@@ -218,14 +222,13 @@ public class Node {
 		return true;
 	}
 	
-	// verifier que ca fonctionne
-	// change the state of the goal and the diamonds 
-	public void changeGoal(int column, int line) {
-		for(Coordonate e : tabGoal) {
-			if((e.column == column) && (e.line == line)) {
+	// A MODIFIER PAS OK DU TOUT CORRESPOND PAS A CE QU ON veut
+	public void changeGoal(int column, int line) {// change the state of the goal and the diamonds
+		for(Coordonate e : tabGoal) { // run all the goal of th table
+			if((e.column == column) && (e.line == line)) { // if coordonate of a goal correspond of the new coordonate we change the state f it
 				e.state = true;
-				for(Coordonate f : tabDiamond) {
-					if((f.column == column) && (f.line == line))
+				for(Coordonate f : tabDiamond) { // run all diamond
+					if((f.column == column) && (f.line == line)) // when we
 						f.state = false;
 				}
 			}
