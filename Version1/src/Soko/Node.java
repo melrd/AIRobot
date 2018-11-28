@@ -159,6 +159,7 @@ public class Node {
 		return true;
 	}
 	
+	/*
 	public boolean movement(char[][] map, int checkLine, int checkColumn) {
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ' ||
@@ -166,14 +167,14 @@ public class Node {
 			return false;
 		else
 			return true;
-	}
+//	}*/
 	
-	public boolean movement(char[][] map, int checkLine, int checkColumn, Node node) {
+	public boolean movement(char[][] map, int checkLine, int checkColumn) {
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ')
 			return false;
 		
-		for(Coordonate e : node.tabDiamond) {
+		for(Coordonate e : tabDiamond) {
 			if (e.line == checkLine && e.column == checkColumn)
 				return false;
 		}
@@ -209,8 +210,8 @@ public class Node {
 
 	// verifier que ca fonctionne
 	// check if all diamonds are put in goals
-	public boolean checkEnd(Node node) {
-		for (Coordonate e : node.tabGoal) {
+	public boolean checkEnd() {
+		for (Coordonate e : tabGoal) {
 			if(e.state == false)
 				return false;
 		}
@@ -219,11 +220,11 @@ public class Node {
 	
 	// verifier que ca fonctionne
 	// change the state of the goal and the diamonds 
-	public void changeGoal(int column, int line, Node node) {
-		for(Coordonate e : node.tabGoal) {
+	public void changeGoal(int column, int line) {
+		for(Coordonate e : tabGoal) {
 			if((e.column == column) && (e.line == line)) {
 				e.state = true;
-				for(Coordonate f : node.tabDiamond) {
+				for(Coordonate f : tabDiamond) {
 					if((f.column == column) && (f.line == line))
 						f.state = false;
 				}
