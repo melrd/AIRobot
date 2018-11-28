@@ -183,65 +183,7 @@ public class Graph {
 	}
 	
 
-	//returns the path composed of nodes
-	public ArrayList<Node> bestDistance(char [][] map, Node startNode, Node goalNode){
-		Tree tree = new Tree(startNode.coordinate.line, startNode.coordinate.column, null, null); // tree of possibles paths
-		Fipo fifo = new Fipo(); // file to save the path
-		ArrayList <Node> path = new ArrayList<>(); // list of all the nodes
-		
-		int [][] indicator = new int [map.length][map[0].length]; // table of values to find the path
-		for (int i = 0; i<map.length; i++) {
-			for (int j = 0; j<map[0].length;j++) {
-				indicator [i][j] = alpha; //everyone has a high value to begin
-			}
-		}	
-		indicator[startNode.coordinate.column][startNode.coordinate.line] = startNode.steps; // the value of the beginning
-		
-		for (Node currentNode : fifo.fifo) {
-			if (!checkArrived(currentNode,goalNode)) {
-				//up
-				if (currentNode.GameRules(map,DIRECTION.UP) == true) { //check if movement is possible
-					System.out.println(" test distance up ");
-					if ((currentNode.roundTrip(DIRECTION.UP) == true)  //check if the movement is relevant
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column][currentNode.coordinate.line - 1])) { //and if the value is the best
-						currentNode.addNode(currentNode,DIRECTION.UP); 
-						fifo.nodeCheck(currentNode, currentNode.up); // add the nodes in the queue
-					}
-				}
-				
-				//down
-				if (currentNode.GameRules(map,DIRECTION.DOWN) == true) { 
-					System.out.println(" test distance down ");
-					if ((currentNode.roundTrip(DIRECTION.DOWN) == true)  
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column][currentNode.coordinate.line + 1])) { 
-						currentNode.addNode(currentNode,DIRECTION.DOWN); 
-						fifo.nodeCheck(currentNode, currentNode.down); 
-					}
-				}
-				
-				//right
-				if (currentNode.GameRules(map,DIRECTION.RIGHT) == true) { 
-					System.out.println(" test distance right ");
-					if ((currentNode.roundTrip(DIRECTION.RIGHT) == true)  
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column + 1][currentNode.coordinate.line])) { 
-						currentNode.addNode(currentNode,DIRECTION.RIGHT); 
-						fifo.nodeCheck(currentNode, currentNode.right); 
-					}
-				}
-				
-				//left
-				if (currentNode.GameRules(map,DIRECTION.LEFT) == true) { 
-					System.out.println(" test distance left ");
-					if ((currentNode.roundTrip(DIRECTION.LEFT) == true)  
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column - 1][currentNode.coordinate.line])) { 
-						currentNode.addNode(currentNode,DIRECTION.LEFT); 
-						fifo.nodeCheck(currentNode, currentNode.left); 
-					}
-				}
-			}
-		}
-			
-			
+	
 		
 		
 		
