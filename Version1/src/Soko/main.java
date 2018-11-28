@@ -49,7 +49,7 @@ public class main {
 		
 		// start of the tree at M and create the tab for diamond and goal
 		tree = new Tree(startLine,startColumn, createCoordonate(mapInitiate , 'G'), createCoordonate(mapInitiate ,'J')); 
-		fifo.fifo.add(tree.node); // WEIRD
+		fifo.addNode(tree.node);
 		
 		// run the fifo with a end point
 		while (fifo.fifo.get(0).steps < 6) {
@@ -57,11 +57,14 @@ public class main {
 			// for the first node of fifo we check the movment possible for it
 			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
 			System.out.println("\n \n");
+			
+			/** calculation(fifo.fifo.get(0)); 
+			 * retourne un boolean qui permettra de stoper le while
+			 */
 			if(fifo.fifo == null)
 				break;
 		}
 		
-		//test(tree, map, fifo);
 		//Graph graph= new Graph();
 
 	}
@@ -173,18 +176,35 @@ public class main {
 		else System.out.println("No node find");
 	}
 
-	//dans le while tant fifo != null
-	private static void calculation(Fipo fifo, Node node) {
-		//if ()
-		for (Coordonate e : node.tabDiamond) {
-			if(e.state == true) {
-				/**
-				 * calculer chemin le plus court
-				 * mettre dans l arbre
-				 * mettre le dernier noeud dans la file 
-				 */
+	//dans le while tant fifo != null et si valeur retourné true
+	private static boolean calculation(Node node) {
+		if (node.coordinate.state == false) {
+			for (Coordonate e : node.tabDiamond) {
+				if(e.state == true) {
+					/**
+					 * calculer chemin le plus court
+					 * mettre dans l arbre
+					 * mettre le dernier noeud dans la file 
+					 */
+				}
 			}
 		}
+		else {
+			for (Coordonate e : node.tabGoal) {
+				if(e.state == false) {
+					/**
+					 * calculer chemin le plus court
+					 * mettre dans l arbre -> actualiser en meme temps la position des J car déplacement
+					 * mettre le dernier noeud dans la file
+					 * modifier l'état des J et des G
+					 */
+				}
+			}
+		}
+		
+		if(node.checkEnd())
+			return true;
+		else return false;
 	}
 	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();

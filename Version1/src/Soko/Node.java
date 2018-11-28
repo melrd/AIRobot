@@ -209,11 +209,14 @@ public class Node {
 		}
 	}
 
-	// verifier que ca fonctionne
-	private boolean checkEnd() { // check if all diamonds are put in goals
+	public boolean checkEnd() { // check if all diamonds are put in goals
 		//observe all goal of our node and check if anyone is free or not
 		for (Coordonate e : tabGoal) {
 			if(e.state == false)
+				return false;
+		}
+		for (Coordonate e : tabDiamond) {
+			if(e.state == true)
 				return false;
 		}
 		return true;

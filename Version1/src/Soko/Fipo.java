@@ -15,7 +15,7 @@ public class Fipo {
 		fifo = null;
 	}
 	
-	private void addNode(Node node) { // new node to check after to add in our fifo
+	public void addNode(Node node) { // new node to check after to add in our fifo
 		// add the case of the node in the List
 		fifo.add(node);
 		// check if the node is added
