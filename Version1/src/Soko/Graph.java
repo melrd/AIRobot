@@ -2,6 +2,8 @@ package Soko;
 
 import java.util.ArrayList;
 
+import Soko.main.DIRECTION;
+
 public class Graph {
 
 	private int [][] G ; //values table (x,y) = (column, line)
@@ -49,7 +51,7 @@ public class Graph {
 	
 	//is this vertex exists = is the case is free
 	public boolean isVertex(Node node, char [][] map) {
-		return (node.movement(map, node.line, node.column));
+		return (node.movement(map, node.coordinate.line, node.coordinate.column));
 	}
 	
 	//number of vertex = size of path 
@@ -59,7 +61,7 @@ public class Graph {
 	
 	//is this distance exists
 	public boolean isPath(Node nodeA, Node nodeB, char[][] map) {
-		return ((isVertex(nodeA,map)) && (isVertex(nodeB,map)) && (G[nodeB.line][nodeB.column] != alpha));
+		return ((isVertex(nodeA,map)) && (isVertex(nodeB,map)) && (G[nodeB.coordinate.line][nodeB.coordinate.column] != alpha));
 	}
 	
 	//returns table of successful vertex
@@ -89,7 +91,7 @@ public class Graph {
 	
 	//get the distance's value of the node
 	public int getDistance(Node nodeA, Node nodeB, char [][] map) {
-		if ( (nodeB.line<0) || (nodeB.line >= G.length) || (nodeB.column<0) || (nodeB.column >= G.length) ) {
+		if ( (nodeB.coordinate.line<0) || (nodeB.coordinate.line >= G.length) || (nodeB.coordinate.column<0) || (nodeB.coordinate.column >= G.length) ) {
 			System.out.println("Graph::getDistance : Error: out of limits.");
 			System.exit(-1);
 		}
@@ -97,7 +99,7 @@ public class Graph {
 			System.out.println("Graph::getDistance : Error: not a distance.");
 			System.exit(-1);
 		}
-		return G[nodeB.line][nodeB.column];
+		return G[nodeB.coordinate.line][nodeB.coordinate.column];
 	}
 	
 	//getter of the value table
@@ -121,7 +123,7 @@ public class Graph {
 	public int distance(char [][] map, Node node, int finalcolumn, int finalline) {
 		
 		Coordonate F = new Coordonate(finalcolumn,finalline, false);
-		Coordonate C = new Coordonate(node.column,node.line,false); //abstract A to follow the path
+		Coordonate C = new Coordonate(node.coordinate.column,node.coordinate.line,false); //abstract A to follow the path
 		double dist = 0.0;
 		int count = 0; //counts steps
 		int xCo = 0; //change of column's coordinate : 0 or 1 or -1
@@ -179,6 +181,84 @@ public class Graph {
 		return count;
 		
 	}
+	
+	//returns the path composed of nodes
+	public ArrayList<Node> bestDistance(char [][] map, Node startNode, Node goalNode){
+		Tree tree = new Tree(startNode.coordinate.line, startNode.coordinate.column, null, null); // tree of possibles paths
+		Fipo fifo = new Fipo(); // file to save the path
+		ArrayList <Node> path = new ArrayList<>(); // list of all the nodes
+		
+		int [][] indicator = new int [map.length][map[0].length]; // table of values to find the path
+		for (int i = 0; i<map.length; i++) {
+			for (int j = 0; j<map[0].length;j++) {
+				indicator [i][j] = alpha; //everyone has a high value to begin
+			}
+		}	
+		indicator[startNode.coordinate.column][startNode.coordinate.line] = startNode.steps; // the value of the beginning
+		
+		for (Node currentNode : fifo.fifo) {
+			if (!checkArrived(currentNode,goalNode)) {
+				//up
+				if (currentNode.GameRules(map,DIRECTION.UP) == true) { //check if movement is possible
+					System.out.println(" test distance up ");
+					if ((currentNode.roundTrip(DIRECTION.UP) == true)  //check if the movement is relevant
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column][currentNode.coordinate.line - 1])) { //and if the value is the best
+						currentNode.addNode(currentNode,DIRECTION.UP); 
+						fifo.nodeCheck(currentNode, currentNode.up); // add the nodes in the queue
+					}
+				}
+				
+				//down
+				if (currentNode.GameRules(map,DIRECTION.DOWN) == true) { 
+					System.out.println(" test distance down ");
+					if ((currentNode.roundTrip(DIRECTION.DOWN) == true)  
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column][currentNode.coordinate.line + 1])) { 
+						currentNode.addNode(currentNode,DIRECTION.DOWN); 
+						fifo.nodeCheck(currentNode, currentNode.down); 
+					}
+				}
+				
+				//right
+				if (currentNode.GameRules(map,DIRECTION.RIGHT) == true) { 
+					System.out.println(" test distance right ");
+					if ((currentNode.roundTrip(DIRECTION.RIGHT) == true)  
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column + 1][currentNode.coordinate.line])) { 
+						currentNode.addNode(currentNode,DIRECTION.RIGHT); 
+						fifo.nodeCheck(currentNode, currentNode.right); 
+					}
+				}
+				
+				//left
+				if (currentNode.GameRules(map,DIRECTION.LEFT) == true) { 
+					System.out.println(" test distance left ");
+					if ((currentNode.roundTrip(DIRECTION.LEFT) == true)  
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column - 1][currentNode.coordinate.line])) { 
+						currentNode.addNode(currentNode,DIRECTION.LEFT); 
+						fifo.nodeCheck(currentNode, currentNode.left); 
+					}
+				}
+			}
+		}
+			
+			
+		
+		
+		
+		
+		
+		
+		
+		return path;
+	}
+
+	
+	public boolean checkArrived (Node actual, Node goal) {
+		if (actual == goal) {
+			return true;
+		}
+		else return false;
+	}
+	
 	
 	//calculates the shortest path between two nodes
 	//check if the result is null
