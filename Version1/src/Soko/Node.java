@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import Soko.main.DIRECTION;
 
 public class Node {
-	int steps; // to know which way is fast
-	Coordonate coordinate; // give position and if it transports something or not
+	int steps; // for know which way is fast
+	Coordonate coordinate; // give position and if he transport something or not
 	Node previous, // child node for each direction possible 
 		up,
 		down,
@@ -99,7 +99,7 @@ public class Node {
 		}
 	}
 
-	public boolean GameRules(char[][] map, DIRECTION direction) { //check if the movement is possible
+	public boolean GameRules(char[][] map, DIRECTION direction) { //check if the movment is possible
 		int lineChange = 0,
 			columnChange  = 0;
 		
@@ -167,7 +167,7 @@ public class Node {
 	}
 	*/
 	
-	public boolean movement(char[][] map, int checkLine, int checkColumn) {
+	private boolean movement(char[][] map, int checkLine, int checkColumn) {
 		// for the coordonate send we check on the map if we are able to move in it
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ')
@@ -222,7 +222,7 @@ public class Node {
 		return true;
 	}
 	
-	// A MODIFIER PAS OK DU TOUT CORRESPOND PAS A CE QU ON VEUT
+	// A MODIFIER PAS OK DU TOUT CORRESPOND PAS A CE QU ON veut
 	private void changeGoal(int column, int line) {// change the state of the goal and the diamonds
 		for(Coordonate e : tabGoal) { // run all the goal of th table
 			if((e.column == column) && (e.line == line)) { // if coordonate of a goal correspond of the new coordonate we change the state f it
@@ -234,10 +234,4 @@ public class Node {
 			}
 		}
 	}
-	
-	
-	
-	
-	
-	
 }

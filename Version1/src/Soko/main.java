@@ -31,7 +31,7 @@ public class main {
 		mapClean = new char[mapInitiate.length][mapInitiate[0].length]; // copy the initiate map in the clean one.
 		
 		
-		// run the map to find the robot, in the same way we do the clean map
+		// run the map for find the robot, in the same way we do the clean map
 		for(int i = 0;i < mapInitiate.length;i++) {
 			for(int j = 0;j<mapInitiate[i].length;j++) {
 				System.out.print(mapInitiate [i][j]);
@@ -65,7 +65,7 @@ public class main {
 				break;
 		}
 		
-		
+		//Graph graph= new Graph();
 
 	}
 	
@@ -206,7 +206,6 @@ public class main {
 			return true;
 		else return false;
 	}
-	
 	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();
 		boolean state;

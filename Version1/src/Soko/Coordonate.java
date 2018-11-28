@@ -5,8 +5,6 @@ public class Coordonate {
 		line;
 	boolean state; // state of our object or if you transport something or not
 	
-	
-	
 	public Coordonate() { // implements at null all value
 		column = 0;
 		line = 0;
@@ -43,8 +41,6 @@ public class Coordonate {
 	public void setState(boolean state) {
 		this.state = state;
 	}
-	
-	
 	
 
 }

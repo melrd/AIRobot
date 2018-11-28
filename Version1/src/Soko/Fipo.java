@@ -28,6 +28,7 @@ public class Fipo {
 		fifo.remove(fifo.indexOf(node));
 	}
 	
+	
 	public void nodeCheck(Node actualNode, Node nextNode) {
 		addNode(nextNode); // add the new node in the file
 		if(fifo.contains(actualNode) == true) // check if the node check is in the file
