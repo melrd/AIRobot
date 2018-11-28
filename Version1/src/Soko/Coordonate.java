@@ -3,7 +3,7 @@ package Soko;
 public class Coordonate {
 	int column, // number of the coordonate  for line and column
 		line;
-	boolean state; // state of our object
+	boolean state; // state of our object or if you transport something or not
 	
 	public Coordonate() { // implements at null all value
 		column = 0;

@@ -38,8 +38,9 @@ public class main {
 				if(mapInitiate [i][j] == 'M') {
 					startColumn = j;
 					startLine = i;
+					mapClean[i][j] = '.';
 				}
-				if(mapInitiate[i][j] == 'G' || mapInitiate[i][j] == 'J' || mapInitiate[i][j] == 'M')
+				if(mapInitiate[i][j] == 'G' || mapInitiate[i][j] == 'J')
 					mapClean[i][j] = '.';
 				mapClean[i][j] = mapInitiate[i][j];
 			}
@@ -51,7 +52,7 @@ public class main {
 		fifo.fifo.add(tree.node); // WEIRD
 		
 		// run the fifo with a end point
-		while (fifo.fifo.get(0).steps < 5) {
+		while (fifo.fifo.get(0).steps < 6) {
 			System.out.println("Step : " + fifo.fifo.get(0).steps);
 			// for the first node of fifo we check the movment possible for it
 			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
@@ -66,7 +67,7 @@ public class main {
 	}
 	
 		
-	public static char[][] readingFile() {
+	private static char[][] readingFile() {
 		ArrayList<String> extractFile = new ArrayList<String>();
 		char[][] map = null; 
 		int numberColumn = 0, 
@@ -114,22 +115,6 @@ public class main {
 		return map;
 	}           
 
-	/** NOT USEFUL ANYMORE
-	private static void test(Tree tree, char[][] map, Fipo fifo) {
-		System.out.println("--------------START---------------------");
-		tree.node.printNode(tree.node);
-		checkAround(map,tree.node, fifo);
-		
-		System.out.println("--------------LEFT---------------------");
-		tree.node.printNode(tree.node.left);
-		checkAround(map,tree.node.left, fifo);
-
-		System.out.println("---------------RIGHT--------------------");
-		tree.node.printNode(tree.node.left.right);
-		checkAround(map,tree.node.left.right, fifo);
-	}
-	*/
-	
 	private static void checkAround (char[][] map, Node node, Fipo fifo) {
 		node.printNode();
 		
@@ -140,7 +125,7 @@ public class main {
 		 * if we don t, we add this child node and we put this node in the file.
 		 * then we print the node
 		 */
-		if (node.GameRules(map,false,DIRECTION.DOWN) == true) {
+		if (node.GameRules(map,DIRECTION.DOWN) == true) {
 			System.out.println("-- test D --");
 			if(node.roundTrip( DIRECTION.DOWN) == true) {
 				node.addNode(node,DIRECTION.DOWN);
@@ -150,7 +135,7 @@ public class main {
 		//node.down.printNode();
 		printNode(node.down);
 		
-		if (node.GameRules(map,false,DIRECTION.LEFT) == true) {
+		if (node.GameRules(map,DIRECTION.LEFT) == true) {
 			System.out.println("-- test L --");
 			if(node.roundTrip(DIRECTION.LEFT) == true) {
 				node.addNode(node,DIRECTION.LEFT);
@@ -160,7 +145,7 @@ public class main {
 		//node.left.printNode();
 		printNode(node.left);
 		
-		if (node.GameRules(map,false,DIRECTION.UP) == true) {
+		if (node.GameRules(map,DIRECTION.UP) == true) {
 			System.out.println("-- test U --");
 			if(node.roundTrip(DIRECTION.UP) == true) {
 				node.addNode(node,DIRECTION.UP);
@@ -170,7 +155,7 @@ public class main {
 		//node.up.printNode();
 		printNode(node.up);
 		
-		if (node.GameRules(map,false,DIRECTION.RIGHT) == true) {
+		if (node.GameRules(map,DIRECTION.RIGHT) == true) {
 			System.out.println("-- test R --");
 			if(node.roundTrip(DIRECTION.RIGHT) == true) {
 				node.addNode(node,DIRECTION.RIGHT);
@@ -181,8 +166,6 @@ public class main {
 		printNode(node.right);
 	}
 
-	
-	// BETTER TO DO IN THE CLASS BUT HOW 
 	// check if the node is not empty before tho call the function in the node class
 	private static void printNode(Node node) {
 		if(node != null)
@@ -190,7 +173,19 @@ public class main {
 		else System.out.println("No node find");
 	}
 
-	
+	//dans le while tant fifo != null
+	private static void calculation(Fipo fifo, Node node) {
+		//if ()
+		for (Coordonate e : node.tabDiamond) {
+			if(e.state == true) {
+				/**
+				 * calculer chemin le plus court
+				 * mettre dans l arbre
+				 * mettre le dernier noeud dans la file 
+				 */
+			}
+		}
+	}
 	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
 		ArrayList <Coordonate> tab = new ArrayList();
 		boolean state;
