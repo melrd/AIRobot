@@ -176,11 +176,10 @@ public class main {
 		else System.out.println("No node find");
 	}
 
-	//dans le while tant fifo != null et si valeur retourné true
+	//dans le while tant fifo != null et si valeur retourné true (ca a voir hein)
 	private static boolean calculation(Node node, Fipo fifo) {
 		ArrayList<Node> temp = new ArrayList();
-		int positionDiamond = 0,
-				positionGoal = 0;
+		int positionDiamond = 0;
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -206,7 +205,9 @@ public class main {
 					 * modifier l'état des J et des G
 					 */
 					// calcul du chemin
-					fifo.nodeCheck(node, copyWay(node, temp, 0));
+					// besoin de savoir quel diamand
+					// vérifier que les conditions de direction sont les bonnes
+					fifo.nodeCheck(node, copyWay(node, temp, 0, positionDiamond, node.tabGoal.indexOf(e)));
 				}
 			}
 		}
@@ -271,6 +272,8 @@ public class main {
 		return null;
 	}
 	
+	//jamais testé
+	// copy shortest way for the diamonds in the tree, change the position of the diamond and change the state of the goal and the diamonds at the end
 	private static Node copyWay(Node node, ArrayList<Node> e, int position, int diamond, int goal) {
 		/**
 		 * recursive function will check each node of the tab
