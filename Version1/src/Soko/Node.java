@@ -156,7 +156,7 @@ public class Node {
 		return true;
 	}
 	
-	private boolean movement(char[][] map, int checkLine, int checkColumn) {
+	public boolean movement(char[][] map, int checkLine, int checkColumn) {
 		// for the coordonate send we check on the map if we are able to move in it
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ')
