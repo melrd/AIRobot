@@ -140,47 +140,51 @@ public class main {
 			System.out.println("-- test D --");
 			if(node.roundTrip( DIRECTION.DOWN) == true) {
 				node.addNode(node,DIRECTION.DOWN);
-				fifo.nodeCheck(fifo.fifo, node, node.down);
+				fifo.nodeCheck(node, node.down);
 			}
 		}
-		if(node.down != null)
-			node.down.printNode();
-		else System.out.println("No node find");
+		//node.down.printNode();
+		printNode(node.down);
 		
 		if (node.GameRules(map,false,DIRECTION.LEFT) == true) {
 			System.out.println("-- test L --");
 			if(node.roundTrip(DIRECTION.LEFT) == true) {
 				node.addNode(node,DIRECTION.LEFT);
-				fifo.nodeCheck(fifo.fifo, node, node.left);
+				fifo.nodeCheck( node, node.left);
 			}
 		}
-		if(node.left != null)
-			node.left.printNode();
-		else System.out.println("No node find");
+		//node.left.printNode();
+		printNode(node.left);
 		
 		if (node.GameRules(map,false,DIRECTION.UP) == true) {
 			System.out.println("-- test U --");
 			if(node.roundTrip(DIRECTION.UP) == true) {
 				node.addNode(node,DIRECTION.UP);
-				fifo.nodeCheck(fifo.fifo, node, node.up);
+				fifo.nodeCheck(node, node.up);
 			}
 		}
-		if (node.up != null)
-			node.up.printNode();
-		else System.out.println("No node find");
+		//node.up.printNode();
+		printNode(node.up);
 		
 		if (node.GameRules(map,false,DIRECTION.RIGHT) == true) {
 			System.out.println("-- test R --");
 			if(node.roundTrip(DIRECTION.RIGHT) == true) {
 				node.addNode(node,DIRECTION.RIGHT);
-				fifo.nodeCheck(fifo.fifo, node, node.right);
+				fifo.nodeCheck(node, node.right);
 			}
 		}
-		if(node.right != null)
-			node.right.printNode();
+		//node.right.printNode();
+		printNode(node.right);
+	}
+
+	
+	// BETTER TO DO IN THE CLASS BUT HOW 
+	// check if the node is not empty before tho call the function in the node class
+	private static void printNode(Node node) {
+		if(node != null)
+			node.printNode();
 		else System.out.println("No node find");
 	}
-	
 
 	//CHANGER LE NOM POUR CREATECOorDONATE
 	private static ArrayList<Coordonate> createGoal (char[][]map, char type) { //create table of coordonate

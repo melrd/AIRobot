@@ -67,13 +67,13 @@ public class Node {
 	
 	// COMMENT FAIRE POUR CHECK SI LE NOEUD EST NUL -> truc fait mais pas ouf
 	public void printNode() { // permit to show the node we want
-		//if(null) // verify we have a node in the memory
-			//System.out.println("No node find");
-		//else { // print the coordonate
-			System.out.println("Coordonate : [" + line + "][" + column +"]");
+	/**	if(this == null) // verify we have a node in the memory
+			System.out.println("No node find");
+		else { // print the coordonate
+*/			System.out.println("Coordonate : [" + line + "][" + column +"]");
 			//System.out.println("Step : " + node.steps);
 			//System.out.println("Goal non complete : " + node.goalsFree);
-		//}
+	//	}
 	}
 
 	// CLEAN A FINIR MAIS COMMENT ....
