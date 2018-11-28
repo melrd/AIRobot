@@ -8,7 +8,7 @@ public class Graph {
 	//private boolean [] visited ; // visited and existed vertex
 	public final static int alpha = 999 ; //constant corresponding to infinity
 	public ArrayList<int []> path = new ArrayList<>();
-	
+	 
 	//default constructor
 	public Graph() {
 		int Nmax = 30;
