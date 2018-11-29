@@ -184,6 +184,7 @@ public class main {
 	private static boolean calculation(Node node, Fipo fifo) {
 		ArrayList<Node> temp = new ArrayList();
 		int positionDiamond = 999;
+		Node finalNode;
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -194,8 +195,7 @@ public class main {
 					 * mettre le dernier noeud dans la file 
 					 */
 					//calcul du chemin retourne une liste de noeud
-					// add the last node of the way, and add the way in the tree
-					//temp = listNode(node,shortWay);
+					// add the way in the tree and add the last node of the way ine the file
 					fifo.nodeCheck(node, copyWay(node, temp, 0));
 					}
 			}
@@ -214,7 +214,7 @@ public class main {
 						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
 							positionDiamond = node.tabDiamond.indexOf(f);
 					}
-					//temp = listNode(node,shortWay);
+					// add the way in the tree and add the last node of the way int the file
 					fifo.nodeCheck(node, copyWay(node, temp, 0, positionDiamond, node.tabGoal.indexOf(e)));
 				}
 			}
