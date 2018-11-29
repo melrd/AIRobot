@@ -26,6 +26,7 @@ public class main {
 		Tree tree = null; // decision tree
 		Fipo fifo = new Fipo(); // file for run the tree
 		
+		ArrayList <Node> = temp;
 		
 		mapInitiate  = readingFile(); // reading the file and give the map of the game 
 		mapClean = new char[mapInitiate.length][mapInitiate[0].length]; // copy the initiate map in the clean one.
@@ -65,6 +66,11 @@ public class main {
 				break;
 		}
 		
+		temp = listNode(fifo.fifo.get(0), temp);
+		if (temp == null)
+			System.out.println("No way");
+		for (Node e : temp)
+			e.printNode();
 		//Graph graph= new Graph();
 
 	}
@@ -361,6 +367,7 @@ public class main {
 		return tab;
 	}
 	
+	//retourne le chemin
 	private static ArrayList <Node> listNode(Node node, ArrayList <Node> temp){
 		temp.add(0, node);
 		if(node.previous == null)
