@@ -205,8 +205,10 @@ public class main {
 					 * modifier l'état des J et des G
 					 */
 					// calcul du chemin
-					// besoin de savoir quel diamand
-					// vérifier que les conditions de direction sont les bonnes
+					for (Coordonate f : node.tabDiamond) {
+						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
+							positionDiamond = node.tabDiamond.indexOf(f);
+					}
 					fifo.nodeCheck(node, copyWay(node, temp, 0, positionDiamond, node.tabGoal.indexOf(e)));
 				}
 			}
@@ -230,7 +232,7 @@ public class main {
 		
 		if(e.get(position).coordinate.column == node.coordinate.column) {
 			
-			if(e.get(position).coordinate.line == node.coordinate.line +1) {
+			if(e.get(position).coordinate.line == node.coordinate.line -1) {
 				if(node.down == null)
 					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
 				if (position ++ < e.size())
@@ -239,7 +241,7 @@ public class main {
 					return node.down;
 			}
 				
-			else if(e.get(position).coordinate.line == node.coordinate.line -1) {
+			else if(e.get(position).coordinate.line == node.coordinate.line +1) {
 				if(node.up == null)
 					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
 				if (position ++ < e.size()) 
@@ -286,10 +288,10 @@ public class main {
 		
 		if(e.get(position).coordinate.column == node.coordinate.column) {
 			
-			if(e.get(position).coordinate.line == node.coordinate.line +1) {
+			if(e.get(position).coordinate.line == node.coordinate.line -1) {
 				if(node.down == null)
 					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				node.down.tabDiamond.get(diamond).line ++;
+				node.down.tabDiamond.get(diamond).line --;
 				if (position ++ < e.size())
 					copyWay(node.down, e, position ++, diamond, goal);
 				else {
@@ -299,10 +301,10 @@ public class main {
 				}
 			}
 				
-			else if(e.get(position).coordinate.line == node.coordinate.line -1) {
+			else if(e.get(position).coordinate.line == node.coordinate.line +1) {
 				if(node.up == null)
 					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				node.up.tabDiamond.get(diamond).line --;
+				node.up.tabDiamond.get(diamond).line ++;
 				if (position ++ < e.size()) 
 					copyWay(node.up, e, position ++, diamond, goal);
 				else {
