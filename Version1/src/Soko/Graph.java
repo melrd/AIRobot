@@ -184,10 +184,10 @@ public class Graph {
 	
 	
 	//returns the path composed of nodes
-	public ArrayList<Node> bestDistance(char [][] map, Node startNode, Node goalNode){
+	public ArrayList<Node> bestDistance(char [][] map, Node startNode, Coordonate goal){
 		//Tree tree = new Tree(startNode.coordinate.line, startNode.coordinate.column, null, null); // tree of possibles paths
 		Fipo fifo = new Fipo(); // file to save the path
-		ArrayList <Node> path = new ArrayList<>(); // list of all the nodes
+		ArrayList <Node> pathF = new ArrayList<>(); // list of all the nodes
 		Node lastNode = new Node(); //last node of the file
 		
 		int [][] indicator = new int [map.length][map[0].length]; // table of values to find the path
@@ -204,7 +204,7 @@ public class Graph {
 		for (Node currentNode : fifo.fifo) {
 			lastNode = currentNode;
 			currentNode.printNode();
-			if (!checkArrived(currentNode,goalNode)) {
+			if (!checkArrived(currentNode,goal)) {
 				//up
 				if (currentNode.GameRules(map,DIRECTION.UP) == true) { //check if movement is possible
 					System.out.println(" test distance up ");
@@ -253,13 +253,15 @@ public class Graph {
 		}
 			
 		}	
-			
-		return path;
+		
+		pathF = lastNode.listNode(lastNode, pathF);
+		
+		return pathF;
 		
 	} 
 	
-	public boolean checkArrived (Node actual, Node goal) {
-		if (actual == goal) {
+	public boolean checkArrived (Node actual, Coordonate goal) {
+		if (actual.coordinate.column == goal.column && actual.coordinate.line == goal.line) {
 			return true;
 		}
 		else return false;

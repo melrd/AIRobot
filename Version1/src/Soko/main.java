@@ -25,6 +25,7 @@ public class main {
 			numberGoal = 0;
 		Tree tree = null; // decision tree
 		Fipo fifo = new Fipo(); // file for run the tree
+		boolean endOfTree = false;
 		
 		ArrayList <Node> temp = new ArrayList();
 		
@@ -54,24 +55,27 @@ public class main {
 		
 		System.out.println("\n");
 		
+		
 		// run the fifo with a end point
-		while (fifo.fifo.get(0).steps < 6) {
+		/**while (fifo.fifo.get(0).steps < 6) {
 			// for the first node of fifo we check the movment possible for it
 			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
-			
-			/** calculation(fifo.fifo.get(0)); 
-			 * retourne un boolean qui permettra de stoper le while
-			 */
 			if(fifo.fifo == null)
 				break;
+		}*/
+		
+		while(fifo.fifo.size() > 0 && endOfTree == false) {
+			endOfTree = calculation(fifo, mapClean);
 		}
+		
+		
 		System.out.println("\n");
 		System.out.println("Way");
-		temp = listNode(fifo.fifo.get(0), temp);
+		//return the way for get it
+		temp = fifo.fifo.get(0).listNode(fifo.fifo.get(0), temp);
 		System.out.println(temp.size());
 		for (Node e : temp)
 			printNode(e); 
-		//Graph graph= new Graph();
 
 	}
 	 
@@ -179,10 +183,11 @@ public class main {
 	}
 
 	//dans le while tant fifo != null et si valeur retourné true (ca a voir hein)
-	private static boolean calculation(Node node, Fipo fifo) {
+	private static boolean calculation(Fipo fifo, char [][] map) {
 		ArrayList<Node> temp = new ArrayList();
 		int positionDiamond = 999;
-		Node finalNode;
+		Node node = fifo.fifo.get(0);
+		Graph graph = new Graph();
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -193,6 +198,7 @@ public class main {
 					 * mettre le dernier noeud dans la file 
 					 */
 					//calcul du chemin retourne une liste de noeud
+					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
 					// add the way in the tree and add the last node of the way ine the file
 					fifo.nodeCheck(node, copyWay(node, temp, 0));
 					}
@@ -208,6 +214,7 @@ public class main {
 					 * modifier l'état des J et des G
 					 */
 					// calcul du chemin
+					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
 					for (Coordonate f : node.tabDiamond) {
 						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
 							positionDiamond = node.tabDiamond.indexOf(f);

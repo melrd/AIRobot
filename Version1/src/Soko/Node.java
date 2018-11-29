@@ -204,7 +204,7 @@ public class Node {
 				return false;
 		}
 		for (Coordonate e : tabDiamond) {
-			if(e.state == true)
+			if(e.state == false)
 				return false;
 		}
 		return true;
