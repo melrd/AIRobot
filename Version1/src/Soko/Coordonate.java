@@ -1,17 +1,17 @@
 package Soko;
 
-public class Coordinate {
-	int column, // number of the coordinate  for line and column
+public class Coordonate {
+	int column, // number of the coordonate  for line and column
 		line;
 	boolean state; // state of our object or if you transport something or not
 	
-	public Coordinate() { // implements at null all value
+	public Coordonate() { // implements at null all value
 		column = 0;
 		line = 0;
 		state = false;
 	}
 	
-	public Coordinate(int pColumn, int pLine) { // implements the coordinate
+	public Coordonate(int pColumn, int pLine) { // implements the coordonate
 		column = pColumn;
 		line = pLine;
 		state = false;

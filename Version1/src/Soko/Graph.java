@@ -122,8 +122,8 @@ public class Graph {
 	//calculates the practical distance between two points
 	public int distance(char [][] map, Node node, int finalcolumn, int finalline) {
 		
-		Coordinate F = new Coordinate(finalcolumn,finalline);
-		Coordinate C = new Coordinate(node.coordinate.column,node.coordinate.line); //abstract A to follow the path
+		Coordonate F = new Coordonate(finalcolumn,finalline);
+		Coordonate C = new Coordonate(node.coordinate.column,node.coordinate.line); //abstract A to follow the path
 		double dist = 0.0;
 		int count = 0; //counts steps
 		int xCo = 0; //change of column's coordinate : 0 or 1 or -1
@@ -184,7 +184,7 @@ public class Graph {
 	
 	
 	//returns the path composed of nodes
-	public ArrayList<Node> bestDistance(char [][] map, Node startNode, Node goalNode){
+		public ArrayList<Node> bestDistance(char [][] map, Node startNode, Node goalNode){
 			Tree tree = new Tree(startNode.coordinate.line, startNode.coordinate.column, null, null); // tree of possibles paths
 			Fipo fifo = new Fipo(); // file to save the path
 			ArrayList <Node> path = new ArrayList<>(); // list of all the nodes
@@ -246,7 +246,6 @@ public class Graph {
 			return path;
 		}
 	
-	//check if the node is arrived
 	public boolean checkArrived (Node actual, Node goal) {
 		if (actual == goal) {
 			return true;
@@ -256,7 +255,7 @@ public class Graph {
 	
 	//calculates the shortest path between two nodes
 	//check if the result is null
-	public ArrayList<int[]> pathCalcul(Node node, Coordinate goal, char[][] map) {
+	public ArrayList<int[]> pathCalcul(Node node, Coordonate goal, char[][] map) {
 			int minDist = distance (map, node, goal.column, goal.line); //distance of the best path
 						
 			if (minDist == path.size()) {
