@@ -370,7 +370,7 @@ public class main {
 	}
 	
 	//retourne le chemin
-	private static ArrayList <Node> listNode(Node node, ArrayList <Node> temp){
+	public static ArrayList <Node> listNode(Node node, ArrayList <Node> temp){
 		temp.add(0, node);
 		if(node.previous != null) { 
 			listNode(node.previous,temp);
