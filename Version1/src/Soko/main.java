@@ -365,13 +365,6 @@ public class main {
 		return tab;
 	}
 	
-	//send the way
-	private static ArrayList <Node> listNode(Node node, ArrayList <Node> temp){
-		temp.add(0, node); // add the actual node at the beginin of the tab
-		if(node.previous != null) // if parent node, call this function again
-			listNode(node.previous,temp);
-		return temp; //return the tab with all the node for the way
-		
-	}
+	
 
 }
