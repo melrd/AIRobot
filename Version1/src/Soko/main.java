@@ -52,12 +52,12 @@ public class main {
 		tree = new Tree(startLine,startColumn, createCoordonate(mapInitiate , 'G'), createCoordonate(mapInitiate ,'J')); 
 		fifo.addNode(tree.node);
 		
+		System.out.println("\n");
+		
 		// run the fifo with a end point
 		while (fifo.fifo.get(0).steps < 6) {
-			System.out.println("Step : " + fifo.fifo.get(0).steps);
 			// for the first node of fifo we check the movment possible for it
 			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
-			System.out.println("\n \n");
 			
 			/** calculation(fifo.fifo.get(0)); 
 			 * retourne un boolean qui permettra de stoper le while
@@ -65,7 +65,7 @@ public class main {
 			if(fifo.fifo == null)
 				break;
 		}
-		
+		System.out.println("\n");
 		System.out.println("Way");
 		temp = listNode(fifo.fifo.get(0), temp);
 		System.out.println(temp.size());
@@ -137,44 +137,40 @@ public class main {
 		 * then we print the node
 		 */
 		if (node.GameRules(map,DIRECTION.DOWN) == true) {
-			System.out.println("-- test D --");
+//			System.out.println("-- test D --");
 			if(node.roundTrip( DIRECTION.DOWN) == true) {
 				node.addNode(node,DIRECTION.DOWN);
 				fifo.nodeCheck(node, node.down);
 			}
 		}
-		//node.down.printNode();
-		printNode(node.down);
+//		printNode(node.down);
 		
 		if (node.GameRules(map,DIRECTION.LEFT) == true) {
-			System.out.println("-- test L --");
+//			System.out.println("-- test L --");
 			if(node.roundTrip(DIRECTION.LEFT) == true) {
 				node.addNode(node,DIRECTION.LEFT);
 				fifo.nodeCheck(node, node.left);
 			}
 		}
-		//node.left.printNode();
-		printNode(node.left);
+//		printNode(node.left);
 		
 		if (node.GameRules(map,DIRECTION.UP) == true) {
-			System.out.println("-- test U --");
+//			System.out.println("-- test U --");
 			if(node.roundTrip(DIRECTION.UP) == true) {
 				node.addNode(node,DIRECTION.UP);
 				fifo.nodeCheck(node, node.up);
 			}
 		}
-		//node.up.printNode();
-		printNode(node.up);
+//		printNode(node.up);
 		
 		if (node.GameRules(map,DIRECTION.RIGHT) == true) {
-			System.out.println("-- test R --");
+//			System.out.println("-- test R --");
 			if(node.roundTrip(DIRECTION.RIGHT) == true) {
 				node.addNode(node,DIRECTION.RIGHT);
 				fifo.nodeCheck(node, node.right);
 			}
 		}
-		//node.right.printNode();
-		printNode(node.right);
+		//printNode(node.right);
 	}
 
 	// check if the node is not empty before tho call the function in the node class
@@ -369,14 +365,12 @@ public class main {
 		return tab;
 	}
 	
-	//retourne le chemin
+	//send the way
 	private static ArrayList <Node> listNode(Node node, ArrayList <Node> temp){
-		temp.add(0, node);
-		if(node.previous != null) { 
+		temp.add(0, node); // add the actual node at the beginin of the tab
+		if(node.previous != null) // if parent node, call this function again
 			listNode(node.previous,temp);
-			System.out.println("bla");
-		}
-		return temp;
+		return temp; //return the tab with all the node for the way
 		
 	}
 
