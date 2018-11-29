@@ -67,8 +67,7 @@ public class Node {
 	
 	public void printNode() { // permit to show the node we want
 		System.out.println("Coordinate : [" + coordinate.line + "][" + coordinate.column+"]");
-		//System.out.println("Step : " + node.steps);
-		//System.out.println("Goal non complete : " + node.goalsFree);
+		System.out.println("Step : " + steps);
 	}
 
 	public void addNode(Node actual, DIRECTION direction) {// add node according to the direction
