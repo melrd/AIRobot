@@ -256,7 +256,7 @@ public class Graph {
 			
 		return path;
 		
-	}
+	} 
 	
 	public boolean checkArrived (Node actual, Node goal) {
 		if (actual == goal) {

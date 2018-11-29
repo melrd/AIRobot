@@ -76,7 +76,7 @@ public class main {
 		//Graph graph= new Graph();
 
 	}
-	
+	 
 		
 	private static char[][] readingFile() {
 		ArrayList<String> extractFile = new ArrayList<String>();
