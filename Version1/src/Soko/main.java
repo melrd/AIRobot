@@ -179,7 +179,7 @@ public class main {
 	//dans le while tant fifo != null et si valeur retourné true (ca a voir hein)
 	private static boolean calculation(Node node, Fipo fifo) {
 		ArrayList<Node> temp = new ArrayList();
-		int positionDiamond = 0;
+		int positionDiamond = 999;
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -191,6 +191,7 @@ public class main {
 					 */
 					//calcul du chemin retourne une liste de noeud
 					// add the last node of the way, and add the way in the tree
+					//temp = listNode(node,shortWay);
 					fifo.nodeCheck(node, copyWay(node, temp, 0));
 					}
 			}
@@ -209,6 +210,7 @@ public class main {
 						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
 							positionDiamond = node.tabDiamond.indexOf(f);
 					}
+					//temp = listNode(node,shortWay);
 					fifo.nodeCheck(node, copyWay(node, temp, 0, positionDiamond, node.tabGoal.indexOf(e)));
 				}
 			}
@@ -357,6 +359,15 @@ public class main {
 				}
 		}
 		return tab;
+	}
+	
+	private static ArrayList <Node> listNode(Node node, ArrayList <Node> temp){
+		temp.add(0, node);
+		if(node.previous == null)
+			return temp;
+		else
+			listNode(node.previous,temp);
+		return null;
 	}
 
 }
