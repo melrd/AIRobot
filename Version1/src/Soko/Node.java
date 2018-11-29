@@ -216,7 +216,7 @@ public class Node {
 		temp.add(0, node); // add the actual node at the beginning of the tab
 		if(node.previous != null) // if parent node, call this function again
 			listNode(node.previous,temp);
-		return temp; //return the tab with all the node for the wayS
+		return temp; //return the tab with all the node for the ways
 		
 	}
 }

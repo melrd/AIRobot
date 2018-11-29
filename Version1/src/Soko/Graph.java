@@ -250,10 +250,13 @@ public class Graph {
 					}
 				}
 			}
-		}
-			
+		}			
 		}	
-			
+		
+		//return the path from the last node
+		lastNode.printNode();
+		path = lastNode.listNode(lastNode, path);
+					
 		return path;
 		
 	}
