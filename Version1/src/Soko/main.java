@@ -25,6 +25,7 @@ public class main {
 			numberGoal = 0;
 		Tree tree = null; // decision tree
 		Fipo fifo = new Fipo(); // file for run the tree
+		boolean endOfTree = false;
 		
 		ArrayList <Node> temp = new ArrayList();
 		
@@ -65,9 +66,16 @@ public class main {
 			if(fifo.fifo == null)
 				break;
 		}
+		
+		while(fifo.fifo != null && endOfTree == false) {
+			endOfTree = calculation(fifo);
+		}
+		
+		
 		System.out.println("\n");
 		System.out.println("Way");
-		temp = listNode(fifo.fifo.get(0), temp);
+		//return the way for get it
+		temp = fifo.fifo.get(0).listNode(fifo.fifo.get(0), temp);
 		System.out.println(temp.size());
 		for (Node e : temp)
 			printNode(e); 
@@ -179,10 +187,10 @@ public class main {
 	}
 
 	//dans le while tant fifo != null et si valeur retourné true (ca a voir hein)
-	private static boolean calculation(Node node, Fipo fifo) {
+	private static boolean calculation(Fipo fifo) {
 		ArrayList<Node> temp = new ArrayList();
 		int positionDiamond = 999;
-		Node finalNode;
+		Node node = fifo.fifo.get(0);
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
