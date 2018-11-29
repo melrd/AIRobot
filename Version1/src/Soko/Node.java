@@ -6,14 +6,14 @@ import Soko.main.DIRECTION;
 
 public class Node {
 	int steps; // for know which way is fast
-	Coordonate coordinate; // give position and if he transport something or not
+	Coordinate coordinate; // give position and if he transport something or not
 	Node previous, // child node for each direction possible 
 		up,
 		down,
 		left,
 		right;
-	ArrayList <Coordonate> tabGoal; // list of all goal with the coordonate & state
-	ArrayList <Coordonate> tabDiamond; // list of all diamond with the coordonate & state
+	ArrayList <Coordinate> tabGoal; // list of all goal with the coordinate & state
+	ArrayList <Coordinate> tabDiamond; // list of all diamond with the coordinate & state
 	
 	public Node(){ // implements the node without any parameters
 		steps = 0;
@@ -31,10 +31,10 @@ public class Node {
 	}
 	
 	//implements the first node because no previous one
-	public Node(int pLine, int pColumn, ArrayList <Coordonate> pTabGoal,ArrayList <Coordonate> pTabDiamond){ 
+	public Node(int pLine, int pColumn, ArrayList <Coordinate> pTabGoal,ArrayList <Coordinate> pTabDiamond){ 
 		steps = 1;
 		
-		coordinate = new Coordonate(pColumn, pLine);
+		coordinate = new Coordinate(pColumn, pLine);
 		
 		previous = null;
 		up = null;
@@ -50,7 +50,7 @@ public class Node {
 	public Node(int pColumn, int pLine, Node pPrevious){ 
 		steps = pPrevious.steps + 1;
 		
-		coordinate = new Coordonate(pColumn, pLine);
+		coordinate = new Coordinate(pColumn, pLine);
 		
 		previous = pPrevious;
 		up = null;
@@ -72,7 +72,7 @@ public class Node {
 	}
 
 	public void addNode(Node actual, DIRECTION direction) {// add node according to the direction
-		//for the direction send, we add a new node with the good coordonate then we check the memory
+		//for the direction send, we add a new node with the good coordinate then we check the memory
 		switch (direction) {
 		case  UP :
 			up = new Node(coordinate.column, coordinate.line-1, actual);
@@ -99,11 +99,11 @@ public class Node {
 		}
 	}
 
-	public boolean GameRules(char[][] map, DIRECTION direction) { //check if the movment is possible
+	public boolean GameRules(char[][] map, DIRECTION direction) { //check if the movement is possible
 		int lineChange = 0,
 			columnChange  = 0;
 		
-		//look the direction send, change coordonate who we looking for in comparaison with the actual one
+		//look the direction send, change coordinate who we looking for in comparaison with the actual one
 		switch (direction) {
 			case UP :
 				lineChange  = coordinate.line- 1;
@@ -130,7 +130,7 @@ public class Node {
 			return false;
 		
 		// check if we can move the diamonds : check if we are still in the map with the diamonds 
-		//& if the movement is possible with the new coordonate of the diamond
+		//& if the movement is possible with the new coordinate of the diamond
 		if(coordinate.state == true) {
 			switch (direction) {
 				case UP :
@@ -157,13 +157,13 @@ public class Node {
 	}
 	
 	public boolean movement(char[][] map, int checkLine, int checkColumn) {
-		// for the coordonate send we check on the map if we are able to move in it
+		// for the coordinate send we check on the map if we are able to move in it
 		if(map[checkLine][checkColumn] == 'X' ||
 				map[checkLine][checkColumn] == ' ')
 			return false;
 		
 		// check on the table of diamond if we don t have any diamond on our  box 
-		for(Coordonate e : tabDiamond) {
+		for(Coordinate e : tabDiamond) {
 			if (e.line == checkLine && e.column == checkColumn)
 				return false;
 		}
@@ -200,11 +200,11 @@ public class Node {
 
 	public boolean checkEnd() { // check if all diamonds are put in goals
 		//observe all goal of our node and check if anyone is free or not
-		for (Coordonate e : tabGoal) {
+		for (Coordinate e : tabGoal) {
 			if(e.state == false)
 				return false;
 		}
-		for (Coordonate e : tabDiamond) {
+		for (Coordinate e : tabDiamond) {
 			if(e.state == true)
 				return false;
 		}

@@ -182,7 +182,7 @@ public class main {
 		int positionDiamond = 0;
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
-			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
+			for (Coordinate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
 				if(e.state == false) { // looking for a diamond who we can move
 					/**
 					 * calculer chemin le plus court => retour d une liste de noeud stocker dans temp pour le moment
@@ -196,7 +196,7 @@ public class main {
 			}
 		}
 		else { // we have a diamond so we are looking for a goal
-			for (Coordonate e : node.tabGoal) {
+			for (Coordinate e : node.tabGoal) {
 				if(e.state == false) {
 					/**
 					 * calculer chemin le plus court
@@ -344,14 +344,14 @@ public class main {
 		return null;
 	}
 	
-	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate
-		ArrayList <Coordonate> tab = new ArrayList();
+	private static ArrayList<Coordinate> createCoordonate (char[][]map, char type) { //create table of Coordinate
+		ArrayList <Coordinate> tab = new ArrayList();
 		
 		// for each box of the table if that correspond of the type who we looking for we added in the table
 		for(int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map[i].length; j++)
 				if(map[i][j] == type) { 
-					tab.add(new Coordonate(j,i));
+					tab.add(new Coordinate(j,i));
 				}
 		}
 		return tab;
