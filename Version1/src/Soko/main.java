@@ -69,10 +69,8 @@ public class main {
 		System.out.println("Way");
 		temp = listNode(fifo.fifo.get(0), temp);
 		System.out.println(temp.size());
-		if (temp == null)
-			System.out.println("No way");
 		for (Node e : temp)
-			e.printNode(); 
+			printNode(e); 
 		//Graph graph= new Graph();
 
 	}
