@@ -214,8 +214,8 @@ public class Graph {
 						System.out.println(" node added ");
 						fifo.nodeCheck(currentNode, currentNode.up); // add the nodes in the queue
 						lastNode = currentNode;
-					}
 				}
+				
 				//down
 				if (currentNode.GameRules(map,DIRECTION.DOWN) == true) { 
 					System.out.println(" test distance down ");
@@ -224,8 +224,10 @@ public class Graph {
 						currentNode.addNode(currentNode,DIRECTION.DOWN); 
 						System.out.println(" node added ");
 						fifo.nodeCheck(currentNode, currentNode.down); 
+						
 					}
 				}
+				
 				//right
 				if (currentNode.GameRules(map,DIRECTION.RIGHT) == true) { 
 					System.out.println(" test distance right ");
@@ -236,6 +238,7 @@ public class Graph {
 						fifo.nodeCheck(currentNode, currentNode.right); 
 					}
 				}
+				
 				//left
 				if (currentNode.GameRules(map,DIRECTION.LEFT) == true) { 
 					System.out.println(" test distance left ");
@@ -248,9 +251,8 @@ public class Graph {
 				}
 			}
 		}
-		
-		
-		path = listNode(lastNode, path);	
+			
+		}	
 			
 		return path;
 		
