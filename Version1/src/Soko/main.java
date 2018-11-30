@@ -26,7 +26,6 @@ public class main {
 		Tree tree = null; // decision tree
 		Fipo fifo = new Fipo(); // file for run the tree
 		boolean endOfTree = false;
-		
 		ArrayList <Node> temp = new ArrayList();
 		
 		mapInitiate  = readingFile(); // reading the file and give the map of the game 
@@ -65,6 +64,7 @@ public class main {
 		}*/
 		
 		while(fifo.fifo.size() > 0 && endOfTree == false) {
+			// besoin du dernier des noeuds
 			endOfTree = calculation(fifo, mapClean);
 		}
 		
@@ -76,6 +76,9 @@ public class main {
 		System.out.println(temp.size());
 		for (Node e : temp)
 			printNode(e); 
+		
+		//ecriture du fichier pour le robot
+		writtingFile(temp);
 
 	}
 	 
@@ -182,7 +185,7 @@ public class main {
 		else System.out.println("No node find");
 	}
 
-	//dans le while tant fifo != null et si valeur retourné true (ca a voir hein)
+
 	private static boolean calculation(Fipo fifo, char [][] map) {
 		ArrayList<Node> temp = new ArrayList();
 		int positionDiamond = 999;
@@ -192,11 +195,6 @@ public class main {
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
 				if(e.state == false) { // looking for a diamond who we can move
-					/**
-					 * calculer chemin le plus court => retour d une liste de noeud stocker dans temp pour le moment
-					 * mettre dans l arbre
-					 * mettre le dernier noeud dans la file 
-					 */
 					//calcul du chemin retourne une liste de noeud
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
 					// add the way in the tree and add the last node of the way ine the file
@@ -207,12 +205,6 @@ public class main {
 		else { // we have a diamond so we are looking for a goal
 			for (Coordonate e : node.tabGoal) {
 				if(e.state == false) {
-					/**
-					 * calculer chemin le plus court
-					 * mettre dans l arbre -> actualiser en meme temps la position des J car déplacement
-					 * mettre le dernier noeud dans la file
-					 * modifier l'état des J et des G
-					 */
 					// calcul du chemin
 					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
 					for (Coordonate f : node.tabDiamond) {
@@ -371,5 +363,16 @@ public class main {
 	}
 	
 	
-
+	private static void writtingFile(ArrayList <Node> way) {
+		for(int i = 0; i < way.size(); i ++) {
+			if(way.get(i).coordinate.state != way.get(i++).coordinate.state) {
+				if(way.get(i).coordinate.state == true) {
+					// dire de lever la barriere apres
+				}
+				else {
+					// dire de baisser la barriere apres
+				}
+			}
+		}
+	}
 }
