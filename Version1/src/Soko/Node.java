@@ -67,7 +67,7 @@ public class Node {
 	
 	public void printNode() { // permit to show the node we want
 		System.out.println("Coordinate : [" + coordinate.line + "][" + coordinate.column+"]");
-		System.out.println("Step : " + steps);
+		//System.out.println("Step : " + steps);
 	}
 
 	public void addNode(Node actual, DIRECTION direction) {// add node according to the direction
@@ -101,7 +101,6 @@ public class Node {
 	public boolean GameRules(char[][] map, DIRECTION direction) { //check if the movment is possible
 		int lineChange = 0,
 			columnChange  = 0;
-		
 		//look the direction send, change coordonate who we looking for in comparaison with the actual one
 		switch (direction) {
 			case UP :
@@ -123,11 +122,11 @@ public class Node {
 			default :
 				return false;
 		}
-		
 		//check if the movement of the robot is possible or say it can't go in this direction
 		if(movement(map, lineChange, columnChange) == false)
 			return false;
-		
+			
+
 		// check if we can move the diamonds : check if we are still in the map with the diamonds 
 		//& if the movement is possible with the new coordonate of the diamond
 		if(coordinate.state == true) {
@@ -163,9 +162,10 @@ public class Node {
 		
 		// check on the table of diamond if we don t have any diamond on our  box 
 		for(Coordonate e : tabDiamond) {
-			if (e.line == checkLine && e.column == checkColumn)
+
+			if (e.line == checkLine && e.column == checkColumn) 
 				return false;
-		}
+		}		
 		return true;
 	}
 	

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -15,6 +16,8 @@ public class main {
 		LEFT,
 		RIGHT,
 	}
+
+
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub	
@@ -62,17 +65,20 @@ public class main {
 			if(fifo.fifo == null)
 				break;
 		}*/
+		Node last = new Node();
 		
 		while(fifo.fifo.size() > 0 && endOfTree == false) {
 			// besoin du dernier des noeuds
-			endOfTree = calculation(fifo, mapClean);
+			Graph graph = new Graph();
+			endOfTree = calculation(fifo, mapClean, graph);
+			last = graph.finalN;
 		}
 		
 		
 		System.out.println("\n");
 		System.out.println("Way");
 		//return the way for get it
-		temp = fifo.fifo.get(0).listNode(fifo.fifo.get(0), temp);
+		temp = fifo.fifo.get(0).listNode(last, temp);
 		System.out.println(temp.size());
 		for (Node e : temp)
 			printNode(e); 
@@ -186,11 +192,11 @@ public class main {
 	}
 
 
-	private static boolean calculation(Fipo fifo, char [][] map) {
+	private static boolean calculation(Fipo fifo, char [][] map, Graph graph) {
 		ArrayList<Node> temp = new ArrayList();
 		int positionDiamond = 999;
 		Node node = fifo.fifo.get(0);
-		Graph graph = new Graph();
+		
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -199,6 +205,12 @@ public class main {
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
 					// add the way in the tree and add the last node of the way ine the file
 					fifo.nodeCheck(node, copyWay(node, temp, 0));
+					System.out.println("Diamond");
+			        try {
+			            Thread.sleep(100);
+			        } catch (InterruptedException f) {
+			            f.printStackTrace();
+			        }
 					}
 			}
 		}
@@ -213,6 +225,12 @@ public class main {
 					}
 					// add the way in the tree and add the last node of the way int the file
 					fifo.nodeCheck(node, copyWay(node, temp, 0, positionDiamond, node.tabGoal.indexOf(e)));
+					System.out.println("Goal");
+			        try {
+			            Thread.sleep(100);
+			        } catch (InterruptedException f) {
+			            f.printStackTrace();
+			        }
 				}
 			}
 		}
@@ -363,16 +381,24 @@ public class main {
 	}
 	
 	
-	private static void writtingFile(ArrayList <Node> way) {
-		for(int i = 0; i < way.size(); i ++) {
-			if(way.get(i).coordinate.state != way.get(i++).coordinate.state) {
-				if(way.get(i).coordinate.state == true) {
-					// dire de lever la barriere apres
-				}
-				else {
-					// dire de baisser la barriere apres
-				}
-			}
+	private static void writtingFile(ArrayList <Node> way){
+		File f = new File("Solution");
+		
+		try {
+			 FileWriter fw = new FileWriter (f);
+			
+			 for(Node e : way) {
+				 fw.write(e.coordinate.line + ";" + e.coordinate.column + ";");
+				 if(e.coordinate.state == true)
+					 fw.write("0;");
+				 else
+					 fw.write("1; \r\n");
+			 }
+			fw.close();
 		}
+		catch(IOException exception){
+			System.out.println("Error for writting" + exception.getMessage());
+		}
+		
 	}
 }
