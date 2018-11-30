@@ -44,9 +44,18 @@ public class main {
 					startLine = i;
 					mapClean[i][j] = '.';
 				}
-				if(mapInitiate[i][j] == 'G' || mapInitiate[i][j] == 'J')
+				else if(mapInitiate[i][j] == 'G' || mapInitiate[i][j] == 'J')
 					mapClean[i][j] = '.';
-				mapClean[i][j] = mapInitiate[i][j];
+				else
+					mapClean[i][j] = mapInitiate[i][j];
+			}
+			System.out.println("\t");
+		}
+		
+		
+		for(int i = 0;i < mapInitiate.length;i++) {
+			for(int j = 0;j<mapInitiate[i].length;j++) {
+				System.out.print(mapClean [i][j]);
 			}
 			System.out.println("\t");
 		}
@@ -70,6 +79,7 @@ public class main {
 		while(fifo.fifo.size() > 0 && endOfTree == false) {
 			// besoin du dernier des noeuds
 			Graph graph = new Graph();
+			fifo.fifo.get(0).printNode();
 			endOfTree = calculation(fifo, mapClean, graph);
 			last = graph.finalN;
 		}

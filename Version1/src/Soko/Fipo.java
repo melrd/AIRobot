@@ -23,7 +23,7 @@ public class Fipo {
 			System.out.println("Not in the file");
 	}
 	
-	private void removeNode(Node node) {
+	public void removeNode(Node node) {
 		// delete the node observe in the table
 		fifo.remove(fifo.indexOf(node));
 	}

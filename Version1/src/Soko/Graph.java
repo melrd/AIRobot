@@ -191,77 +191,128 @@ public class Graph {
 		ArrayList <Node> pathF = new ArrayList<>(); // list of all the nodes
 		Node lastNode = new Node(); //last node of the file
 		
-		int [][] indicator = new int [map.length][map[0].length]; // table of values to find the path
+		/*int [][] indicator = new int [map.length][map[0].length]; // table of values to find the path
 		for (int i = 0; i<map.length; i++) {
 			for (int j = 0; j<map[0].length;j++) {
-				indicator [i][j] = alpha; //everyone has a high value to begin
+				if(map[i][j] == '.')
+					indicator [i][j] = 9; //everyone has a high value to begin
+				else
+					indicator [i][j] = -1;
+				System.out.print(indicator[i][j]);
 			}
-		}	
-		indicator[startNode.coordinate.line][startNode.coordinate.column] = startNode.steps; // the value of the beginning
+			System.out.println("\t");
+		}*/	
+		
+		int[][] indicator = new int[map.length][map[0].length];
+		for(int i = 0; i < indicator.length; i++) {
+			for(int j = 0; j <indicator[0].length; j++) {
+				if(map[i][j] == '.')
+					indicator[i][j] = alpha;
+				else
+					indicator[i][j] = -1;
+			}
+		}
+		
+		indicator[startNode.coordinate.line][startNode.coordinate.column] = 0; // the value of the beginning
 		fifoCalcul.addNode(startNode);
-		//System.out.println(" first node added ");
+		System.out.println(" first node added ");
+		
+		Node currentNode;
 		
 		//Node currentNode : fifoCalcul.fifo
 		while (fifoCalcul.fifo.size() >0) {
-			Node currentNode = fifoCalcul.fifo.get(0);
-			lastNode = currentNode;
-			currentNode.printNode();
-			if (!checkArrived(currentNode,goal)) {
+			do {
+				boolean changement = false;
+				currentNode = fifoCalcul.fifo.get(0);
+				lastNode = currentNode;
+				currentNode.printNode();
+				
 				//System.out.println(" up ");
 				//up
 				if (currentNode.GameRules(map,DIRECTION.UP) == true) { //check if movement is possible
-					//System.out.println(" test distance up ");
+					System.out.println(" test distance up ");
+					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column]);
 					if ((currentNode.roundTrip(DIRECTION.UP) == true)  //check if the movement is relevant
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column][currentNode.coordinate.line - 1])) { //and if the value is the best
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column])) { //and if the value is the best
 						currentNode.addNode(currentNode,DIRECTION.UP); 
-						//System.out.println(" node added ");
+						System.out.println(" node added ");
+						System.out.println(currentNode.steps + " CURRENT");
+						System.out.println(currentNode.up.steps + " ADD");
+						indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column] = currentNode.up.steps;
+						//currentNode.up.steps = indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.up); // add the nodes in the queue
 						lastNode = currentNode;
+						changement = true;
 					}
 				}
 				
 				//down
 				//System.out.println(" down");
 				if (currentNode.GameRules(map,DIRECTION.DOWN) == true) { 
-					//System.out.println(" test distance down ");
+					System.out.println(" test distance down ");
+					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line +1][currentNode.coordinate.column]);
 					if ((currentNode.roundTrip(DIRECTION.DOWN) == true)  
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column][currentNode.coordinate.line + 1])) { 
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line + 1][currentNode.coordinate.column])) { 
 						currentNode.addNode(currentNode,DIRECTION.DOWN); 
-						//System.out.println(" node added ");
+						System.out.println(" node added ");
+						System.out.println(currentNode.steps + " CURRENT");
+						System.out.println(currentNode.down.steps + " ADD");
+						indicator[currentNode.coordinate.line + 1][currentNode.coordinate.column] = currentNode.down.steps;
+						//currentNode.down.steps = indicator[currentNode.coordinate.line + 1][currentNode.coordinate.column] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.down); 
 						lastNode = currentNode;
+						changement = true;
 					}
 				}
 				
 				//right
 				//System.out.println(" right");
 				if (currentNode.GameRules(map,DIRECTION.RIGHT) == true) { 
-					//System.out.println(" test distance right ");
+					System.out.println(" test distance right ");
+					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line][currentNode.coordinate.column+1]);
 					if ((currentNode.roundTrip(DIRECTION.RIGHT) == true)  
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column + 1][currentNode.coordinate.line])) { 
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line][currentNode.coordinate.column + 1])) { 
 						currentNode.addNode(currentNode,DIRECTION.RIGHT); 
-						//System.out.println(" node added ");
+						System.out.println(" node added ");
+						System.out.println(currentNode.steps + " CURRENT");
+						System.out.println(currentNode.right.steps + " ADD");
+						indicator[currentNode.coordinate.line][currentNode.coordinate.column + 1] = currentNode.right.steps;
+						//currentNode.right.steps = indicator[currentNode.coordinate.line ][currentNode.coordinate.column+1] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.right); 
 						lastNode = currentNode;
+						changement = true;
 					}
 				}
 				
 				//left
 				//System.out.println(" left");
 				if (currentNode.GameRules(map,DIRECTION.LEFT) == true) { 
-					//System.out.println(" test distance left ");
+					System.out.println(" test distance left ");
+					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line][currentNode.coordinate.column-1]);
 					if ((currentNode.roundTrip(DIRECTION.LEFT) == true)  
-					&& (currentNode.steps+1 < indicator[currentNode.coordinate.column - 1][currentNode.coordinate.line])) { 
+					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line][currentNode.coordinate.column - 1])) { 
 						currentNode.addNode(currentNode,DIRECTION.LEFT); 
-						//System.out.println(" node added ");
+						System.out.println(" node added ");
+						System.out.println(currentNode.steps + " CURRENT");
+						System.out.println(currentNode.left.steps + " ADD");
+						indicator[currentNode.coordinate.line][currentNode.coordinate.column - 1] = currentNode.left.steps;
+						//currentNode.left.steps = indicator[currentNode.coordinate.line][currentNode.coordinate.column-1] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.left); 
 						lastNode = currentNode;
+						changement = true;
 					}
 				}
-			}
+				if(!changement) 
+					fifoCalcul.removeNode(currentNode);
+				try {
+		            Thread.sleep(100);
+		        } catch (InterruptedException f) {
+		            f.printStackTrace();
+		        }
+			}while  (!checkArrived(currentNode,goal) && fifoCalcul.fifo.size() != 0);
 		}
 		
-		pathF = lastNode.listNode(lastNode, pathF);
+		pathF = Node.listNode(lastNode, pathF);
 		finalN = lastNode;
 		
 		return pathF;
