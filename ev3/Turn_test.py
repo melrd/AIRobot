@@ -117,28 +117,67 @@ def correction_trajectoire(sensorLeft,sensorRight):
         return 1
     
 
-    
+def correction_trajectoire_backward(sensorLeft,sensorRight):
+    if sensorLeft>Stop_Value and sensorRight>Stop_Value:
+        mAleft.duty_cycle_sp=-Forward_Speed
+        mBright.duty_cycle_sp = -Forward_Speed
+        return 0
+    elif sensorLeft>Stop_Value and sensorRight<Stop_Value:
+        mAleft.duty_cycle_sp=-Forward_Speed
+        mBright.duty_cycle_sp =Correction_Speed
+        return 0
+    elif sensorLeft<Stop_Value and sensorRight>Stop_Value:
+        mAleft.duty_cycle_sp=Correction_Speed
+        mBright.duty_cycle_sp = -Forward_Speed
+        return 0
+    elif sensorLeft<Stop_Value and sensorRight<Stop_Value:
+        mAleft.duty_cycle_sp=No_Speed
+        mBright.duty_cycle_sp = No_Speed
+        return 1    
 ###############################################################################    
-def management_can():
+def management_can(distance):
     mAleft.duty_cycle_sp=Forward_Speed
     mBright.duty_cycle_sp = Forward_Speed
 
         
-    distance = Sonar.value()  # en mm normalement
-    print("distance")
-    print(distance)
-    while distance>50:
-        distance = Sonar.value()
-        mAleft.duty_cycle_sp= Forward_Speed*(distance-50)/distance
-        mBright.duty_cycle_sp = Forward_Speed*(distance-50)/distance
-        print("distance")
-        print(distance)
+    distance_to_can = Sonar.value()  # en mm normalement
+    print("distance_to_can")
+    print(distance_to_can)
+    while distance_to_can>50:
+        distance_to_can = Sonar.value()
+        mAleft.duty_cycle_sp= Forward_Speed*(distance_to_can-20)/distance_to_can
+        mBright.duty_cycle_sp = Forward_Speed*(distance_to_can-20)/distance_to_can
+        print("distance_to_can")
+        print(distance_to_can)
     mAleft.duty_cycle_sp=No_Speed
     mBright.duty_cycle_sp = No_Speed
+    print("Descendreeeee")
     move_fence(0)
-    
-    
-        
+    i=0
+    while i<distance+1:
+        go_straight(1)
+        i=i+1
+        print("case :  ")
+        print(i)
+    j=0
+    while j<20:
+        mAleft.duty_cycle_sp=-Forward_before_turn_speed
+        mBright.duty_cycle_sp = -Forward_before_turn_speed
+        j=j+1
+        print("recule :  ")
+        print(j)
+    move_fence(1)
+    stop_condition=0
+    while stop_condition==0:
+        sensorLeft = get_value_left_light_sensor()
+        sensorRight = get_value_right_light_sensor()
+        print("left :  ")
+        print(sensorLeft)
+        print("right :  ")
+        print(sensorRight)
+        stop_condition=correction_trajectoire_backward(sensorLeft,sensorRight)
+    mAleft.duty_cycle_sp=No_Speed
+    mBright.duty_cycle_sp = No_Speed    
 
 #### 1 for mooving up, 0 for mooving down########################################
 def move_fence(state):
@@ -226,16 +265,16 @@ def read_order():
     i=0
     while i < len(order):
         x=file[i]
-        if x=='a':
+        if x=='f':        
             go_straight(1)
-        elif x=='b':
+        elif x=='l':
             Turn(-90)
-        elif x=='c':
+        elif x=='r':
             Turn(90)
-        elif x=='d':
+        elif x=='b':
             Turn(180)
-        elif x=='e':
-            management_can()
+        elif x=='c':
+            management_can(1)
         i=i+1
 
         
@@ -244,22 +283,16 @@ def read_order():
 
 ####Commandes a tetser
 
-#management_canette()
-
-
-go_straight(1)
-Turn(-90)
-go_straight(1)
-Turn(-90)
-go_straight(1)
-Turn(-90)
-go_straight(1)
-Turn(-90)
-go_straight(1)
-Turn(90)
-go_straight(1)
-Turn(90)
-go_straight(1)
-Turn(90)
-go_straight(1)
-Turn(90)
+management_can(1)
+#move_fence(0)
+#move_fence(1)
+#go_straight(1)
+#go_straight(1)
+#Turn(-90)
+#go_straight(1)
+#Turn(-90)
+#go_straight(1)
+#go_straight(1)
+#Turn(-90)
+#go_straight(1)
+#Turn(-90)
