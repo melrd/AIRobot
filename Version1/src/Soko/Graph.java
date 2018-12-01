@@ -206,11 +206,10 @@ public class Graph {
 		System.out.println(" first node added ");
 		
 		Node currentNode;
-		
+		boolean find = false;
 		//Node currentNode : fifoCalcul.fifo
-		while (fifoCalcul.fifo.size() >0) {
+		while (fifoCalcul.fifo.size() >0 && !find) {
 			System.out.println(" ____*************____");	
-			boolean find = false;
 			do {
 				boolean changement = false;
 				currentNode = fifoCalcul.fifo.get(0);
@@ -335,7 +334,11 @@ public class Graph {
 	} 
 	
 	public boolean checkArrived (Node actual, Coordonate goal) {
+//		System.out.println("compare : ");
+//		actual.printNode();
+//		System.out.println("and [" + goal.line + "][" +goal.column +"]");
 		if (actual.coordinate.column == goal.column && actual.coordinate.line == goal.line) {
+			System.out.println("ok");
 			return true;
 		}
 		else return false;
