@@ -79,9 +79,14 @@ public class main {
 		while(fifo.fifo.size() > 0 && endOfTree == false) {
 			// besoin du dernier des noeuds
 			Graph graph = new Graph();
-			fifo.fifo.get(0).printNode();
+			printNode(fifo.fifo.get(0));
 			endOfTree = calculation(fifo, mapClean, graph);
 			last = graph.finalN;
+			try {
+	            Thread.sleep(100);
+	        } catch (InterruptedException f) {
+	            f.printStackTrace();
+	        }
 		}
 		
 		
@@ -157,7 +162,7 @@ public class main {
 		 * if we don t, we add this child node and we put this node in the file.
 		 * then we print the node
 		 */
-		if (node.GameRules(map,DIRECTION.DOWN) == true) {
+/**		if (node.GameRules(map,DIRECTION.DOWN) == true) {
 //			System.out.println("-- test D --");
 			if(node.roundTrip( DIRECTION.DOWN) == true) {
 				node.addNode(node,DIRECTION.DOWN);
@@ -192,7 +197,7 @@ public class main {
 			}
 		}
 		//printNode(node.right);
-	}
+	*/}
 
 	// check if the node is not empty before tho call the function in the node class
 	private static void printNode(Node node) {
@@ -205,8 +210,10 @@ public class main {
 	private static boolean calculation(Fipo fifo, char [][] map, Graph graph) {
 		ArrayList<Node> temp = new ArrayList();
 		int positionDiamond = 999;
-		Node node = fifo.fifo.get(0);
+		if(fifo.fifo.get(0) == null)
+			return false;
 		
+		Node node = fifo.fifo.get(0);
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -215,7 +222,8 @@ public class main {
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
 					// add the way in the tree and add the last node of the way ine the file
 					fifo.nodeCheck(node, copyWay(node, temp, 0));
-					System.out.println("Diamond");
+					System.out.println("Diamond \n\n");
+					//printNode(temp.get(temp.size()-1));
 			        try {
 			            Thread.sleep(100);
 			        } catch (InterruptedException f) {
@@ -249,8 +257,7 @@ public class main {
 			return true;
 		else return false;
 	}
-		
-	//jamais testé
+
 	//copy shortest way in the treee
 	private static Node copyWay(Node node, ArrayList<Node> e, int position) {
 		/**
@@ -305,7 +312,6 @@ public class main {
 		return null;
 	}
 	
-	//jamais testé
 	// copy shortest way for the diamonds in the tree, change the position of the diamond and change the state of the goal and the diamonds at the end
 	private static Node copyWay(Node node, ArrayList<Node> e, int position, int diamond, int goal) {
 		/**
