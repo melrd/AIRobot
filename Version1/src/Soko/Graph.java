@@ -216,10 +216,10 @@ public class Graph {
 				lastNode = currentNode;
 				currentNode.printNode();
 				
-				System.out.println(" up ");
+//				System.out.println(" up ");
 				//up
 				if (!find && currentNode.GameRules(map,DIRECTION.UP, goal.column, goal.line)) { //check if movement is possible
-					System.out.println(" test distance up ");
+//					System.out.println(" test distance up ");
 //					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column]);
 					if ((currentNode.roundTrip(DIRECTION.UP) == true)  //check if the movement is relevant
 					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column])) { //and if the value is the best
@@ -230,22 +230,22 @@ public class Graph {
 						indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column] = currentNode.up.steps;
 						//currentNode.up.steps = indicator[currentNode.coordinate.line - 1][currentNode.coordinate.column] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.up); // add the nodes in the queue
-						System.out.println("node added ");
+//						System.out.println("node added ");
 						lastNode = currentNode;
 						changement = true;
 						//si c est le noeud d arrivée tout arreté
 						if(checkArrived(currentNode.up,goal)) {
 							find = true;
-							System.out.println("node goal " + find);
+//							System.out.println("node goal " + find);
 							break;
 						}
 					}
 				}
 				
 				//down
-				System.out.println(" down");
+//				System.out.println(" down");
 				if (!find && currentNode.GameRules(map,DIRECTION.DOWN, goal.column, goal.line)) { 
-					System.out.println(" test distance down ");
+//					System.out.println(" test distance down ");
 //					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line +1][currentNode.coordinate.column]);
 					if ((currentNode.roundTrip(DIRECTION.DOWN) == true)  
 					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line + 1][currentNode.coordinate.column])) { 
@@ -256,21 +256,21 @@ public class Graph {
 						indicator[currentNode.coordinate.line + 1][currentNode.coordinate.column] = currentNode.down.steps;
 						//currentNode.down.steps = indicator[currentNode.coordinate.line + 1][currentNode.coordinate.column] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.down); 
-						System.out.println("node added ");
+//						System.out.println("node added ");
 						lastNode = currentNode;
 						changement = true;
 						if(checkArrived(currentNode.down,goal)) {
 							find = true;
-							System.out.println("node goal " + find);
+//							System.out.println("node goal " + find);
 							break;
 						}
 					}
 				}
 				
 				//right
-				System.out.println(" right");
+//				System.out.println(" right");
 				if (!find && currentNode.GameRules(map,DIRECTION.RIGHT, goal.column, goal.line)) { 
-					System.out.println(" test distance right ");
+//					System.out.println(" test distance right ");
 //					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line][currentNode.coordinate.column+1]);
 					if ((currentNode.roundTrip(DIRECTION.RIGHT) == true)  
 					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line][currentNode.coordinate.column + 1])) { 
@@ -281,21 +281,21 @@ public class Graph {
 						indicator[currentNode.coordinate.line][currentNode.coordinate.column + 1] = currentNode.right.steps;
 						//currentNode.right.steps = indicator[currentNode.coordinate.line ][currentNode.coordinate.column+1] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.right);
-						System.out.println("node added ");
+//						System.out.println("node added ");
 						lastNode = currentNode;
 						changement = true;
 						if(checkArrived(currentNode.right,goal)) {
 							find = true;
-							System.out.println("node goal " + find);
+//							System.out.println("node goal " + find);
 							break;
 						}
 					}
 				}
 				
 				//left
-				System.out.println(" left");
+//				System.out.println(" left");
 				if (!find && currentNode.GameRules(map,DIRECTION.LEFT, goal.column, goal.line)) { 
-					System.out.println(" test distance left ");
+//					System.out.println(" test distance left ");
 //					System.out.println(currentNode.steps +1 + " VS" +indicator[currentNode.coordinate.line][currentNode.coordinate.column-1]);
 					if ((currentNode.roundTrip(DIRECTION.LEFT) == true)  
 					&& (currentNode.steps+1 < indicator[currentNode.coordinate.line][currentNode.coordinate.column - 1])) { 
@@ -306,12 +306,12 @@ public class Graph {
 						indicator[currentNode.coordinate.line][currentNode.coordinate.column - 1] = currentNode.left.steps;
 						//currentNode.left.steps = indicator[currentNode.coordinate.line][currentNode.coordinate.column-1] ;
 						fifoCalcul.nodeCheck(currentNode, currentNode.left);
-						System.out.println("node added ");
+//						System.out.println("node added ");
 						lastNode = currentNode;
 						changement = true;
 						if(checkArrived(currentNode.left,goal)) {
 							find = true;
-							System.out.println("node goal " + find);
+//							System.out.println("node goal " + find);
 							break;
 						}
 					}
@@ -338,7 +338,7 @@ public class Graph {
 //		actual.printNode();
 //		System.out.println("and [" + goal.line + "][" +goal.column +"]");
 		if (actual.coordinate.column == goal.column && actual.coordinate.line == goal.line) {
-			System.out.println("ok");
+//			System.out.println("ok");
 			return true;
 		}
 		else return false;
