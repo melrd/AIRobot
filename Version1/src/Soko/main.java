@@ -213,8 +213,7 @@ public class main {
 		if(fifo.fifo.get(0) == null)
 			return false;
 		
-		Node node = fifo.fifo.get(0),
-				finalOne;
+		Node node = fifo.fifo.get(0);
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -225,8 +224,7 @@ public class main {
 //					for (Node z : temp)
 //						printNode(z);
 					// add the way in the tree and add the last node of the way ine the file
-					finalOne = copyWay(node, temp, 1);
-					fifo.nodeCheck(node, finalOne);
+					fifo.nodeCheck(node, copyWay(node, temp, 1));
 					System.out.println("Diamond \n\n");
 					//printNode(temp.get(temp.size()-1));
 			        try {
