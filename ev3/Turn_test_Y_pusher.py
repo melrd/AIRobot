@@ -11,17 +11,13 @@ import signal
 # Connect two motors 
 mAleft = ev3.LargeMotor('outA')
 mBright = ev3.LargeMotor('outB')
-mCFence = ev3.MediumMotor('outC')
 
 #input, light sensors and gyro sensor
 lightSensorLeft1 = ev3.ColorSensor('in1')
 lightSensorRight2 = ev3.ColorSensor('in4') 
 gyro = ev3.GyroSensor('in2')
-Sonar = ev3.UltrasonicSensor('in3') 
 
 # Put the US sensor into distance mode.
-Sonar.mode='US-DIST-CM'
-units = Sonar.units    # reports 'cm' even though the sensor measures 'mm'
 
 
 
@@ -41,16 +37,12 @@ Correction_Speed=-20
 Turn_Speed = -35
 Forward_before_turn_speed=-50
 
-Fence_down_speed=20
-Fence_up_speed=-50
 # Set the motor mode
 mAleft.run_direct()
 mBright.run_direct()
 mAleft.polarity = "inversed"
 mBright.polarity = "inversed"
 
-mCFence.run_direct()
-mCFence.polarity = "inversed"
 
 # Put the gyro sensor into ANGLE mode.
 gyro.mode='GYRO-ANG'
@@ -63,7 +55,6 @@ def signal_handler(sig, frame):
 	print('Shutting down gracefully')
 	mAleft.duty_cycle_sp = 0
 	mBright.duty_cycle_sp = 0
-	mCFence.duty_cycle_sp=0
 	exit(0)
 
 # Install the signal handler for CTRL+C
@@ -136,37 +127,14 @@ def correction_trajectoire_backward(sensorLeft,sensorRight):
         return 1    
 ###############################################################################    
 def management_can(distance):
-    mAleft.duty_cycle_sp=Forward_Speed
-    mBright.duty_cycle_sp = Forward_Speed
-
+ 
         
-    distance_to_can = Sonar.value()  # en mm normalement
-    print("distance_to_can")
-    print(distance_to_can)
-    while distance_to_can>50:
-        distance_to_can = Sonar.value()
-        mAleft.duty_cycle_sp= Forward_Speed*(distance_to_can-20)/distance_to_can
-        mBright.duty_cycle_sp = Forward_Speed*(distance_to_can-20)/distance_to_can
-        print("distance_to_can")
-        print(distance_to_can)
-    mAleft.duty_cycle_sp=No_Speed
-    mBright.duty_cycle_sp = No_Speed
-    print("Descendreeeee")
-    move_fence(0)
     i=0
     while i<distance+1:
         go_straight(1)
         i=i+1
         print("case :  ")
         print(i)
-    j=0
-    while j<20:
-        mAleft.duty_cycle_sp=-Forward_before_turn_speed
-        mBright.duty_cycle_sp = -Forward_before_turn_speed
-        j=j+1
-        print("recule :  ")
-        print(j)
-    move_fence(1)
     stop_condition=0
     while stop_condition==0:
         sensorLeft = get_value_left_light_sensor()
@@ -180,22 +148,7 @@ def management_can(distance):
     mBright.duty_cycle_sp = No_Speed    
 
 #### 1 for mooving up, 0 for mooving down########################################
-def move_fence(state):
-    if state==1:
-        i=0
-        while i<250:
-            mCFence.duty_cycle_sp=Fence_up_speed
-            i=i+1
-    if state==0:
-        i=0
-        while i<250:
-            mCFence.duty_cycle_sp=Fence_down_speed
-            i=i+1
-
-    mCFence.duty_cycle_sp=No_Speed
-
-
-###############################################################################
+##############################################################################
 def get_value_left_light_sensor():
     sensorLeft = lightSensorLeft1.value()
     return sensorLeft
@@ -289,18 +242,4 @@ def read_order():
     file.close()
 
 
-####Commandes a tetser
 read_order()
-#management_can(1)
-#move_fence(0)
-#move_fence(1)
-#go_straight(1)
-#go_straight(1)
-#Turn(-90)
-#go_straight(1)
-#Turn(-90)
-#go_straight(1)
-#go_straight(1)
-#Turn(-90)
-#go_straight(1)
-#Turn(-90)
