@@ -213,18 +213,22 @@ public class main {
 		if(fifo.fifo.get(0) == null)
 			return false;
 		
-		Node node = fifo.fifo.get(0);
+		Node node = fifo.fifo.get(0),
+				tempFinal;
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
 				if(e.state == false) { // looking for a diamond who we can move
 					//calcul du chemin retourne une liste de noeud
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
+					//temp.add(temp.size(),graph.finalN);
 //					System.out.println("best distance");
-//					for (Node z : temp)
-//						printNode(z);
+					for (Node z : temp)
+						printNode(z);
 					// add the way in the tree and add the last node of the way ine the file
-					fifo.nodeCheck(node, copyWay(node, temp, 1));
+					tempFinal = copyWay(node, temp, 1);
+					printNode(tempFinal);
+					fifo.nodeCheck(node, tempFinal);
 					System.out.println("Diamond \n\n");
 					//printNode(temp.get(temp.size()-1));
 			        try {
@@ -240,12 +244,14 @@ public class main {
 				if(e.state == false) {
 					// calcul du chemin
 					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
+//					temp.add(temp.size(),graph.finalN);
 					for (Coordonate f : node.tabDiamond) {
 						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
 							positionDiamond = node.tabDiamond.indexOf(f);
 					}
 					// add the way in the tree and add the last node of the way int the file
-					fifo.nodeCheck(node, copyWay(node, temp, 1, positionDiamond, node.tabGoal.indexOf(e)));
+					tempFinal = copyWay(node, temp, 1, positionDiamond, node.tabGoal.indexOf(e));
+					fifo.nodeCheck(node, tempFinal);
 					System.out.println("Goal \n\n");
 			        try {
 			            Thread.sleep(100);
@@ -274,43 +280,58 @@ public class main {
 		 * we check if we are at the end of the new way or not
 		 * return the last node
 		 */
-	
+		System.out.println(position +"sur " + e.size());
+		//if(node.coordinate.line == e.get(e.size()-1).coordinate.line && node.coordinate.column == e.get(e.size()-1).coordinate.column) {
+		if(position == e.size()) {
+			System.out.println("end copy");
+			return node;}
+		
+		printNode(node);
+		printNode(e.get(position));
+		
+		
 		if(e.get(position).coordinate.column == node.coordinate.column) {
+			System.out.println("column");
 			if(e.get(position).coordinate.line == node.coordinate.line -1) {
+				System.out.println("line");
 				if(node.down == null) 
 					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				if (position ++ < e.size()) 
-					copyWay(node.down, e, position ++);
-				else 
-					return node.down;
+				if (position < e.size()) 
+					copyWay(node.down, e, position +1);
+//				else 
+//					return node.down;
 			}
 				
 			else if(e.get(position).coordinate.line == node.coordinate.line +1) {
+				System.out.println("line");
 				if(node.up == null) 
 					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);					System.out.println("create node");}
-				if (position ++ < e.size()) 
-					copyWay(node.up, e, position ++);
-				else 
-					return node.up;
+				if (position < e.size()) 
+					copyWay(node.up, e, position +1);
+//				else 
+//					return node.up;
 			}
 			
 		else if(e.get(position).coordinate.line == node.coordinate.line) {
+			System.out.println("line");
 			if(e.get(position).coordinate.column == node.coordinate.column -1 ) { 
+				System.out.println("column");
 				if(node.left == null) 
 					node.left = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				if (position ++ < e.size()) 
-					copyWay(node.left, e, position ++);
-				else 
-					return node.left;
+				if (position < e.size()) 
+					copyWay(node.left, e, position +1);
+//				else 
+//					return node.left;
 			}
 			
 			else if(e.get(position).coordinate.column == node.coordinate.column +1) {
+				System.out.println("column");
 				if(node.right == null)
 					node.right = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				if (position ++ < e.size()) 
-					copyWay(node.right, e, position ++);
-				else 
-					return node.right;
+				if (position < e.size()) 
+					copyWay(node.right, e, position +1);
+//				else 
+//					return node.right;
 			}
 		}
 		return null;
@@ -326,6 +347,13 @@ public class main {
 		 * we check if we are at the end of the new way or not
 		 * return the last node and change the state of the diamond and the goal
 		 */
+		System.out.println(position +"sur " + e.size());
+		if(node.coordinate.line == e.get(e.size()-1).coordinate.line && node.coordinate.column == e.get(e.size()-1).coordinate.column) {
+			System.out.println("end copy");
+			return node;}
+		
+		printNode(node);
+		printNode(e.get(position));
 		
 		if(e.get(position).coordinate.column == node.coordinate.column) {
 			
@@ -338,7 +366,7 @@ public class main {
 				else {
 					node.down.tabDiamond.get(diamond).state = true;
 					node.down.tabGoal.get(goal).state = true;
-					return node.down;
+//					return node.down;
 				}
 			}
 				
@@ -351,7 +379,7 @@ public class main {
 				else {
 					node.up.tabDiamond.get(diamond).state = true;
 					node.up.tabGoal.get(goal).state = true;
-					return node.up;
+//					return node.up;
 				}
 			}
 		}
@@ -367,7 +395,7 @@ public class main {
 				else {
 					node.left.tabDiamond.get(diamond).state = true;
 					node.left.tabGoal.get(goal).state = true;
-					return node.left;
+//					return node.left;
 				}
 			}
 			
@@ -380,7 +408,7 @@ public class main {
 				else {
 					node.right.tabDiamond.get(diamond).state = true;
 					node.right.tabGoal.get(goal).state = true;
-					return node.right;
+//					return node.right;
 				}
 			}
 		}

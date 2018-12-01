@@ -124,7 +124,7 @@ public class Node {
 		}
 		//check if the movement of the robot is possible or say it can't go in this direction
 		if(lineChange == goalLine && columnChange == goalColumn) { // check if it's not the goal, if it is we can go, useful for diamond
-			System.out.println("Same!");
+//			System.out.println("Same!");
 			return true;}
 		else if(movement(map, lineChange, columnChange) == false)
 			return false;
