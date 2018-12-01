@@ -12,7 +12,7 @@
 /////////////////////////////////////////////////////////////////////////////////
 #define MAX_ORDER_INPUT 200
 #define MAX_LINE_LENGTH 20
-char input_filename [] = "input.txt";
+char input_filename [] = "Solution.txt";
 char output_filename [] = 			"output.txt";
 
 
@@ -112,7 +112,7 @@ int Affichage ( int nb_order)
 	if (file_out != NULL) // verif fichier
     {
 		for (int i=0; i<nb_order;i++){
-			fprintf(file_out,"%c\t",final_order[i]);
+			fprintf(file_out,"%c\n",final_order[i]);
 		}
 		fclose(file_out);
 	}
@@ -149,111 +149,268 @@ int main (){
 		position.next_col = tab_order[i+1].col;
 		position.next_line = tab_order[i+1].line;
 
-
-        if (position.current_col==position.prev_col & position.current_line==(position.prev_line+1))
-        {
-            if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
-            {
-                final_order[nb_order_total]='b';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
-            {
-                // don't turn
-            }
-            else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
-            {
-                final_order[nb_order_total]='r';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
-            {
-                final_order[nb_order_total]='l';
-                nb_order_total=nb_order_total+1;
-            }
-        }
-        else if (position.current_col==position.prev_col & position.current_line==(position.prev_line-1))
-        {
-            if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
-            {
-               // don't turn
-            }
-            else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
-            {
-                final_order[nb_order_total]='b';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
-            {
-                final_order[nb_order_total]='l';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
-            {
-                final_order[nb_order_total]='r';
-                nb_order_total=nb_order_total+1;
-            }
-        }
-        else if (position.current_col==(position.prev_col+1) & position.current_line==position.prev_line)
-        {
-            if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
-            {
-                final_order[nb_order_total]='l';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
-            {
-                final_order[nb_order_total]='r';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
-            {
-                final_order[nb_order_total]='b';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
-            {
-                // don't turn
-            }
-        }
-        else if (position.current_col==(position.prev_col-1) & position.current_line==position.prev_line)
-        {
-            if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
-            {
-                final_order[nb_order_total]='r';
-                nb_order_total=nb_order_total+1;
-            }
-            else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
-            {
-                final_order[nb_order_total]='l';
-                nb_order_total=nb_order_total+1;
-
-            }
-            else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
-            {
-                // don't turn
-            }
-            else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
-            {
-               final_order[nb_order_total]='b';
-               nb_order_total=nb_order_total+1;
-            }
-        }
-
         if (position.can==1)
         {
-            printf("pas de can\n\n");
+            if (position.current_col==position.prev_col & position.current_line==(position.prev_line+1))
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                    final_order[nb_order_total]='b';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    // don't turn
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                }
+            }
+            else if (position.current_col==position.prev_col & position.current_line==(position.prev_line-1))
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                   // don't turn
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    final_order[nb_order_total]='b';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+            }
+            else if (position.current_col==(position.prev_col+1) & position.current_line==position.prev_line)
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='b';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                    // don't turn
+                }
+            }
+            else if (position.current_col==(position.prev_col-1) & position.current_line==position.prev_line)
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
 
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    // don't turn
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                   final_order[nb_order_total]='b';
+                   nb_order_total=nb_order_total+1;
+                }
+            }
+
+            printf("pas de can\n\n");
             final_order[nb_order_total]='f';
             nb_order_total=nb_order_total+1;
         }
         if (position.can==0)
         {
-            printf("on pousse la can\n\n");
 
+             if (position.current_col==position.prev_col & position.current_line==(position.prev_line+1))
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                    //final_order[nb_order_total]='b';
+                    //nb_order_total=nb_order_total+1;
+                    //est pas sensé arriver
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    // don't turn
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                }
+            }
+            else if (position.current_col==position.prev_col & position.current_line==(position.prev_line-1))
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                   // don't turn
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    //final_order[nb_order_total]='b';
+                    //nb_order_total=nb_order_total+1;
+                    //est pas sensé arriver
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+            }
+            else if (position.current_col==(position.prev_col+1) & position.current_line==position.prev_line)
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    //final_order[nb_order_total]='b';
+                    //nb_order_total=nb_order_total+1;
+                    //est pas sensé arriver
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                    // don't turn
+                }
+            }
+            else if (position.current_col==(position.prev_col-1) & position.current_line==position.prev_line)
+            {
+                if (position.current_col==position.next_col & position.current_line==(position.next_line+1))
+                {
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                }
+                else if (position.current_col==position.next_col & position.current_line==(position.next_line-1))
+                {
+                    final_order[nb_order_total]='r';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='f';
+                    nb_order_total=nb_order_total+1;
+                    final_order[nb_order_total]='l';
+                    nb_order_total=nb_order_total+1;
+
+                }
+                else if (position.current_col==(position.next_col+1) & position.current_line==(position.next_line))
+                {
+                    // don't turn
+                }
+                else if (position.current_col==(position.next_col-1) & position.current_line==(position.next_line))
+                {
+                   //final_order[nb_order_total]='b';
+                    //nb_order_total=nb_order_total+1;
+                    //est pas sensé arriver
+                }
+            }
+
+            printf("can\n\n");
             final_order[nb_order_total]='c';
             nb_order_total=nb_order_total+1;
         }
+
 
 	}
 
@@ -261,7 +418,7 @@ int main (){
 #ifdef DEBUG_MAIN
 #endif // DEBUG_MAIN
 
-    ret= Affichage(nb_order);
+    ret= Affichage(nb_order_total);
 
     printf("end\n");
 	return 0;
