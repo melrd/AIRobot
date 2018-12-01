@@ -126,7 +126,7 @@ public class Node {
 		if(lineChange == goalLine && columnChange == goalColumn) { // check if it's not the goal, if it is we can go, useful for diamond
 			System.out.println("Same!");
 			return true;}
-		else if(movement(map, lineChange, columnChange, goalColumn, goalLine) == false)
+		else if(movement(map, lineChange, columnChange) == false)
 			return false;
 			
 
@@ -171,20 +171,6 @@ public class Node {
 		return true;
 	}
 	
-	public boolean movement(char[][] map, int checkLine, int checkColumn,int goalColumn, int goalLine) {
-		// for the coordonate send we check on the map if we are able to move in it
-		if(map[checkLine][checkColumn] == 'X' ||
-				map[checkLine][checkColumn] == ' ')
-			return false;
-		
-		// check on the table of diamond if we don t have any diamond on our  box 
-		for(Coordonate e : tabDiamond) {
-			if (e.line == checkLine && e.column == checkColumn) 
-				return false;
-			
-		}		
-		return true;
-	}
 	public boolean roundTrip(DIRECTION direction) { // prevent round trip between 2 boxes
 		if(previous == null)
 			return true;
