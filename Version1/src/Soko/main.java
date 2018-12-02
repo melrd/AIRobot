@@ -220,11 +220,12 @@ public class main {
 				if(e.state == false) { // looking for a diamond who we can move
 					//calcul du chemin retourne une liste de noeud
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
+					//temp.add(temp.size(),graph.finalN);
 //					System.out.println("best distance");
-//					for (Node z : temp)
-//						printNode(z);
+					for (Node z : temp)
+						printNode(z);
 					// add the way in the tree and add the last node of the way ine the file
-					fifo.nodeCheck(node, copyWay(node, temp, 1));
+					fifo.nodeCheck(node, node.copyShortWay(node, temp));
 					System.out.println("Diamond \n\n");
 					//printNode(temp.get(temp.size()-1));
 			        try {
@@ -240,12 +241,13 @@ public class main {
 				if(e.state == false) {
 					// calcul du chemin
 					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
+//					temp.add(temp.size(),graph.finalN);
 					for (Coordonate f : node.tabDiamond) {
 						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
 							positionDiamond = node.tabDiamond.indexOf(f);
 					}
 					// add the way in the tree and add the last node of the way int the file
-					fifo.nodeCheck(node, copyWay(node, temp, 1, positionDiamond, node.tabGoal.indexOf(e)));
+					fifo.nodeCheck(node, node.copyShortWay(node, temp, positionDiamond, node.tabGoal.indexOf(e)));
 					System.out.println("Goal \n\n");
 			        try {
 			            Thread.sleep(100);
@@ -263,128 +265,6 @@ public class main {
 		if(node.checkEnd())
 			return true;
 		else return false;
-	}
-
-	//copy shortest way in the treee
-	private static Node copyWay(Node node, ArrayList<Node> e, int position) {
-		/**
-		 * recursive function will check each node of the tab
-		 * try to find the direction of the way
-		 * if the node is not add, we create it
-		 * we check if we are at the end of the new way or not
-		 * return the last node
-		 */
-	
-		if(e.get(position).coordinate.column == node.coordinate.column) {
-			if(e.get(position).coordinate.line == node.coordinate.line -1) {
-				if(node.down == null) 
-					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				if (position ++ < e.size()) 
-					copyWay(node.down, e, position ++);
-				else 
-					return node.down;
-			}
-				
-			else if(e.get(position).coordinate.line == node.coordinate.line +1) {
-				if(node.up == null) 
-					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);					System.out.println("create node");}
-				if (position ++ < e.size()) 
-					copyWay(node.up, e, position ++);
-				else 
-					return node.up;
-			}
-			
-		else if(e.get(position).coordinate.line == node.coordinate.line) {
-			if(e.get(position).coordinate.column == node.coordinate.column -1 ) { 
-				if(node.left == null) 
-					node.left = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				if (position ++ < e.size()) 
-					copyWay(node.left, e, position ++);
-				else 
-					return node.left;
-			}
-			
-			else if(e.get(position).coordinate.column == node.coordinate.column +1) {
-				if(node.right == null)
-					node.right = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				if (position ++ < e.size()) 
-					copyWay(node.right, e, position ++);
-				else 
-					return node.right;
-			}
-		}
-		return null;
-	}
-	
-	// copy shortest way for the diamonds in the tree, change the position of the diamond and change the state of the goal and the diamonds at the end
-	private static Node copyWay(Node node, ArrayList<Node> e, int position, int diamond, int goal) {
-		/**
-		 * recursive function will check each node of the tab
-		 * try to find the direction of the way
-		 * if the node is not add, we create it
-		 * we also change the position of the diamonds
-		 * we check if we are at the end of the new way or not
-		 * return the last node and change the state of the diamond and the goal
-		 */
-		
-		if(e.get(position).coordinate.column == node.coordinate.column) {
-			
-			if(e.get(position).coordinate.line == node.coordinate.line -1) {
-				if(node.down == null)
-					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				node.down.tabDiamond.get(diamond).line --;
-				if (position ++ < e.size())
-					copyWay(node.down, e, position ++, diamond, goal);
-				else {
-					node.down.tabDiamond.get(diamond).state = true;
-					node.down.tabGoal.get(goal).state = true;
-					return node.down;
-				}
-			}
-				
-			else if(e.get(position).coordinate.line == node.coordinate.line +1) {
-				if(node.up == null)
-					node.up = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				node.up.tabDiamond.get(diamond).line ++;
-				if (position ++ < e.size()) 
-					copyWay(node.up, e, position ++, diamond, goal);
-				else {
-					node.up.tabDiamond.get(diamond).state = true;
-					node.up.tabGoal.get(goal).state = true;
-					return node.up;
-				}
-			}
-		}
-			
-		else if(e.get(position).coordinate.line == node.coordinate.line) {
-			
-			if(e.get(position).coordinate.column == node.coordinate.column -1 ) { 
-				if(node.left == null) 
-					node.left = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				node.left.tabDiamond.get(diamond).column--;
-				if (position ++ < e.size()) 
-					copyWay(node.left, e, position ++, diamond, goal);
-				else {
-					node.left.tabDiamond.get(diamond).state = true;
-					node.left.tabGoal.get(goal).state = true;
-					return node.left;
-				}
-			}
-			
-			else if(e.get(position).coordinate.column == node.coordinate.column +1) {
-				if(node.right == null) 
-					node.right = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
-				node.right.tabDiamond.get(diamond).column++;
-				if (position ++ < e.size()) 
-					copyWay(node.right, e, position ++, diamond, goal);
-				else {
-					node.right.tabDiamond.get(diamond).state = true;
-					node.right.tabGoal.get(goal).state = true;
-					return node.right;
-				}
-			}
-		}
-		return null;
 	}
 	
 	private static ArrayList<Coordonate> createCoordonate (char[][]map, char type) { //create table of coordonate

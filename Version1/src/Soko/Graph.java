@@ -214,7 +214,7 @@ public class Graph {
 				boolean changement = false;
 				currentNode = fifoCalcul.fifo.get(0);
 				lastNode = currentNode;
-				currentNode.printNode();
+//				currentNode.printNode();
 				
 //				System.out.println(" up ");
 				//up
