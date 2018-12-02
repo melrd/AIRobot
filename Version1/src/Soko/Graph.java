@@ -207,6 +207,9 @@ public class Graph {
 		fifoCalcul.addNode(startNode);
 		
 
+		System.out.println("start point Bestdistance");
+		startNode.printNode();
+		
 		//Node currentNode : fifoCalcul.fifo
 		while (fifoCalcul.fifo.size() >0 && !find) {
 			do {

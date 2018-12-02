@@ -84,7 +84,7 @@ public class main {
 		
 		
 		System.out.println("\n");
-		System.out.println("Way");
+		System.out.println("Final Way");
 		//return the way for get it
 		temp = fifo.fifo.get(0).listNode(last, temp);
 		System.out.println(temp.size());
@@ -160,6 +160,9 @@ public class main {
 			return false;
 		
 		Node node = fifo.fifo.get(0);
+		System.out.println("start point");
+		printNode(node);
+		System.out.println(node.tabGoal.get(0).state);
 		
 		if (node.coordinate.state == false) { // observe if we transport a diamond or not
 			for (Coordonate e : node.tabDiamond) { // we don t have any diamond so we are looking for one
@@ -183,9 +186,13 @@ public class main {
 			}
 		}
 		else { // we have a diamond so we are looking for a goal
+			System.out.println("a");
 			for (Coordonate e : node.tabGoal) {
+				System.out.println("b");
+				System.out.println(e.state);
 				if(e.state == false) {
 					// calcul du chemin
+					System.out.println("c");
 					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
 					System.out.println("Way");
 					for (Node z : temp)

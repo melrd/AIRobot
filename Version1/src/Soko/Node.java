@@ -240,15 +240,15 @@ public class Node {
 				
 			else if(f.coordinate.line == currentNode.coordinate.line) {
 				if(f.coordinate.column == currentNode.coordinate.column -1 ) { 
-					if(currentNode.left == null) 
-						currentNode.left = new Node(f.coordinate.column, f.coordinate.line, currentNode);
-					currentNode = currentNode.left;
+					if(currentNode.right == null) 
+						currentNode.right = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.right ;
 				}
 				
 				else if(f.coordinate.column == currentNode.coordinate.column +1) {
-					if(currentNode.right == null)
-						currentNode.right = new Node(f.coordinate.column, f.coordinate.line, currentNode);
-					currentNode = currentNode.right;
+					if(currentNode.left == null)
+						currentNode.left = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.left;
 				}
 			}
 		}
@@ -276,14 +276,14 @@ public class Node {
 			}
 				
 			else if(f.coordinate.line == currentNode.coordinate.line) {
-				if(f.coordinate.column == currentNode.coordinate.column -1 ) { 
+				if(f.coordinate.column == currentNode.coordinate.column +1 ) { 
 					if(currentNode.left == null) 
 						currentNode.left = new Node(f.coordinate.column, f.coordinate.line, currentNode);
 					currentNode = currentNode.left;
 					currentNode.tabDiamond.get(diamond).column--;
 				}
 				
-				else if(f.coordinate.column == currentNode.coordinate.column +1) {
+				else if(f.coordinate.column == currentNode.coordinate.column -1) {
 					if(currentNode.right == null)
 						currentNode.right = new Node(f.coordinate.column, f.coordinate.line, currentNode);
 					currentNode = currentNode.right;
