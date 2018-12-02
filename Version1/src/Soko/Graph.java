@@ -190,7 +190,9 @@ public class Graph {
 		Fipo fifoCalcul = new Fipo(); // file to save the path
 		ArrayList <Node> pathF = new ArrayList<>(); // list of all the nodes
 		Node lastNode = new Node(); //last node of the file
-
+		Node currentNode;
+		boolean find = false;
+		
 		int[][] indicator = new int[map.length][map[0].length];
 		for(int i = 0; i < indicator.length; i++) {
 			for(int j = 0; j <indicator[0].length; j++) {
@@ -203,10 +205,8 @@ public class Graph {
 		
 		indicator[startNode.coordinate.line][startNode.coordinate.column] = 0; // the value of the beginning
 		fifoCalcul.addNode(startNode);
-		System.out.println(" first node added ");
 		
-		Node currentNode;
-		boolean find = false;
+
 		//Node currentNode : fifoCalcul.fifo
 		while (fifoCalcul.fifo.size() >0 && !find) {
 			do {
@@ -289,7 +289,7 @@ public class Graph {
 		
 		pathF = Node.listNode(lastNode, pathF);
 		finalN = lastNode;
-		finalN.printNode();
+		//finalN.printNode();
 		
 		return pathF;
 		

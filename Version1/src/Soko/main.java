@@ -70,8 +70,10 @@ public class main {
 		while(fifo.fifo.size() > 0 && endOfTree == false) {
 			// besoin du dernier des noeuds
 			Graph graph = new Graph();
+			System.out.println("Node : ");
 			printNode(fifo.fifo.get(0));
 			endOfTree = calculation(fifo, mapClean, graph);
+			fifo.fifo.remove(0);
 			last = graph.finalN;
 			try {
 	            Thread.sleep(100);
@@ -164,12 +166,15 @@ public class main {
 				if(e.state == false) { // looking for a diamond who we can move
 					//calcul du chemin retourne une liste de noeud
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
+					System.out.println("Way");
 					for (Node z : temp)
 						printNode(z);
 					// add the way in the tree and add the last node of the way ine the file
 					fifo.nodeCheck(node, node.copyShortWay(node, temp));
-					System.out.println("Diamond \n\n");
-			        try {
+					System.out.println("Diamond");
+					printNode(fifo.fifo.get(fifo.fifo.size()-1));
+					System.out.println("________ \n\n");
+					try {
 			            Thread.sleep(50);
 			        } catch (InterruptedException f) {
 			            f.printStackTrace();
@@ -182,13 +187,20 @@ public class main {
 				if(e.state == false) {
 					// calcul du chemin
 					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
+					System.out.println("Way");
+					for (Node z : temp)
+						printNode(z);
+					
 					for (Coordonate f : node.tabDiamond) {
 						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
+							System.out.println("[" + f.line + "][" + f.column);
 							positionDiamond = node.tabDiamond.indexOf(f);
 					}
 					// add the way in the tree and add the last node of the way int the file
 					fifo.nodeCheck(node, node.copyShortWay(node, temp, positionDiamond, node.tabGoal.indexOf(e)));
-					System.out.println("Goal \n\n");
+					System.out.println("Goal");
+					printNode(fifo.fifo.get(fifo.fifo.size()-1));
+					System.out.println("________ \n\n");
 			        try {
 			            Thread.sleep(50);
 			        } catch (InterruptedException f) {
