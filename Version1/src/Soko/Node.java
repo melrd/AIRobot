@@ -222,7 +222,7 @@ public class Node {
 		
 	}
 	
-	public Node copyShortWay(Node currentNode, ArrayList<Node> way) {
+	public static Node copyShortWay(Node currentNode, ArrayList<Node> way) {
 		for(Node f : way) {
 			if(f.coordinate.column == currentNode.coordinate.column) {
 				if(f.coordinate.line == currentNode.coordinate.line -1) {
@@ -252,12 +252,10 @@ public class Node {
 				}
 			}
 		}
-		currentNode.coordinate.state = true;
 		return currentNode;
 	}
 
-	public Node copyShortWay(Node currentNode, ArrayList<Node> way,  int diamond, int goal) {
-		System.out.println(diamond);
+	public static Node copyShortWay(Node currentNode, ArrayList<Node> way,  int diamond, int goal) {
 		for(Node f : way) {
 			if(f.coordinate.column == currentNode.coordinate.column) {
 				if(f.coordinate.line == currentNode.coordinate.line -1) {
@@ -292,7 +290,6 @@ public class Node {
 			}
 		}
 		currentNode.tabDiamond.get(diamond).state = true;
-		currentNode.coordinate.state = false;
 		currentNode.tabGoal.get(goal).state = true;
 		return currentNode;
 	}
