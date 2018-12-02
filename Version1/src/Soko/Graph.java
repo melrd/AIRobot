@@ -209,7 +209,7 @@ public class Graph {
 
 		System.out.println("start point Bestdistance");
 		startNode.printNode();
-		
+		System.out.println ("[" + goal.line +"][" + goal.column);
 		//Node currentNode : fifoCalcul.fifo
 		while (fifoCalcul.fifo.size() >0 && !find) {
 			do {
@@ -290,12 +290,15 @@ public class Graph {
 			}while  (!checkArrived(currentNode,goal) && fifoCalcul.fifo.size() != 0 && !find);
 		}
 		
+		// prend pas en compte le cas ou aucune solution possible
+		
 		pathF = Node.listNode(lastNode, pathF);
 		finalN = lastNode;
 		//finalN.printNode();
-		System.out.println("Path");
-		 for(Node e : pathF)
-			 e.printNode();
+//		System.out.println("Path");
+//		 for(Node e : pathF)
+//			 e.printNode();
+//		System.out.print(pathF.size());
 		
 		return pathF;
 		

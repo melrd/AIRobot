@@ -253,6 +253,7 @@ public class Node {
 			}
 		}
 		currentNode.coordinate.state = true;
+		// lui qui affiche le 73
 		currentNode.printNode();
 		return currentNode;
 	}

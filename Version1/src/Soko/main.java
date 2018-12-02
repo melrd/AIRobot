@@ -182,15 +182,20 @@ public class main {
 				if(e.state == false) { // looking for a diamond who we can move
 					//calcul du chemin retourne une liste de noeud
 					ArrayList<Node> temp = new ArrayList();
-					System.out.println("temp");
-					for(Node b : temp)
-						printNode(b);
+//					System.out.println("temp");
+//					for(Node b : temp)
+//						printNode(b);
+					
+					
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
+					System.out.print(temp.size());
 					System.out.println("Way");
 					for (Node z : temp)
 						printNode(z);
+//					System.out.print("jhggjhg");
 					// add the way in the tree and add the last node of the way ine the file
 					fifo.nodeCheck(node, node.copyShortWay(node, temp));
+				
 					System.out.println("Diamond");
 					printNode(fifo.fifo.get(fifo.fifo.size()-1));
 					for(Coordonate a : fifo.fifo.get(fifo.fifo.size()-1).tabGoal)
@@ -225,7 +230,7 @@ public class main {
 					fifo.nodeCheck(node, node.copyShortWay(node, temp, positionDiamond, node.tabGoal.indexOf(e)));
 					
 					System.out.println("Goal");
-					printNode(fifo.fifo.get(fifo.fifo.size()-1));
+					//printNode(fifo.fifo.get(fifo.fifo.size()-1));
 					
 					for(Coordonate a : fifo.fifo.get(fifo.fifo.size()-1).tabGoal)
 						System.out.println(a.state);
