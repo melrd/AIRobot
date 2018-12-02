@@ -24,8 +24,7 @@ public class main {
 		char[][] mapInitiate = null, //map for the reading part
 				mapClean = null; // map without any diamonds or goal
 		int startColumn = 0,
-			startLine = 0,
-			numberGoal = 0;
+			startLine = 0;
 		Tree tree = null; // decision tree
 		Fipo fifo = new Fipo(); // file for run the tree
 		boolean endOfTree = false;
@@ -66,14 +65,6 @@ public class main {
 		
 		System.out.println("\n");
 		
-		
-		// run the fifo with a end point
-		/**while (fifo.fifo.get(0).steps < 6) {
-			// for the first node of fifo we check the movment possible for it
-			checkAround(mapInitiate ,fifo.fifo.get(0), fifo);
-			if(fifo.fifo == null)
-				break;
-		}*/
 		Node last = new Node();
 		
 		while(fifo.fifo.size() > 0 && endOfTree == false) {
@@ -152,53 +143,6 @@ public class main {
 		return map;
 	}           
 
-	private static void checkAround (char[][] map, Node node, Fipo fifo) {
-		node.printNode();
-		
-		/** for the node send
-		 * check each direction one by one
-		 * we start by looking if we can move in this direction
-		 * if we can, we check we don t already pass on it before (round trip)
-		 * if we don t, we add this child node and we put this node in the file.
-		 * then we print the node
-		 */
-/**		if (node.GameRules(map,DIRECTION.DOWN) == true) {
-//			System.out.println("-- test D --");
-			if(node.roundTrip( DIRECTION.DOWN) == true) {
-				node.addNode(node,DIRECTION.DOWN);
-				fifo.nodeCheck(node, node.down);
-			}
-		}
-//		printNode(node.down);
-		
-		if (node.GameRules(map,DIRECTION.LEFT) == true) {
-//			System.out.println("-- test L --");
-			if(node.roundTrip(DIRECTION.LEFT) == true) {
-				node.addNode(node,DIRECTION.LEFT);
-				fifo.nodeCheck(node, node.left);
-			}
-		}
-//		printNode(node.left);
-		
-		if (node.GameRules(map,DIRECTION.UP) == true) {
-//			System.out.println("-- test U --");
-			if(node.roundTrip(DIRECTION.UP) == true) {
-				node.addNode(node,DIRECTION.UP);
-				fifo.nodeCheck(node, node.up);
-			}
-		}
-//		printNode(node.up);
-		
-		if (node.GameRules(map,DIRECTION.RIGHT) == true) {
-//			System.out.println("-- test R --");
-			if(node.roundTrip(DIRECTION.RIGHT) == true) {
-				node.addNode(node,DIRECTION.RIGHT);
-				fifo.nodeCheck(node, node.right);
-			}
-		}
-		//printNode(node.right);
-	*/}
-
 	// check if the node is not empty before tho call the function in the node class
 	private static void printNode(Node node) {
 		if(node != null)
@@ -220,16 +164,13 @@ public class main {
 				if(e.state == false) { // looking for a diamond who we can move
 					//calcul du chemin retourne une liste de noeud
 					temp = graph.bestDistance(map, node, node.tabDiamond.get(node.tabDiamond.indexOf(e)));
-					//temp.add(temp.size(),graph.finalN);
-//					System.out.println("best distance");
 					for (Node z : temp)
 						printNode(z);
 					// add the way in the tree and add the last node of the way ine the file
 					fifo.nodeCheck(node, node.copyShortWay(node, temp));
 					System.out.println("Diamond \n\n");
-					//printNode(temp.get(temp.size()-1));
 			        try {
-			            Thread.sleep(100);
+			            Thread.sleep(50);
 			        } catch (InterruptedException f) {
 			            f.printStackTrace();
 			        }
@@ -241,7 +182,6 @@ public class main {
 				if(e.state == false) {
 					// calcul du chemin
 					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
-//					temp.add(temp.size(),graph.finalN);
 					for (Coordonate f : node.tabDiamond) {
 						if(f.line == temp.get(0).coordinate.line && f.column == temp.get(0).coordinate.column)
 							positionDiamond = node.tabDiamond.indexOf(f);
@@ -250,7 +190,7 @@ public class main {
 					fifo.nodeCheck(node, node.copyShortWay(node, temp, positionDiamond, node.tabGoal.indexOf(e)));
 					System.out.println("Goal \n\n");
 			        try {
-			            Thread.sleep(100);
+			            Thread.sleep(50);
 			        } catch (InterruptedException f) {
 			            f.printStackTrace();
 			        }
