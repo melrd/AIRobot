@@ -230,7 +230,7 @@ public class Graph {
 						if(checkArrived(currentNode.up,goal)) {
 							find = true;
 							lastNode = currentNode.up;
-							break;
+//							break;
 						}
 					}
 				}
@@ -247,7 +247,7 @@ public class Graph {
 						if(checkArrived(currentNode.down,goal)) {
 							find = true;
 							lastNode = currentNode.down;
-							break;
+//							break;
 						}
 					}
 				}
@@ -264,7 +264,7 @@ public class Graph {
 						if(checkArrived(currentNode.right,goal)) {
 							find = true;
 							lastNode = currentNode.right;
-							break;
+//							break;
 						}
 					}
 				}
@@ -281,7 +281,7 @@ public class Graph {
 						if(checkArrived(currentNode.left,goal)) {
 							lastNode = currentNode.left;
 							find = true;
-							break;
+//							break;
 						}
 					}
 				}
