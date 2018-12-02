@@ -293,6 +293,9 @@ public class Graph {
 		pathF = Node.listNode(lastNode, pathF);
 		finalN = lastNode;
 		//finalN.printNode();
+		System.out.println("Path");
+		 for(Node e : pathF)
+			 e.printNode();
 		
 		return pathF;
 		
