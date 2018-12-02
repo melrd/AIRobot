@@ -72,6 +72,11 @@ public class main {
 			Graph graph = new Graph();
 			System.out.println("Node : ");
 			printNode(fifo.fifo.get(0));
+			for(Coordonate a : fifo.fifo.get(0).tabGoal)
+				System.out.println(a.state);
+			if(fifo.fifo.size() > 2)
+				for(Coordonate a : fifo.fifo.get(0).tabGoal)
+					System.out.println(a.state);
 //			System.out.println("file start");
 //			for(Node f : fifo.fifo)
 //				printNode(f);
@@ -179,6 +184,8 @@ public class main {
 					fifo.nodeCheck(node, node.copyShortWay(node, temp));
 					System.out.println("Diamond");
 					printNode(fifo.fifo.get(fifo.fifo.size()-1));
+					for(Coordonate a : fifo.fifo.get(fifo.fifo.size()-1).tabGoal)
+						System.out.println(a.state);
 					System.out.println("________ \n\n");
 					try {
 			            Thread.sleep(50);
@@ -189,13 +196,10 @@ public class main {
 			}
 		}
 		else { // we have a diamond so we are looking for a goal
-			System.out.println("a");
 			for (Coordonate e : node.tabGoal) {
-				System.out.println("b");
 				System.out.println(e.state);
 				if(e.state == false) {
 					// calcul du chemin
-					System.out.println("c");
 					temp = graph.bestDistance(map, node, node.tabGoal.get(node.tabGoal.indexOf(e)));
 					System.out.println("Way");
 					for (Node z : temp)
@@ -210,6 +214,8 @@ public class main {
 					fifo.nodeCheck(node, node.copyShortWay(node, temp, positionDiamond, node.tabGoal.indexOf(e)));
 					System.out.println("Goal");
 					printNode(fifo.fifo.get(fifo.fifo.size()-1));
+					for(Coordonate a : fifo.fifo.get(fifo.fifo.size()-1).tabGoal)
+						System.out.println(a.state);
 					System.out.println("________ \n\n");
 			        try {
 			            Thread.sleep(50);

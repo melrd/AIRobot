@@ -259,6 +259,7 @@ public class Node {
 
 	public Node copyShortWay(Node currentNode, ArrayList<Node> way,  int diamond, int goal) {
 		System.out.println(diamond);
+		System.out.println(goal);
 		for(Node f : way) {
 			if(f.coordinate.column == currentNode.coordinate.column) {
 				if(f.coordinate.line == currentNode.coordinate.line -1) {
