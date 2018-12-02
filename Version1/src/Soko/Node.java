@@ -221,4 +221,77 @@ public class Node {
 		return temp; //return the tab with all the node for the wayS
 		
 	}
+	
+	public static Node copyShortWay(Node currentNode, ArrayList<Node> way) {
+		for(Node f : way) {
+			if(f.coordinate.column == currentNode.coordinate.column) {
+				if(f.coordinate.line == currentNode.coordinate.line -1) {
+					if(currentNode.down == null) 
+						currentNode.down = new Node(f.coordinate.column,f.coordinate.line, currentNode);
+					currentNode = currentNode.down;
+				}
+					
+				else if(f.coordinate.line == currentNode.coordinate.line +1) {
+					if(currentNode.up == null) 
+						currentNode.up = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.up;
+				}
+			}
+				
+			else if(f.coordinate.line == currentNode.coordinate.line) {
+				if(f.coordinate.column == currentNode.coordinate.column -1 ) { 
+					if(currentNode.left == null) 
+						currentNode.left = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.left;
+				}
+				
+				else if(f.coordinate.column == currentNode.coordinate.column +1) {
+					if(currentNode.right == null)
+						currentNode.right = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.right;
+				}
+			}
+		}
+		return currentNode;
+	}
+
+	public static Node copyShortWay(Node currentNode, ArrayList<Node> way,  int diamond, int goal) {
+		for(Node f : way) {
+			if(f.coordinate.column == currentNode.coordinate.column) {
+				if(f.coordinate.line == currentNode.coordinate.line -1) {
+					if(currentNode.down == null) 
+						currentNode.down = new Node(f.coordinate.column,f.coordinate.line, currentNode);
+					currentNode = currentNode.down;
+					currentNode.tabDiamond.get(diamond).line --;
+				}
+					
+				else if(f.coordinate.line == currentNode.coordinate.line +1) {
+					if(currentNode.up == null) 
+						currentNode.up = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.up;
+					currentNode.tabDiamond.get(diamond).line++;
+				}
+			}
+				
+			else if(f.coordinate.line == currentNode.coordinate.line) {
+				if(f.coordinate.column == currentNode.coordinate.column -1 ) { 
+					if(currentNode.left == null) 
+						currentNode.left = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.left;
+					currentNode.tabDiamond.get(diamond).column--;
+				}
+				
+				else if(f.coordinate.column == currentNode.coordinate.column +1) {
+					if(currentNode.right == null)
+						currentNode.right = new Node(f.coordinate.column, f.coordinate.line, currentNode);
+					currentNode = currentNode.right;
+					currentNode.tabDiamond.get(diamond).column++;
+				}
+			}
+		}
+		currentNode.tabDiamond.get(diamond).state = true;
+		currentNode.tabGoal.get(goal).state = true;
+		return currentNode;
+	}
+
 }
