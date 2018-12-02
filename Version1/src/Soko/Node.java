@@ -253,6 +253,7 @@ public class Node {
 			}
 		}
 		currentNode.coordinate.state = true;
+		currentNode.printNode();
 		return currentNode;
 	}
 

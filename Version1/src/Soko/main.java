@@ -72,8 +72,11 @@ public class main {
 			Graph graph = new Graph();
 			System.out.println("Node : ");
 			printNode(fifo.fifo.get(0));
+//			System.out.println("file start");
+//			for(Node f : fifo.fifo)
+//				printNode(f);
 			endOfTree = calculation(fifo, mapClean, graph);
-			fifo.fifo.remove(0);
+			
 			last = graph.finalN;
 			try {
 	            Thread.sleep(100);
