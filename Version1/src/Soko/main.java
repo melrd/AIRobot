@@ -275,7 +275,10 @@ public class main {
 		 * return the last node
 		 */
 	
-		if(e.get(position).coordinate.column == node.coordinate.column) {
+		if(node == e.get(e.size()-1))
+			return node;
+		
+		else if(e.get(position).coordinate.column == node.coordinate.column) {
 			if(e.get(position).coordinate.line == node.coordinate.line -1) {
 				if(node.down == null) 
 					node.down = new Node(e.get(position).coordinate.column, e.get(position).coordinate.line, node);
@@ -326,6 +329,9 @@ public class main {
 		 * we check if we are at the end of the new way or not
 		 * return the last node and change the state of the diamond and the goal
 		 */
+		
+		if(node == e.get(e.size()-1))
+			return node;
 		
 		if(e.get(position).coordinate.column == node.coordinate.column) {
 			
