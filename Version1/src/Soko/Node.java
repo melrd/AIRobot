@@ -62,8 +62,6 @@ public class Node {
 		tabDiamond = previous.tabDiamond;
 	}
 	
-	public void Node() {
-	}
 	
 	public void printNode() { // permit to show the node we want
 		System.out.println("Coordinate : [" + coordinate.line + "][" + coordinate.column+"]");
