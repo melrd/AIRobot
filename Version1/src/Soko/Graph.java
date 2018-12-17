@@ -51,57 +51,57 @@ public class Graph {
 	}
 	
 	//is this vertex exists = is the case is free
-	public boolean isVertex(Node node, char [][] map) {
-		return (node.movement(map, node.coordinate.line, node.coordinate.column));
-	}
+//	public boolean isVertex(Node node, char [][] map) {
+//		return (node.movement(map, node.coordinate.line, node.coordinate.column));
+//	}
 	
 	//number of vertex = size of path 
-	public int vertexCount() {
-		return (path.size());
-	}
+//	public int vertexCount() {
+//		return (path.size());
+//	}
 	
 	//is this distance exists
-	public boolean isPath(Node nodeA, Node nodeB, char[][] map) {
-		return ((isVertex(nodeA,map)) && (isVertex(nodeB,map)) && (G[nodeB.coordinate.line][nodeB.coordinate.column] != alpha));
-	}
+//	public boolean isPath(Node nodeA, Node nodeB, char[][] map) {
+//		return ((isVertex(nodeA,map)) && (isVertex(nodeB,map)) && (G[nodeB.coordinate.line][nodeB.coordinate.column] != alpha));
+//	}
 	
 	//returns table of successful vertex
-	/*public int[] success(int i) {
-		if ((i<0) || (i >= G.length)){
-			System.out.println("Graph::success list : Error: out of limits.");
-			System.exit(-1);
-		}
-		if (!isVertex(i)){
-			System.out.println("Graph::success list : Error : this vertex does not exist.");
-			System.exit(-1);
-		}
-		
-		int [] table = new int [vertexCount()];
-		int y = 0;
-		
-		while (y<vertexCount()) {
-			for (int j = 0; j<G[i].length; j++) {
-				if (G[i][j] != alpha) {
-					table[y] = G[i][j];
-					y++;
-				}
-			}
-		}
-		return table;
-	}*/
+//	public int[] success(int i) {
+//		if ((i<0) || (i >= G.length)){
+//			System.out.println("Graph::success list : Error: out of limits.");
+//			System.exit(-1);
+//		}
+//		if (!isVertex(i)){
+//			System.out.println("Graph::success list : Error : this vertex does not exist.");
+//			System.exit(-1);
+//		}
+//		
+//		int [] table = new int [vertexCount()];
+//		int y = 0;
+//		
+//		while (y<vertexCount()) {
+//			for (int j = 0; j<G[i].length; j++) {
+//				if (G[i][j] != alpha) {
+//					table[y] = G[i][j];
+//					y++;
+//				}
+//			}
+//		}
+//		return table;
+//	}
 	
 	//get the distance's value of the node
-	public int getDistance(Node nodeA, Node nodeB, char [][] map) {
-		if ( (nodeB.coordinate.line<0) || (nodeB.coordinate.line >= G.length) || (nodeB.coordinate.column<0) || (nodeB.coordinate.column >= G.length) ) {
-			System.out.println("Graph::getDistance : Error: out of limits.");
-			System.exit(-1);
-		}
-		if (!isPath(nodeA, nodeB, map)){
-			System.out.println("Graph::getDistance : Error: not a distance.");
-			System.exit(-1);
-		}
-		return G[nodeB.coordinate.line][nodeB.coordinate.column];
-	}
+//	public int getDistance(Node nodeA, Node nodeB, char [][] map) {
+//		if ( (nodeB.coordinate.line<0) || (nodeB.coordinate.line >= G.length) || (nodeB.coordinate.column<0) || (nodeB.coordinate.column >= G.length) ) {
+//			System.out.println("Graph::getDistance : Error: out of limits.");
+//			System.exit(-1);
+//		}
+//		if (!isPath(nodeA, nodeB, map)){
+//			System.out.println("Graph::getDistance : Error: not a distance.");
+//			System.exit(-1);
+//		}
+//		return G[nodeB.coordinate.line][nodeB.coordinate.column];
+//	}
 	
 	//getter of the value table
 	public int [][] getG(){
